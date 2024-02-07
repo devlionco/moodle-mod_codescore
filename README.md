@@ -1,24 +1,34 @@
-# Code Grader AI #
+# Codescore #
 
-TODO Describe the plugin shortly here.
+## Introduction ##
+Codescore plugin allows teachers to get second opinion on student's code in case they missed something. Just write code task, select programming language and when student submits solution -  Codescore will grade it.
 
-TODO Provide more detailed description here.
+## Requirements ##
 
-## Installing via uploaded ZIP file ##
+In order to use Codescore you need to have one of the following:
+1. Moodle version 4.1
+2. Moodle version 4.2
+3. Moodle version 4.3
 
-1. Log in to your Moodle site as an admin and go to _Site administration >
+Moreover, the plugin requires PHP version of 8.1 and above.
+As well, the plugin is working with SQL queries, therefore is compatible to MySQL-based DB's (such as MySql, MariaDB e.t.c).
+
+## Installation ##
+### Installing via uploaded ZIP file ###
+
+1. Log in to your Moodle site as an admin and go to Site administration >
    Plugins > Install plugins_.
 2. Upload the ZIP file with the plugin code. You should only be prompted to add
    extra details if your plugin type is not automatically detected.
 3. Check the plugin validation report and finish the installation.
 
-## Installing manually ##
+### Installing manually ###
 
 The plugin can be also installed by putting the contents of this directory to
 
     {your/moodle/dirroot}/mod/codescore
 
-Afterwards, log in to your Moodle site as an admin and go to _Site administration >
+Afterwards, log in to your Moodle site as an admin and go to Site administration >
 Notifications_ to complete the installation.
 
 Alternatively, you can run
@@ -26,6 +36,27 @@ Alternatively, you can run
     $ php admin/cli/upgrade.php
 
 to complete the installation from the command line.
+
+### Installing with git ###
+
+Use
+    $ git clone { this repository URL/git address}
+
+Afterwards, log in to your Moodle site as an admin and go to Site administration >
+Notifications_ to complete the installation.
+
+Alternatively, you can run
+
+    $ php admin/cli/upgrade.php
+
+to complete the installation from the command line.
+
+## Managing Pages ##
+You may find the plugin admin settings under Site administration -> Plugins -> Activity plugins -> Code Score
+
+## Technical Support ##
+If you have questions or need help integrating Code Score, please contact us (Support@devlion.co) instead of opening an issue
+
 
 ## License ##
 
