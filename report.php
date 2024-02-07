@@ -50,7 +50,7 @@ if ($data = data_submitted()) {
           'context' => context_module::instance($cmid),
           'other' => [
                'grade' => $grade,
-          ]
+          ],
      ];
      $event = \mod_codescore\event\attempt_grade::create($params);
      $event->trigger();
@@ -59,18 +59,19 @@ if ($data = data_submitted()) {
      $moduleinstance->userid = $userid;
      $attempts = cgai_get_user_attempts($cm->id, $userid);
      $maxgrade = 0;
-     if(count($attempts) === 1 || count($attempts) === 0) {
+     if (count($attempts) === 1 || count($attempts) === 0) {
+          codescore_grade_item_update($moduleinstance);
+     } else {
+         foreach ($attempts as &$value) {
+             if ((int)$value->grade >= $maxgrade) {
+                  $maxgrade = (int)$value->grade;
+             }
+         }
+     }
+     if ($maxgrade <= (int)$data->grade) {
           codescore_grade_item_update($moduleinstance);
      }
-     else {
-          foreach ($attempts as &$value) {
-               if((int)$value->grade >= $maxgrade) {
-                    $maxgrade = (int)$value->grade;
-               }
-          }
-     }
-     if($maxgrade <= (int)$data->grade) codescore_grade_item_update($moduleinstance);
-     
+
      redirect($redirecturl);
 }
 
@@ -106,7 +107,7 @@ $attempt = $DB->get_records(
 
 $user = $DB->get_record('user', array('id' => $userid));
 $name = $user->firstname . " " . $user->lastname;
-$isTeacher = has_capability('mod/quiz:addinstance', $modulecontext);
+$isteacher = has_capability('mod/quiz:addinstance', $modulecontext);
 
 $langobject = [
      '0' => 'Javascript',
@@ -129,7 +130,7 @@ $attempt[$index]->cmid = $id;
 $attempt[$index]->grade = intval($attempt[$index]->grade);
 $attempt[$index]->aigrade = intval($attempt[$index]->aigrade);
 $attempt[$index]->backUrl = new moodle_url('/mod/codescore/report.php', array('cmid' => $id));
-$attempt[$index]->isTeacher = $isTeacher;
+$attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;
 $attempt[$index]->syntaxgrade = $moduleinstance->syntaxgrading;

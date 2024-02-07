@@ -58,7 +58,6 @@ class mod_codescore_mod_form extends moodleform_mod {
             $mform->setType('name', PARAM_CLEANHTML);
         }
 
-
         $this->standard_intro_elements();
         $mform->addElement('textarea', 'task', get_string('task', 'codescore'), null,
                 ['subdirs' => 1, 'maxbytes' => $CFG->maxbytes, 'maxfiles' => -1, 'changeformat' => 1, 'context' => $this->context,
@@ -86,7 +85,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $alowedlanguages = explode(',', $alowedlanguages);
 
         foreach ($langs as $key => $lang) {
-            if(in_array($key, $alowedlanguages)) {
+            if (in_array($key, $alowedlanguages)) {
                 $langoptions[$key] = $lang;
             }
         }
@@ -96,8 +95,11 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->setDefault('programminglang', '13');
 
         $checkvalid = function ($val) {
-            if($val === '13') return false;
-            else return true;
+            if ($val === '13') {
+                return false;
+            } else {
+                return true;
+            }
         };
 
         $mform->addRule('programminglang', get_string('selectlang', 'codescore'), 'callback', $checkvalid, 'server');
@@ -115,7 +117,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('date_time_selector', 'timeclosed', get_string('codescoreclose', 'codescore'),
                 self::$datefieldoptions);
         $mform->setType('timeclosed', PARAM_INT);
-        //grading options
+        // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 
         $mform->addElement('text', 'syntaxgrading', get_string('syntaxgrade', 'codescore'));
@@ -138,20 +140,22 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->setDefault('allcasesgrading', 20);
         $mform->addHelpButton('allcasesgrading', 'allcases', 'codescore');
 
-        $checkGrading = function() {
+        $checkgrading = function() {
             $mform = $this->_form;
-            $syntaxValue = (int)$mform->getElement('syntaxgrading')->_attributes['value'];
-            $outputValue = (int)$mform->getElement('outputgrading')->_attributes['value'];
-            $solutionValue = (int)$mform->getElement('problemsolutiongrading')->_attributes['value'];
-            $casesValue = (int)$mform->getElement('allcasesgrading')->_attributes['value'];
-            if($syntaxValue + $outputValue + $solutionValue + $casesValue !== 100) return false;
+            $syntaxvalue = (int)$mform->getElement('syntaxgrading')->_attributes['value'];
+            $outputvalue = (int)$mform->getElement('outputgrading')->_attributes['value'];
+            $solutionvalue = (int)$mform->getElement('problemsolutiongrading')->_attributes['value'];
+            $casesvalue = (int)$mform->getElement('allcasesgrading')->_attributes['value'];
+            if ($syntaxvalue + $outputvalue + $solutionvalue + $casesvalue !== 100) {
+                return false;
+            }
             return true;
         };
 
         $mform->addElement('advcheckbox', 'autograde', get_string('autograde', 'codescore'));
         $mform->setDefault('autograde', false);
 
-        $mform->addRule('autograde', 'Total sum of grades should be equal to 100', 'callback', $checkGrading, 'server');
+        $mform->addRule('autograde', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
 
         $this->standard_coursemodule_elements();
 

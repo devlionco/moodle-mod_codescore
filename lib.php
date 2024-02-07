@@ -175,10 +175,9 @@ function codescore_grade_item_update($moduleinstance, $reset=false, $new = false
         $item['reset'] = true;
     }
     $grades;
-    if($new) {
+    if ($new) {
         $grades = null;
-    }
-    else {
+    } else {
         $grades = array(
             'userid' => (int)$moduleinstance->userid,
             'rawgrade' => (int)$moduleinstance->grade,

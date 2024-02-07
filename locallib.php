@@ -16,9 +16,9 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-require_once ("$CFG->libdir/filelib.php");
-require_once ("$CFG->libdir/resourcelib.php");
-require_once ("$CFG->dirroot/mod/page/lib.php");
+require_once("$CFG->libdir/filelib.php");
+require_once("$CFG->libdir/resourcelib.php");
+require_once("$CFG->dirroot/mod/page/lib.php");
 
 function page_get_editor_options($context) {
     global $CFG;
@@ -53,7 +53,7 @@ function cgai_save_attempt($data) {
         'context' => context_module::instance($data->cmid),
         'objectid' => context_module::instance($data->cmid)->id,
     ];
-   
+
     $event = \mod_codescore\event\attempt_submit::create($params);
     $event->trigger();
 
@@ -65,7 +65,7 @@ function cgai_set_grade_attempt($data) {
 
     $attempts = $DB->update_record('codescore_attempts', array(
         'id' => $data->id,
-        'grade' => $data->grade
+        'grade' => $data->grade,
     ));
     return $attempts;
 }
@@ -98,8 +98,8 @@ function cgai_get_attempts($codescore) {
     global $DB, $USER;
 
     $context = context_module::instance($codescore);
-    $isTeacher = has_capability('mod/quiz:addinstance', $context);
-    if ($isTeacher) {
+    $isteacher = has_capability('mod/quiz:addinstance', $context);
+    if ($isteacher) {
         $attempts = $DB->get_records('codescore_attempts',
             ['codescore' => $codescore]
         );

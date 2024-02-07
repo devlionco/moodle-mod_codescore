@@ -43,7 +43,7 @@ class attempt_grade extends \core\event\base {
      */
     public function get_description() {
         return "The user with id '$this->relateduserid' has graded the attempt for the " .
-            "codescore with course module id '$this->contextinstanceid'." . 
+            "codescore with course module id '$this->contextinstanceid'." .
             "The grade is: " . $this->other['grade'];
     }
 

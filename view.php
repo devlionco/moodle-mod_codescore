@@ -22,9 +22,9 @@
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-require (__DIR__ . '/../../config.php');
-require_once (__DIR__ . '/lib.php');
-require_once ($CFG->dirroot . '/mod/codescore/locallib.php');
+require(__DIR__ . '/../../config.php');
+require_once(__DIR__ . '/lib.php');
+require_once($CFG->dirroot . '/mod/codescore/locallib.php');
 
 // Course module id.
 $id = optional_param('id', 0, PARAM_INT);
@@ -60,12 +60,12 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-$isSubmitted = cgai_get_user_attempts($id, $USER->id);
+$issubmitted = cgai_get_user_attempts($id, $USER->id);
 
 $canattempt = has_capability('mod/quiz:attempt', $context);
-$isTeacher = has_capability('mod/quiz:addinstance', $context);
+$isteacher = has_capability('mod/quiz:addinstance', $context);
 
-if ($isTeacher) {
+if ($isteacher) {
     $url = new moodle_url('/mod/codescore/reports.php', array('cmid' => $id));
     echo $OUTPUT->render_from_template('mod_codescore/reportsbtn', ['url' => $url]);
 }
@@ -75,18 +75,18 @@ $renderdata = (object) [
     'textareaClass' => '',
     'value' => '',
     'submission' => get_string('notsubmitted', 'codescore'),
-    'isSubmitted' => false,
+    'issubmitted' => false,
     'cmid' => $cm->id,
     'task' => $moduleinstance->task,
 ];
 
-if ($isSubmitted) {
+if ($issubmitted) {
     $renderdata = (object) [
         'buttonClass' => 'd-none',
         'textareaClass' => 'disabled',
-        'value' => 'function() { }', //TODO get from DB
+        'value' => 'function() { }',
         'submission' => get_string('submitted', 'codescore'),
-        'isSubmitted' => $moduleinstance->multiattempts === '1' ? false : true,
+        'issubmitted' => $moduleinstance->multiattempts === '1' ? false : true,
         'cmid' => $cm->id,
         'task' => $moduleinstance->task,
     ];
@@ -94,22 +94,20 @@ if ($isSubmitted) {
 
 echo $OUTPUT->render_from_template('mod_codescore/view', $renderdata);
 
-// if (!$isTeacher) {
-    // TODO:
-    $attempts = cgai_get_user_attempts($id, $USER->id);
-    $data = new stdClass;
-    $data->attempts = array_values($attempts);
-    foreach ($data->attempts as &$value) {
-        $userid = $value->userid;
-        $user = $DB->get_record('user', array('id'=>$userid));
-        $name = $user->firstname . " " . $user->lastname;
-        $value->username = $name;
-    }
-    $data->title = get_string('yoursubmissions', 'codescore');
-    $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
-    $data->hasAttempts = $attempts ? true : false;
-    echo $OUTPUT->render_from_template('mod_codescore/reports', $data);
-    $PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$data]);
-// }
+
+$attempts = cgai_get_user_attempts($id, $USER->id);
+$data = new stdClass;
+$data->attempts = array_values($attempts);
+foreach ($data->attempts as &$value) {
+    $userid = $value->userid;
+    $user = $DB->get_record('user', array('id' => $userid));
+    $name = $user->firstname . " " . $user->lastname;
+    $value->username = $name;
+}
+$data->title = get_string('yoursubmissions', 'codescore');
+$data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
+$data->hasAttempts = $attempts ? true : false;
+echo $OUTPUT->render_from_template('mod_codescore/reports', $data);
+$PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$data]);
 
 echo $OUTPUT->footer();

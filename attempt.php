@@ -29,7 +29,7 @@
 
  $id = required_param('cmid', PARAM_INT); // Course module id
 
- if ($data = data_submitted()) {
+if ($data = data_submitted()) {
     $code = optional_param('code', '', PARAM_RAW);
     $notes = optional_param('notes', '', PARAM_RAW);
     $sesskey = optional_param('sesskey', '', PARAM_RAW);
@@ -43,17 +43,17 @@
 
     $redirecturl = new moodle_url('/mod/codescore/view.php', array('id' => $id));
     redirect($redirecturl);
- }
+}
 
- if ($id) {
+if ($id) {
      $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
      $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
      $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
- } else {
+} else {
      $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
      $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
      $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
- }
+}
 
 $modulecontext = context_module::instance($id);
 
@@ -73,13 +73,13 @@ if ($modulecontext->contextlevel == CONTEXT_MODULE) {
 
 echo $OUTPUT->header();
 
-$cmdb = $DB->get_record('codescore', array('id'=>$moduleinstance->id));
+$cmdb = $DB->get_record('codescore', array('id' => $moduleinstance->id));
 
- $renderdata = (object) [
+$renderdata = (object) [
     'backUrl' => new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id)),
     'cmid' => $id,
     'task' => $cmdb->task,
- ];
+];
 
 echo $OUTPUT->render_from_template('mod_codescore/attempt', $renderdata);
 

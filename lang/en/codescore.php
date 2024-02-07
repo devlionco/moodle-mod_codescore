@@ -66,13 +66,13 @@ $string['selectlang'] = 'Please select language';
 $string['yes'] = 'Yes';
 $string['no'] = 'No';
 
-//Admin settings
+// Admin settings
 $string['apikey'] = 'API Key';
 $string['apikeyexplain'] = 'Insert an API key for GPT-4';
 $string['apiurl'] = 'API URL';
 $string['apiurlexplain'] = 'Insert an API URL for GPT-4';
 
-//View
+// View
 $string['viewreportsbtn'] = 'View reports';
 $string['taskview'] = 'The task is:';
 $string['submissionstatus'] = 'Submission status: ';
@@ -80,17 +80,17 @@ $string['submitted'] = 'submitted';
 $string['notsubmitted'] = 'not submitted';
 $string['yoursubmissions'] = 'Your submissions: ';
 
-//Reports
+// Reports
 $string['studentsreports'] = "Student's reports:";
 $string['noreports'] = "No reports yet";
 $string['deleteBtnText'] = 'Delete attempts';
 $string['areyousure'] = 'Are you sure you want to delete attempts?';
 $string['irreversible'] = 'This action will be irreversible';
 
-//Attempt
+// Attempt
 $string['taskheader'] = 'The task is:';
 
-//Attempts table
+// Attempts table
 $string['tablename'] = "Name";
 $string['startedat'] = "Started at";
 $string['tablenotes'] = "Notes";
@@ -101,7 +101,7 @@ $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
 $string['tableteachergrade'] = "Teacher grade";
 
-//Report
+// Report
 $string['taskoverview'] = 'Task overview';
 $string['reportlang'] = 'Programming language: ';
 $string['taskreport'] = 'Task: ';

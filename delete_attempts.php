@@ -30,7 +30,7 @@ $cmid = required_param('cmid', PARAM_TEXT); // Course module id
 
 $ids = explode(",", $ids);
 
-foreach($ids as &$id) {
+foreach ($ids as &$id) {
     $DB->delete_records_select('codescore_attempts', "id=" . $id);
 }
 

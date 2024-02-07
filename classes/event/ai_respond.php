@@ -42,7 +42,7 @@ class ai_respond extends \core\event\base {
      * @return string
      */
     public function get_description() {
-        return "AI has graded the attempt of user with id '$this->relateduserid'" . 
+        return "AI has graded the attempt of user with id '$this->relateduserid'" .
         "On course with id '$this->courseid'";
     }
 

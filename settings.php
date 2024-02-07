@@ -52,6 +52,6 @@ if ($hassiteconfig) {
                 get_string('apiurl', 'mod_codescore'), get_string('apiurlexplain', 'mod_codescore'), 'https://apireprot.learnapp.io/LionAI/index.php', PARAM_TEXT));
         $settings->add(new admin_setting_configmultiselect('codescore/alowedlanguages',
                 get_string('alowedlanguages', 'mod_codescore'), null,
-                array('0','1','2','3','4','5','6','7'), $langs));
+                array('0', '1', '2', '3', '4', '5', '6', '7'), $langs));
     }
 }

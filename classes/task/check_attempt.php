@@ -36,7 +36,7 @@ class check_attempt extends adhoc_task {
      */
     public function execute() {
         global $CFG, $DB;
-        require_once ("$CFG->dirroot/mod/codescore/classes/GptxPrompt.php");
+        require_once("$CFG->dirroot/mod/codescore/classes/GptxPrompt.php");
         $data = $this->get_custom_data();
 
         $config = get_config('codescore');
@@ -48,7 +48,6 @@ class check_attempt extends adhoc_task {
             $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
             $attempt->state = 'pending';
             $attempt->timemodified = time();
-            //$DB->update_record('codescore_attempts', $attempt);
             $langobject = array(
                     '0' => 'Javascript',
                     '1' => 'C++',
@@ -73,11 +72,11 @@ class check_attempt extends adhoc_task {
             $data->solutiongrade = $codescore->problemsolutiongrading;
             $data->allcasesgrade = $codescore->allcasesgrading;
 
-
-            $response = $tt->sendPrompt($codescore);
+            $response = $tt->sendprompt($codescore);
             $response = str_replace('```json', '', $response);
             $response = str_replace('```', '', $response);
             $response = json_decode($response);
+            $response = json_decode($response->message);
             if ($codescore->autograde === "1") {
                 $attempt->grade = $response->grade;
             }
