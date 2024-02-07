@@ -1,0 +1,6 @@
+<div id="viewWrapper">
+    <h3> {{#str}} taskview, codescore {{/str}}</h3>
+    <p class="task">{{task}}</p>
+    <h6> {{#str}} submissionstatus, codescore {{/str}} {{submission}}</h6>
+    <a href='startattempt.php?cmid={{cmid}}' class="btn btn-primary mt-3 {{#isSubmitted}} disabled {{/isSubmitted}}">Start attempt</a>
+</div>
