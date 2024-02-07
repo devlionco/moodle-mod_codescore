@@ -17,7 +17,7 @@
 namespace mod_codescore\privacy;
 
 /**
- * Privacy API implementation for the Code Grader AI plugin.
+ * Privacy API implementation for the Code Score plugin.
  *
  * @package     mod_codescore
  * @category    privacy
