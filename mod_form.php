@@ -103,8 +103,6 @@ class mod_codescore_mod_form extends moodleform_mod {
         };
 
         $mform->addRule('programminglang', get_string('selectlang', 'codescore'), 'callback', $checkvalid, 'server');
-        $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
-        $mform->setDefault('multiattempts', true);
 
         $mform->addElement('header', 'timing', get_string('timing', 'codescore'));
 
@@ -156,6 +154,9 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->setDefault('autograde', false);
 
         $mform->addRule('autograde', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+        
+        $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
+        $mform->setDefault('multiattempts', true);
 
         $this->standard_coursemodule_elements();
 
