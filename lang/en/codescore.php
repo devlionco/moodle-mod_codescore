@@ -78,7 +78,7 @@ $string['taskview'] = 'The task is:';
 $string['submissionstatus'] = 'Submission status: ';
 $string['submitted'] = 'submitted';
 $string['notsubmitted'] = 'not submitted';
-$string['yoursubmissions'] = 'Your submissions: ';
+$string['yoursubmissions'] = 'Your attempt: ';
 
 // Reports
 $string['studentsreports'] = "Student's reports:";

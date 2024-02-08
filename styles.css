@@ -1763,3 +1763,13 @@ body.tabulator-print-fullscreen-hide > *:not(.tabulator-print-fullscreen) {
 #page-mod-codescore-mod #id_task {
     height: 140px;
 }
+.lastattempt {
+    display: flex;
+}
+.lastattempt > .CodeMirror {
+    width: 50vw;
+}
+.lastattemptHead {
+    margin-top: 48px;
+    margin-bottom: 20px;
+}

@@ -26,6 +26,8 @@ require(__DIR__ . '/../../config.php');
 require_once(__DIR__ . '/lib.php');
 require_once($CFG->dirroot . '/mod/codescore/locallib.php');
 
+global $COURSE, $USER;
+
 // Course module id.
 $id = optional_param('id', 0, PARAM_INT);
 
@@ -79,7 +81,6 @@ $renderdata = (object) [
     'cmid' => $cm->id,
     'task' => $moduleinstance->task,
 ];
-
 if ($issubmitted) {
     $renderdata = (object) [
         'buttonClass' => 'd-none',
@@ -104,10 +105,20 @@ foreach ($data->attempts as &$value) {
     $name = $user->firstname . " " . $user->lastname;
     $value->username = $name;
 }
-$data->title = get_string('yoursubmissions', 'codescore');
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
-$data->hasAttempts = $attempts ? true : false;
-echo $OUTPUT->render_from_template('mod_codescore/reports', $data);
-$PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$data]);
+
+$grading_info = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
+$lastrenderdata = end($data->attempts);
+if ($lastrenderdata) {
+    $lastrenderdata->grade = (int)end($grading_info->items[0]->grades)->grade;
+    $lastrenderdata->aigrade = (int)$lastrenderdata->aigrade;
+    $lastrenderdata->hasAttempts = $attempts ? true : false;
+    $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
+}
+
+if ($attempts) {
+    echo $OUTPUT->render_from_template('mod_codescore/lastattempt', $lastrenderdata);
+}
+$PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);
 
 echo $OUTPUT->footer();
