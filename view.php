@@ -67,6 +67,18 @@ $issubmitted = cgai_get_user_attempts($id, $USER->id);
 $canattempt = has_capability('mod/quiz:attempt', $context);
 $isteacher = has_capability('mod/quiz:addinstance', $context);
 
+$currenttime = time();
+$timeopened = $moduleinstance->timeopened;
+$timeclosed = (int)$moduleinstance->timeclosed;
+$isavaible = true;
+if ($timeclosed === 0) {
+    $timeclosed = INF;
+}
+
+if ((int)$timeopened < $currenttime && $timeclosed > $currenttime) {
+    $isavaible = false;
+}
+
 if ($isteacher) {
     $url = new moodle_url('/mod/codescore/reports.php', array('cmid' => $id));
     echo $OUTPUT->render_from_template('mod_codescore/reportsbtn', ['url' => $url]);
@@ -80,6 +92,7 @@ $renderdata = (object) [
     'issubmitted' => false,
     'cmid' => $cm->id,
     'task' => $moduleinstance->task,
+    'isavaible' => $isavaible,
 ];
 if ($issubmitted) {
     $renderdata = (object) [
@@ -90,6 +103,7 @@ if ($issubmitted) {
         'issubmitted' => $moduleinstance->multiattempts === '1' ? false : true,
         'cmid' => $cm->id,
         'task' => $moduleinstance->task,
+        'isavaible' => $isavaible,
     ];
 }
 

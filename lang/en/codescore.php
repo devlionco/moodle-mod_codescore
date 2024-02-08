@@ -32,7 +32,7 @@ $string['timing'] = 'Timing';
 $string['codescoreopenclose'] = 'Open and close dates';
 $string['codescoreopenclose_help'] = 'Students can only start their attempt(s) after the open time and they must complete their attempts before the close time.';
 $string['codescoreopen'] = 'Open the activity';
-$string['codescoreclose'] = 'Open and close dates';
+$string['codescoreclose'] = 'Close the activity';
 $string['codescoreclose_help'] = 'Students can only start their attempt(s) after the open time and they must complete their attempts before the close time.';
 
 $string['modulenameplural'] = 'Codescore\'s';
