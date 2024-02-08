@@ -1,0 +1,15 @@
+{{#hasAttempts}}
+    <h3 class='lastattemptHead'>{{title}}</h3>
+    <div class='mt-2 lastattempt'>
+        <textarea name="" cols="" rows="" id="codeEditor">{{code}}</textarea>
+        <ul>
+            <li>{{#str}} reportgrade, codescore {{/str}} {{grade}}</li>
+            <li>{{#str}} aigradereport, codescore {{/str}} {{aigrade}}</li>
+            <li>{{#str}} syntaxreport, codescore {{/str}} {{syntaxgrading}}</li>
+            <li>{{#str}} outputreport, codescore {{/str}} {{outputgrading}}</li>
+            <li>{{#str}} problemreport, codescore {{/str}} {{problemsolutiongrading}}</li>
+            <li>{{#str}} casesreport, codescore {{/str}} {{allcasesgrading}}</li>
+            <li>{{#str}} notesreport, codescore {{/str}} {{studentnotes}}</li>
+        </ul>
+    </div>
+{{/hasAttempts}}

@@ -1,0 +1,13 @@
+{{^isavaible}}
+    <div id="viewWrapper">
+        <h3> {{#str}} taskview, codescore {{/str}}</h3>
+        <p class="task">{{task}}</p>
+        <h6> {{#str}} submissionstatus, codescore {{/str}} {{submission}}</h6>
+        {{^issubmitted}}
+            <a href='startattempt.php?cmid={{cmid}}' class="btn btn-primary mt-3">Start attempt</a>
+        {{/issubmitted}}
+    </div>
+{{/isavaible}}
+{{#isavaible}}
+    <p>This activity isn't avaible for now</p>
+{{/isavaible}}
