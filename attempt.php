@@ -33,6 +33,8 @@ if ($data = data_submitted()) {
     $code = optional_param('code', '', PARAM_RAW);
     $notes = optional_param('notes', '', PARAM_RAW);
     $sesskey = optional_param('sesskey', '', PARAM_RAW);
+    $timestart = optional_param('timestart', '', PARAM_RAW);
+    $data->timestart = $timestart;
     confirm_sesskey($sesskey);
 
     // Save attempt.
@@ -44,7 +46,7 @@ if ($data = data_submitted()) {
     $redirecturl = new moodle_url('/mod/codescore/view.php', array('id' => $id));
     redirect($redirecturl);
 }
-
+$timestart = time();
 if ($id) {
      $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
      $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
@@ -79,6 +81,7 @@ $renderdata = (object) [
     'backUrl' => new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id)),
     'cmid' => $id,
     'task' => $cmdb->task,
+    'timestart' => $timestart,
 ];
 
 echo $OUTPUT->render_from_template('mod_codescore/attempt', $renderdata);

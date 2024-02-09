@@ -41,7 +41,7 @@ function cgai_save_attempt($data) {
     $data->studentnotes = $data->notes;
     $data->attempt = $lastattempt ? $lastattempt->attempt + 1 : 1;
     $data->state = 'inprogress';
-    $data->timestart = time();
+    $data->timefinish = time();
     $data->grade = 0;
     $data->correctedcode = '';
     $data->output = '';
@@ -65,6 +65,7 @@ function cgai_set_grade_attempt($data) {
 
     $attempts = $DB->update_record('codescore_attempts', array(
         'id' => $data->id,
+        'timegraded' => time(),
         'grade' => $data->grade,
     ));
     return $attempts;

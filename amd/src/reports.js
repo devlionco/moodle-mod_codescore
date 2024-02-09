@@ -47,6 +47,7 @@ export const init = async(data) => {
 
     const dateFormatter = (cell) => {
         const value = cell.getValue();
+        if (value === '0') {return '';}
         const toDate = new Date(Number(value) * 1000).toString();
         return toDate.split('GMT')[0];
     };
@@ -59,6 +60,22 @@ export const init = async(data) => {
     const deleteFormatter = (cell) => {
         const index = cell.getRow().getIndex();
         return `<input type="checkbox" data-id="${index}" class="tabulatorSelect"/>`;
+    };
+
+    const statusFormatter = (cell) => {
+        let result;
+        switch (cell.getValue()) {
+            case 'inprogress':
+                result = 'Submitted';
+                break;
+            case 'finished':
+                result = 'Finished';
+                break;
+            case 'pending':
+                result = 'Pending';
+                break;
+        }
+        return result;
     };
 
     if (!data.attempts[0]) {
@@ -80,13 +97,10 @@ export const init = async(data) => {
             },
             { title: await getString('tablename', 'codescore'), field: "username", width: 150, formatter: link },
             { title: await getString('startedat', 'codescore'), field: "timestart", hozAlign: "left", formatter: dateFormatter },
-            { title: await getString('tablenotes', 'codescore'), field: "studentnotes" },
-            { title: await getString('syntaxgradetable', 'codescore'), field: "syntaxgrading" },
-            { title: await getString('outputgradetable', 'codescore'), field: "outputgrading" },
-            { title: await getString('problemgradetable', 'codescore'), field: "problemsolutiongrading" },
-            { title: await getString('casesgradetable', 'codescore'), field: "allcasesgrading" },
-            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: gradeFormatter },
+            { title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter },
+            { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
             { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
+            { title: await getString('statusattempt', 'codescore'), field: "state", formatter:statusFormatter },
         ],
     });
     //Event listeners

@@ -93,13 +93,15 @@ $string['taskheader'] = 'The task is:';
 // Attempts table
 $string['tablename'] = "Name";
 $string['startedat'] = "Started at";
-$string['tablenotes'] = "Notes";
+$string['timefinish'] = "Submitted at";
+$string['timegraded'] = "Graded at";
 $string['syntaxgradetable'] = "Syntax grade";
 $string['outputgradetable'] = "Output grade";
 $string['problemgradetable'] = "Problem grade";
 $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
-$string['tableteachergrade'] = "Teacher grade";
+$string['tableteachergrade'] = "Final grade";
+$string['statusattempt'] = "Status";
 
 // Report
 $string['taskoverview'] = 'Task overview';
