@@ -46,6 +46,7 @@ require_login($course, true, $cm);
 require_capability("mod/codescore:view", $context);
 
 $modulecontext = context_module::instance($cm->id);
+print_r($moduleinstance->programminglang);
 
 $event = \mod_codescore\event\course_module_viewed::create(array(
     'objectid' => $moduleinstance->id,
@@ -84,6 +85,22 @@ if ($isteacher) {
     echo $OUTPUT->render_from_template('mod_codescore/reportsbtn', ['url' => $url]);
 }
 
+$langs = array(
+    '0' => 'Javascript',
+    '1' => 'C++',
+    '2' => 'Python',
+    '3' => 'Java',
+    '4' => 'GO',
+    '5' => 'C#',
+    '6' => 'PHP',
+    '7' => 'HTML',
+    '8' => 'Typescript',
+    '9' => 'Visual Basic',
+    '10' => 'Ruby',
+    '11' => 'SQL',
+    '12' => 'Assembly',
+);
+
 $renderdata = (object) [
     'buttonClass' => '',
     'textareaClass' => '',
@@ -93,6 +110,7 @@ $renderdata = (object) [
     'cmid' => $cm->id,
     'task' => $moduleinstance->task,
     'isavaible' => $isavaible,
+    'lang' => $langs[$moduleinstance->programminglang],
 ];
 if ($issubmitted) {
     $renderdata = (object) [
@@ -104,6 +122,7 @@ if ($issubmitted) {
         'cmid' => $cm->id,
         'task' => $moduleinstance->task,
         'isavaible' => $isavaible,
+        'lang' => $langs[$moduleinstance->programminglang],
     ];
 }
 

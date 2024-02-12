@@ -77,11 +77,28 @@ echo $OUTPUT->header();
 
 $cmdb = $DB->get_record('codescore', array('id' => $moduleinstance->id));
 
+$langs = array(
+    '0' => 'Javascript',
+    '1' => 'C++',
+    '2' => 'Python',
+    '3' => 'Java',
+    '4' => 'GO',
+    '5' => 'C#',
+    '6' => 'PHP',
+    '7' => 'HTML',
+    '8' => 'Typescript',
+    '9' => 'Visual Basic',
+    '10' => 'Ruby',
+    '11' => 'SQL',
+    '12' => 'Assembly',
+);
+
 $renderdata = (object) [
     'backUrl' => new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id)),
     'cmid' => $id,
     'task' => $cmdb->task,
     'timestart' => $timestart,
+    'lang' => $langs[$moduleinstance->programminglang],
 ];
 
 echo $OUTPUT->render_from_template('mod_codescore/attempt', $renderdata);

@@ -57,6 +57,7 @@ $string['correctsolution_help'] = "Maximum grade for student's code optimization
 $string['allcases'] = 'Grade for covering all cases';
 $string['allcases_help'] = "Maximum grade for student's code covering all cases (e.g function works properly with any set of parameters)";
 $string['programminglang'] = 'Select programming language';
+$string['programminglangview'] = 'Programming language:';
 $string['autograde'] = 'Set automatic grade by AI';
 $string['alowedlanguages'] = 'Select languages that will be used';
 $string['multiattempts'] = 'Multiple attempts';
