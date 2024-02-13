@@ -46,7 +46,6 @@ require_login($course, true, $cm);
 require_capability("mod/codescore:view", $context);
 
 $modulecontext = context_module::instance($cm->id);
-print_r($moduleinstance->programminglang);
 
 $event = \mod_codescore\event\course_module_viewed::create(array(
     'objectid' => $moduleinstance->id,
