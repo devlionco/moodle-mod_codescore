@@ -40,26 +40,10 @@ export const init = () => {
   if (textarea.className.includes("disabled")) {
     isReadOnly = true;
   }
-  let cm = CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
+  CodeMirror.fromTextArea(document.getElementById("codeEditor"), {
     lineNumbers: true,
     mode: "javascript", //TODO add lang from backend
     theme: "darcula",
     readOnly: true,
   });
-
-  // Event Listeners/
-  document
-    .getElementById("submitattemptbutton")
-    .addEventListener("click", (e) => {
-      e.preventDefault();
-
-      let code = cm.getValue();
-      let notes = document.getElementById("codeNotes").value;
-
-      document.getElementById("code").value = code;
-      document.getElementById("notes").value = notes;
-      document.getElementById("sesskey").value = M.cfg.sesskey;
-
-      document.getElementById("saveAndExitForm").submit();
-    });
 };

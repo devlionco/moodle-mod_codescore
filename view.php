@@ -151,7 +151,8 @@ if ($lastrenderdata) {
 
 if ($attempts) {
     echo $OUTPUT->render_from_template('mod_codescore/lastattempt', $lastrenderdata);
+    $PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);
 }
-$PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);
+
 
 echo $OUTPUT->footer();
