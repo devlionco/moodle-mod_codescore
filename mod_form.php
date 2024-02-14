@@ -59,9 +59,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         }
 
         $this->standard_intro_elements();
-        $mform->addElement('textarea', 'task', get_string('task', 'codescore'), null,
-                ['subdirs' => 1, 'maxbytes' => $CFG->maxbytes, 'maxfiles' => -1, 'changeformat' => 0, 'context' => $this->context,
-                        'noclean' => 1, 'trusttext' => 0]);
+        $mform->addElement('textarea', 'task', get_string('task', 'codescore'));
         $mform->setType('task', PARAM_RAW);
         $mform->addRule('task', get_string('filltask', 'codescore'), 'required');
 
