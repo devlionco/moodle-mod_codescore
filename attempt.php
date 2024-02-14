@@ -56,6 +56,7 @@ if ($id) {
      $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
      $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
 }
+$PAGE->requires->css('/mod/codescore/codemirror.css');
 
 $modulecontext = context_module::instance($id);
 
