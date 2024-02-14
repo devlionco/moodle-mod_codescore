@@ -53,6 +53,7 @@ export const init = async(data) => {
     };
 
     const gradeFormatter = (cell) => {
+        if (cell.getRow().getData().timegraded === '0') { return ''; }
         const value = cell.getValue();
         return Number(value);
     };
@@ -60,6 +61,11 @@ export const init = async(data) => {
     const deleteFormatter = (cell) => {
         const index = cell.getRow().getIndex();
         return `<input type="checkbox" data-id="${index}" class="tabulatorSelect"/>`;
+    };
+
+    const aigradeFormatter = (cell) => {
+        if (cell.getValue() === null) { return ''; }
+        return Number(cell.getValue());
     };
 
     const statusFormatter = (cell) => {
@@ -100,6 +106,7 @@ export const init = async(data) => {
             { title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter },
             { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
             { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
+            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter },
             { title: await getString('statusattempt', 'codescore'), field: "state", formatter:statusFormatter },
         ],
     });
@@ -108,8 +115,13 @@ export const init = async(data) => {
     table.on("renderComplete", () => {
         document.querySelectorAll('.tabulatorSelect').forEach((el) => {
             el.addEventListener('click', (e) => {
-                const id = el.dataset.id;
-                table.getRow(Number(id)).toggleSelect();
+                e.stopPropagation();
+                const id = e.target.dataset.id;
+                if (e.target.checked) {
+                    table.selectRow(Number(id));
+                } else {
+                    table.deselectRow(Number(id));
+                }
                 const deleteBtn = document.getElementById('deleteAttempts');
                 if (!table.getSelectedData()[0]) {
                     deleteBtn.className = 'disabled btn btn-secondary mb-2';
@@ -117,7 +129,6 @@ export const init = async(data) => {
                 else {
                     deleteBtn.className = 'btn btn-secondary mb-2';
                 }
-                e.stopPropagation();
             });
         });
     });

@@ -80,6 +80,11 @@ $string['submissionstatus'] = 'Submission status: ';
 $string['submitted'] = 'submitted';
 $string['notsubmitted'] = 'not submitted';
 $string['yoursubmissions'] = 'Your attempt: ';
+$string['waitingforgrade'] = 'Waiting for grade';
+$string['graded'] = 'Graded';
+$string['notgraded'] = 'Not graded yet';
+$string['viewdategraded'] = 'Date graded:';
+$string['gradestatus'] = 'Status:';
 
 // Reports
 $string['studentsreports'] = "Student's reports:";

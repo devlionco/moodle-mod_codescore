@@ -3,6 +3,8 @@
     <div class='mt-2 lastattempt'>
         <textarea name="" cols="" rows="" id="codeEditor">{{code}}</textarea>
         <ul>
+            <li>{{#str}} gradestatus, codescore {{/str}} {{status}}</li>
+            <li>{{#str}} viewdategraded, codescore {{/str}} {{convertedTime}}</li>
             <li>{{#str}} reportgrade, codescore {{/str}} {{grade}}</li>
             <li>{{#str}} aigradereport, codescore {{/str}} {{aigrade}}</li>
             <li>{{#str}} syntaxreport, codescore {{/str}} {{syntaxgrading}}</li>

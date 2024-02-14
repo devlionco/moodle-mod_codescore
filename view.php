@@ -142,10 +142,13 @@ $data->candelete = has_capability('mod/codescore:addinstance', context_system::i
 $grading_info = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
 $lastrenderdata = end($data->attempts);
 if ($lastrenderdata) {
-    $lastrenderdata->grade = (int)end($grading_info->items[0]->grades)->grade;
-    $lastrenderdata->aigrade = (int)$lastrenderdata->aigrade;
+    $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($grading_info->items[0]->grades)->grade;
+    $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
     $lastrenderdata->hasAttempts = $attempts ? true : false;
     $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
+    if($lastrenderdata->timegraded === "0") { $lastrenderdata->status = get_string('waitingforgrade', 'codescore'); }
+    else { $lastrenderdata->status = get_string('graded', 'codescore'); }
+    $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
 }
 
 if ($attempts) {
