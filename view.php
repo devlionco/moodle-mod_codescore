@@ -47,7 +47,7 @@ require_capability("mod/codescore:view", $context);
 
 $modulecontext = context_module::instance($cm->id);
 
-$PAGE->requires->css('/mod/codescore/codemirror.css');
+$PAGE->requires->css('/mod/codescore/codemirror/codemirror.css');
 
 $event = \mod_codescore\event\course_module_viewed::create(array(
     'objectid' => $moduleinstance->id,
