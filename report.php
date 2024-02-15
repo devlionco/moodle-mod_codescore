@@ -80,6 +80,9 @@ $userid = required_param('userid', PARAM_INT); // Course module id
 $attemptindex = required_param('attempt', PARAM_INT);
 $index = required_param('index', PARAM_INT);
 
+$PAGE->requires->css('/mod/codescore/codemirrormerge.css');
+$PAGE->requires->css('/mod/codescore/codemirror.css');
+
 if ($id) {
      $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
      $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
