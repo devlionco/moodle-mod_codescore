@@ -136,7 +136,7 @@
 }
 
 .CodeMirror-merge-l-chunk {
-    background: #eef;
+    background: rgba(232, 232, 251, 0.2);
 }
 
 .CodeMirror-merge-l-chunk-start {
@@ -148,7 +148,7 @@
 }
 
 .CodeMirror-merge-l-connect {
-    fill: #eef;
+    fill: rgba(232, 232, 251, 0.2);;
     stroke: #88e;
     stroke-width: 1px;
 }
