@@ -5,10 +5,10 @@
         <p class="task" style="white-space: pre-wrap;">{{{task}}}</p>
         <h6> {{#str}} submissionstatus, codescore {{/str}} {{submission}}</h6>
         {{^issubmitted}}
-            <a href='startattempt.php?cmid={{cmid}}' class="btn btn-primary mt-3">Start attempt</a>
+            <a href='startattempt.php?cmid={{cmid}}' class="btn btn-primary mt-3">{{#str}} startattempt, codescore {{/str}}</a>
         {{/issubmitted}}
     </div>
 {{/isavaible}}
 {{#isavaible}}
-    <p>This activity isn't avaible for now</p>
+    <p>{{#str}} unavaibleactivity, codescore {{/str}}</p>
 {{/isavaible}}

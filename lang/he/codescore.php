@@ -85,6 +85,8 @@ $string['graded'] = 'ניתן ציון';
 $string['notgraded'] = 'טרם ניתן ציון';
 $string['viewdategraded'] = 'תאריך ציון: ';
 $string['gradestatus'] = 'סטטוס:';
+$string['unavaibleactivity'] = 'פעילות זו אינה זמינה לעת עתה';
+$string['startattempt'] = 'התחל ניסיון';
 
 // Reports
 $string['studentsreports'] = "הגשות תלמיד: ";
@@ -95,6 +97,8 @@ $string['irreversible'] = 'פעולה זו תהיה בלתי הפיכה';
 
 // Attempt
 $string['taskheader'] = 'המטלה הינה: ';
+$string['saveandexit'] = "שמור וצא";
+$string['notesplaceholder'] = 'אתה יכול לכתוב הערות למורים כאן';
 
 // Attempts table
 $string['tablename'] = "שם";
@@ -108,6 +112,9 @@ $string['casesgradetable'] = "ניקוד עבור כיסוי כל המקרים �
 $string['tableaigrade'] = "ניקוד AI";
 $string['tableteachergrade'] = "ניקוד סופי";
 $string['statusattempt'] = "סטטוס";
+$string['finishedstatus'] = "גָמוּר";
+$string['pendingstatus'] = "ממתין ל";
+$string['submittedstatus'] = "הוגש";
 
 // Report
 $string['taskoverview'] = 'צפיה במטלה';

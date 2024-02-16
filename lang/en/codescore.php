@@ -85,6 +85,8 @@ $string['graded'] = 'Graded';
 $string['notgraded'] = 'Not graded yet';
 $string['viewdategraded'] = 'Date graded:';
 $string['gradestatus'] = 'Status:';
+$string['unavaibleactivity'] = "This activity isn't available for now";
+$string['startattempt'] = 'Start attempt';
 
 // Reports
 $string['studentsreports'] = "Student's reports:";
@@ -95,6 +97,8 @@ $string['irreversible'] = 'This action will be irreversible';
 
 // Attempt
 $string['taskheader'] = 'The task is:';
+$string['saveandexit'] = "Save and exit";
+$string['notesplaceholder'] = 'You can write notes for teachers here';
 
 // Attempts table
 $string['tablename'] = "Name";
@@ -108,6 +112,9 @@ $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
 $string['tableteachergrade'] = "Final grade";
 $string['statusattempt'] = "Status";
+$string['finishedstatus'] = "Finished";
+$string['pendingstatus'] = "Pending";
+$string['submittedstatus'] = "Submitted";
 
 // Report
 $string['taskoverview'] = 'Task overview';
