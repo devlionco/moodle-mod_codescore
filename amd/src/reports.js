@@ -68,17 +68,21 @@ export const init = async(data) => {
         return Number(cell.getValue());
     };
 
+    let inprogress = await getString('submittedstatus', 'codescore');
+    let finished = await getString('finishedstatus', 'codescore');
+    let pending = await getString('pendingstatus', 'codescore');
+
     const statusFormatter = (cell) => {
         let result;
         switch (cell.getValue()) {
             case 'inprogress':
-                result = 'Submitted';
+                result = inprogress;
                 break;
             case 'finished':
-                result = 'Finished';
+                result = finished;
                 break;
             case 'pending':
-                result = 'Pending';
+                result = pending;
                 break;
         }
         return result;
@@ -107,7 +111,7 @@ export const init = async(data) => {
             { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
             { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
             { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter },
-            { title: await getString('statusattempt', 'codescore'), field: "state", formatter:statusFormatter },
+            { title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter },
         ],
     });
     //Event listeners
