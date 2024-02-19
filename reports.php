@@ -40,7 +40,7 @@ if ($id) {
 
 $context = context_module::instance($cm->id);
 
-require_capability("mod/codescore:view", $context);
+require_capability("mod/codescore:addinstance", $context);
 
 $modulecontext = context_module::instance($cm->id);
 

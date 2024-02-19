@@ -35,6 +35,9 @@ if ($data = data_submitted()) {
      $data->grade = $grade;
      $data->id = $id;
      // Save attempt.
+     $modulecontext = context_module::instance($cmid);
+     $isteacher = has_capability('mod/codescore:addinstance', $modulecontext);
+     if(!$isteacher) return;
      $attemptid = cgai_set_grade_attempt($data);
 
      $modulecontext = context_module::instance($id);

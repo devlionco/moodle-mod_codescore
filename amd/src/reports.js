@@ -22,6 +22,7 @@
 
 import Tabulator from 'mod_codescore/tabulatorlib';
 import {get_string as getString} from 'core/str';
+import Ajax from 'core/ajax';
 
 export const init = async(data) => {
     const rawParams = window.location.search;
@@ -136,13 +137,20 @@ export const init = async(data) => {
             });
         });
     });
-    document.getElementById('deleteAttemptsConfirm').addEventListener('click', () => {
+    document.getElementById('deleteAttemptsConfirm').addEventListener('click', async() => {
         // eslint-disable-next-line curly
         if (!table.getSelectedData()) return;
         const selected = table.getSelectedData().map((el) => {
             return el.id;
         });
-        window.location.href = `delete_attempts.php?ids=${selected.join(",")}&cmid=${cmid}`;
+        await Ajax.call([{
+            methodname: 'mod_codescore_delete_attempts',
+            args: {
+                ids: selected.join(","),
+                cmid: cmid
+            },
+        }]);
+        location.reload();
     });
     if (!data.candelete) {
         table.on("tableBuilt", function () {
