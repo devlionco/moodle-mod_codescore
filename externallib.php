@@ -93,8 +93,9 @@ class mod_codescore_external extends external_api
         $ids = explode(",", $ids);
 
         foreach ($ids as $id) {
-            $attempt = $DB->get_records('codescore_attempts', ['id' => $id]);
+            $attempt = $DB->get_record('codescore_attempts', ['id' => $id]);
             $attempt->state = 'inprogress';
+            $attempt->aigrade = null;
             $DB->update_record('codescore_attempts', $attempt);
             cgai_exec_adhoc($id);
         }

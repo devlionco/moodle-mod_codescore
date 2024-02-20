@@ -54,11 +54,20 @@ class regrade_attempts extends external_api
      */
     public static function execute($ids)
     {
-        require_once(__DIR__ . '../../../config.php');
-        require_once(__DIR__ . '../lib.php');
+        require_once(__DIR__ . '/../../config.php');
+        require_once(__DIR__ . '/lib.php');
+
         global $USER, $DB, $PAGE, $COURSE;
 
         $ids = explode(",", $ids);
+
+        foreach ($ids as $id) {
+            $attempt = $DB->get_record('codescore_attempts', ['id' => $id]);
+            $attempt->state = 'inprogress';
+            $attempt->aigrade = null;
+            $DB->update_record('codescore_attempts', $attempt);
+            cgai_exec_adhoc($id);
+        }
 
         return ['result' => 'event dispatched'];
     }
