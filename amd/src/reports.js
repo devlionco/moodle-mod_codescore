@@ -128,14 +128,31 @@ export const init = async(data) => {
                     table.deselectRow(Number(id));
                 }
                 const deleteBtn = document.getElementById('deleteAttempts');
+                const regradeBtn = document.getElementById('regradeAttempts');
                 if (!table.getSelectedData()[0]) {
                     deleteBtn.className = 'disabled btn btn-secondary mb-2';
+                    regradeBtn.className = 'disabled btn btn-secondary mb-2';
                 }
                 else {
                     deleteBtn.className = 'btn btn-secondary mb-2';
+                    regradeBtn.className = 'btn btn-secondary mb-2';
                 }
             });
         });
+    });
+    document.getElementById('regradeAttempts').addEventListener('click', async () => {
+        // eslint-disable-next-line curly
+        if (!table.getSelectedData()) return;
+        const selected = table.getSelectedData().map((el) => {
+            return el.id;
+        });
+        await Ajax.call([{
+            methodname: 'mod_codescore_regrade_attempts',
+            args: {
+                ids: selected.join(","),
+            },
+        }]);
+        location.reload();
     });
     document.getElementById('deleteAttemptsConfirm').addEventListener('click', async() => {
         // eslint-disable-next-line curly

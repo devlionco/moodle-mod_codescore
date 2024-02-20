@@ -3,13 +3,16 @@
     <button type="button" class="disabled btn btn-secondary mb-2" id="deleteAttempts" data-toggle="modal" data-target="#exampleModal">
       {{#str}} deleteBtnText, codescore {{/str}}
     </button>
+    <button type="button" class="disabled btn btn-secondary mb-2" id="regradeAttempts" data-toggle="modal">
+        {{#str}} regrade, codescore {{/str}}
+    </button>
 {{/hasAttempts}}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class='mb-0'> {{#str}} areyousure, codescore {{/str}} </h5>
-      </div> 
+      </div>
       <div class="modal-body">
         <p class='mb-0'> {{#str}} irreversible, codescore {{/str}} </p>
       </div>

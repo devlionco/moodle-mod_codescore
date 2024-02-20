@@ -35,12 +35,21 @@ $functions = [
         'capabilities' => 'mod/quiz:addinstance',
         'type' => 'write',
         'ajax' => true,
+    ],
+    'mod_codescore_regrade_attempts' => [
+        'classname' => 'mod_codescore_external',
+        'methodname' => 'regrade_attempts',
+        'description' => 'Regrade user attempts',
+        'capabilities' => 'mod/quiz:addinstance',
+        'type' => 'write',
+        'ajax' => true,
     ]
 ];
 $services = array(
     'Codescore web services' => [
         'functions' => [
             'mod_codescore_delete_attempts',
+            'mod_codescore_regrade_attempts',
         ],
         'restrictedusers' => 1,
         'enabled' => 1

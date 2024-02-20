@@ -96,6 +96,7 @@ $string['noreports'] = "עדין לא בוצעו הגשות";
 $string['deleteBtnText'] = 'מחק הגשה';
 $string['areyousure'] = 'האם אתה בטוח שאתה רוצה למחוק את ההגשה?';
 $string['irreversible'] = 'פעולה זו תהיה בלתי הפיכה';
+$string['regrade'] = 'דרג ניסיונות מחדש';
 
 // Attempt
 $string['taskheader'] = 'המטלה הינה: ';

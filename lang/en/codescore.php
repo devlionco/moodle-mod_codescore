@@ -96,6 +96,7 @@ $string['noreports'] = "No reports yet";
 $string['deleteBtnText'] = 'Delete attempts';
 $string['areyousure'] = 'Are you sure you want to delete attempts?';
 $string['irreversible'] = 'This action will be irreversible';
+$string['regrade'] = 'Regrade attempts';
 
 // Attempt
 $string['taskheader'] = 'The task is:';
