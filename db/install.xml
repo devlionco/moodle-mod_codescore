@@ -23,6 +23,7 @@
                 <FIELD NAME="resourcecompgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="complexitygrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="autograde" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="showfeedback" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="multiattempts" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="duedate" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was last modified."/>
                 <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Timestamp of when the instance was added to the course."/>
@@ -59,11 +60,12 @@
                 <FIELD NAME="studentnotes" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Student's notes"/>
                 <FIELD NAME="grade" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5" COMMENT="Grade for student's code"/>
                 <FIELD NAME="aigrade" TYPE="number" LENGTH="10" NOTNULL="false" SEQUENCE="false" DECIMALS="5" COMMENT="Grade for student's code"/>
-                <FIELD NAME="syntaxgrading" TYPE="int" LENGTH="10" NOTNULL="false"/>
-                <FIELD NAME="outputgrading" TYPE="int" LENGTH="10" NOTNULL="false"/>
+                <FIELD NAME="syntaxgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="outputgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="problemsolutiongrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="allcasesgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="correctedcode" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Code corrected by gpt"/>
+                <FIELD NAME="feedback" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Gpt's feedback about the code"/>
                 <FIELD NAME="output" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Code output"/>
                 <FIELD NAME="gradednotificationsenttime" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="The timestamp when the 'graded' notification was sent."/>
             </FIELDS>

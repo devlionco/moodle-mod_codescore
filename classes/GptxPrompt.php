@@ -27,8 +27,7 @@ class GptxPrompt {
 
     public function sendprompt($codescore) {
         $response = $this->sendrequest($codescore);
-        $convertedresponse = json_decode(json_decode($response));
-        return $convertedresponse->message;
+        return json_decode($response)->message;
     }
 
     private function sendrequest($codescore) {

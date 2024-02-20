@@ -66,6 +66,8 @@ $string['filltask'] = 'Please provide task description';
 $string['selectlang'] = 'Please select language';
 $string['yes'] = 'Yes';
 $string['no'] = 'No';
+$string['showfeedback'] = 'Show AI feedback to students';
+$string['aifeedback'] = 'AI feedback:';
 
 // Admin settings
 $string['apikey'] = 'API Key';

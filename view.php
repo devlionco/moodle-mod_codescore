@@ -148,7 +148,13 @@ if ($lastrenderdata) {
     $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
     $lastrenderdata->hasAttempts = $attempts ? true : false;
     $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
-    if($lastrenderdata->timegraded === "0") { $lastrenderdata->status = get_string('waitingforgrade', 'codescore'); }
+
+    $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
+
+    if ($lastrenderdata->timegraded !== "0" && $codescore->showfeedback === '1') {
+        $lastrenderdata->formatfeedback = get_string('aifeedback', 'codescore') . ' ' .$lastrenderdata->feedback;
+    }
+    if ($lastrenderdata->timegraded === "0") { $lastrenderdata->status = get_string('waitingforgrade', 'codescore'); }
     else { $lastrenderdata->status = get_string('graded', 'codescore'); }
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
 }

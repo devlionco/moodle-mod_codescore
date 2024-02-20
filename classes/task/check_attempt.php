@@ -76,11 +76,11 @@ class check_attempt extends adhoc_task {
             $response = str_replace('```json', '', $response);
             $response = str_replace('```', '', $response);
             $response = json_decode($response);
-            $response = json_decode($response->message);
             if ($codescore->autograde === "1") {
                 $attempt->grade = $response->grade;
             }
             $attempt->aigrade = $response->grade;
+            $attempt->feedback = $response->feedback;
             $attempt->syntaxgrading = $response->syntaxgrade;
             $attempt->outputgrading = $response->outputgrade;
             $attempt->problemsolutiongrading = $response->solutiongrade;

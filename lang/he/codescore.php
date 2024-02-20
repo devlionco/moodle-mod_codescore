@@ -66,6 +66,8 @@ $string['filltask'] = 'הזן תיאור משימה';
 $string['selectlang'] = 'בחר שפת תכנות';
 $string['yes'] = 'כן';
 $string['no'] = 'לא';
+$string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמידים';
+$string['aifeedback'] = 'AI משוב:';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';

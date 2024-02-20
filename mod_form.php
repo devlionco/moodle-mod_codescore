@@ -151,8 +151,11 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'autograde', get_string('autograde', 'codescore'));
         $mform->setDefault('autograde', false);
 
-        $mform->addRule('autograde', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
-        
+        $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
+        $mform->setDefault('showfeedback', true);
+
+        $mform->addRule('allcasesgrading', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);
 
