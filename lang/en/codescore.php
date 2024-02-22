@@ -34,6 +34,7 @@ $string['codescoreopenclose_help'] = 'Students can only start their attempt(s) a
 $string['codescoreopen'] = 'Open the activity';
 $string['codescoreclose'] = 'Close the activity';
 $string['codescoreclose_help'] = 'Students can only start their attempt(s) after the open time and they must complete their attempts before the close time.';
+$string['feedbacklang'] = 'Language of feedback';
 
 $string['modulenameplural'] = 'Codescore\'s';
 $string['newmodulesettings'] = 'Settings';

@@ -50,6 +50,17 @@ function xmldb_codescore_upgrade($oldversion) {
             $dbman->add_field($table, $field);
         }
     }
+    if ($oldversion < 2024022200) {
+        $table = new xmldb_table('codescore');
+        $field = new \xmldb_field('feedbacklang', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
+        $field2 = new \xmldb_field('showfeedback', XMLDB_TYPE_INTEGER, '10', null, null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        if (!$dbman->field_exists($table, $field2)) {
+            $dbman->add_field($table, $field2);
+        }
+    }
 
     return true;
 }

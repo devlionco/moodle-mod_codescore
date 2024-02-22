@@ -159,6 +159,9 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);
 
+        $mform->addElement('select', 'feedbacklang', get_string('feedbacklang', 'codescore'), get_string_manager()->get_list_of_translations());
+        $mform->setDefault('feedbacklang', $CFG->lang);
+
         $this->standard_coursemodule_elements();
 
         // Add standard buttons.

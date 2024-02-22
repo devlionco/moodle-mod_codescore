@@ -52,6 +52,7 @@ class GptxPrompt {
         $correctedata->outputgrade = $codescore->outputgrading;
         $correctedata->solutiongrade = $codescore->problemsolutiongrading;
         $correctedata->allcasesgrade = $codescore->allcasesgrading;
+        $correctedata->feedbacklang = get_string_manager()->get_list_of_translations()[$codescore->feedbacklang];
 
         $curldata = array(
             'token' => $key,
