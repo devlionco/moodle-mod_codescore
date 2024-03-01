@@ -27,7 +27,7 @@
 /**
  * JS actions.
  *
- * @module      mod_codescore/codeEditor
+ * @module      mod_codescore/codeeditor
  * @copyright   2024 Devlion <info@devlion.co>
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
