@@ -66,7 +66,7 @@ class regrade_attempts extends external_api
             $attempt->state = 'inprogress';
             $attempt->aigrade = null;
             $DB->update_record('codescore_attempts', $attempt);
-            cgai_exec_adhoc($id);
+            codescore_exec_adhoc($id);
         }
 
         return ['result' => 'event dispatched'];

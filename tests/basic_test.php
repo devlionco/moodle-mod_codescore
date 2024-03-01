@@ -53,7 +53,7 @@ class basic_test extends \advanced_testcase {
         $data->cmid = $cm->cmid;
         $data->sesskey = '9iw8sPuL8W';
         $data->timestart = 1707728466;
-        cgai_save_attempt($data);
+        codescore_save_attempt($data);
         $this->assertEquals(1, $DB->count_records('codescore_attempts', array()));
     }
 }

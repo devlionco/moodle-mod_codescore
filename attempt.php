@@ -38,10 +38,10 @@ if ($data = data_submitted()) {
     confirm_sesskey($sesskey);
 
     // Save attempt.
-    $attemptid = cgai_save_attempt($data);
+    $attemptid = codescore_save_attempt($data);
 
     // TODO: Exec ADHOC
-    cgai_exec_adhoc($attemptid);
+    codescore_exec_adhoc($attemptid);
 
     $redirecturl = new moodle_url('/mod/codescore/view.php', array('id' => $id));
     redirect($redirecturl);

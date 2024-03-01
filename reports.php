@@ -58,7 +58,7 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-$attempts = cgai_get_attempts($id);
+$attempts = codescore_get_attempts($id);
 $data = new stdClass;
 $data->attempts = array_values($attempts);
 

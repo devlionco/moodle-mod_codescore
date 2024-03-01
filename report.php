@@ -38,7 +38,7 @@ if ($data = data_submitted()) {
      $modulecontext = context_module::instance($cmid);
      $isteacher = has_capability('mod/codescore:addinstance', $modulecontext);
      if(!$isteacher) return;
-     $attemptid = cgai_set_grade_attempt($data);
+     $attemptid = codescore_set_grade_attempt($data);
 
      $modulecontext = context_module::instance($id);
 
@@ -60,7 +60,7 @@ if ($data = data_submitted()) {
 
      $moduleinstance->grade = $data->grade;
      $moduleinstance->userid = $userid;
-     $attempts = cgai_get_user_attempts($cm->id, $userid);
+     $attempts = codescore_get_user_attempts($cm->id, $userid);
      $maxgrade = 0;
      if (count($attempts) === 1 || count($attempts) === 0) {
           codescore_grade_item_update($moduleinstance);
@@ -155,6 +155,6 @@ $params = [
 $event = \mod_codescore\event\attempt_viewed::create($params);
 $event->add_record_snapshot('codescore_attempts', $attempt[$index]);
 $event->trigger();
-$attempts = cgai_get_user_attempts($id, $userid);
+$attempts = codescore_get_user_attempts($id, $userid);
 
 echo $OUTPUT->footer();

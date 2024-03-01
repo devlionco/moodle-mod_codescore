@@ -64,7 +64,7 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-$issubmitted = cgai_get_user_attempts($id, $USER->id);
+$issubmitted = codescore_get_user_attempts($id, $USER->id);
 
 $canattempt = has_capability('mod/quiz:attempt', $context);
 $isteacher = has_capability('mod/quiz:addinstance', $context);
@@ -130,7 +130,7 @@ if ($issubmitted) {
 echo $OUTPUT->render_from_template('mod_codescore/view', $renderdata);
 
 
-$attempts = cgai_get_user_attempts($id, $USER->id);
+$attempts = codescore_get_user_attempts($id, $USER->id);
 $data = new stdClass;
 $data->attempts = array_values($attempts);
 foreach ($data->attempts as &$value) {
