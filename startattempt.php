@@ -28,6 +28,5 @@ global $USER;
 
 $id = required_param('cmid', PARAM_INT); // Course module id
 
-require_sesskey();
 $url = new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
 redirect($url);

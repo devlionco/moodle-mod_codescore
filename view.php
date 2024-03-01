@@ -44,7 +44,6 @@ if ($id) {
 $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 require_capability("mod/codescore:view", $context);
-require_sesskey();
 
 $modulecontext = context_module::instance($cm->id);
 
