@@ -30,10 +30,12 @@ function cgai_save_attempt($data) {
 
     $lastattempt = $DB->get_record_sql(
         "SELECT *
-        from {codescore_attempts}
-        order by attempt desc",
-        ['userid' => $USER->id,
-            'codescore' => $data->cmid]
+           FROM {codescore_attempts}
+       ORDER BY attempt desc",
+        [
+            'userid' => $USER->id,
+            'codescore' => $data->cmid
+        ]
     );
 
     $data->codescore = $data->cmid;
