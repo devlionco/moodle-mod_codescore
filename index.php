@@ -52,7 +52,7 @@ echo $OUTPUT->heading($modulenameplural);
 $codescores = get_all_instances_in_course('codescore', $course);
 
 if (empty($codescores)) {
-    notice(get_string('no$codescoreinstances', 'mod_codescore'), new moodle_url('/course/view.php', array('id' => $course->id)));
+    notice(get_string('noinstances', 'mod_codescore'), new moodle_url('/course/view.php', array('id' => $course->id)));
 }
 
 $table = new html_table();

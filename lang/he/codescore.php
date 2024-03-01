@@ -69,6 +69,7 @@ $string['yes'] = 'כן';
 $string['no'] = 'לא';
 $string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמידים';
 $string['aifeedback'] = 'AI משוב:';
+$string['noinstances'] = 'אין מופעי CodeScore';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';

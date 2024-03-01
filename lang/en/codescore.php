@@ -69,6 +69,7 @@ $string['yes'] = 'Yes';
 $string['no'] = 'No';
 $string['showfeedback'] = 'Show AI feedback to students';
 $string['aifeedback'] = 'AI feedback:';
+$string['noinstances'] = 'There are no CodeScore instances';
 
 // Admin settings
 $string['apikey'] = 'API Key';
