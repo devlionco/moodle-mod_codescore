@@ -58,6 +58,7 @@ class regrade_attempts extends external_api
         require_once(__DIR__ . '/lib.php');
 
         global $USER, $DB, $PAGE, $COURSE;
+        require_sesskey();
 
         $ids = explode(",", $ids);
 
