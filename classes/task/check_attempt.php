@@ -36,7 +36,7 @@ class check_attempt extends adhoc_task {
      */
     public function execute() {
         global $CFG, $DB;
-        require_once("$CFG->dirroot/mod/codescore/classes/GptxPrompt.php");
+        require_once($CFG->dirroot . "/mod/codescore/classes/GptxPrompt.php");
         $data = $this->get_custom_data();
 
         $config = get_config('codescore');
