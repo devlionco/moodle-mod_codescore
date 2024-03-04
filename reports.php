@@ -63,7 +63,7 @@ $data->attempts = array_values($attempts);
 foreach ($data->attempts as &$value) {
     $userid = $value->userid;
     $user = $DB->get_record('user', array('id' => $userid));
-    $name = $user->firstname . " " . $user->lastname;
+    $name = fullname($user);
     $value->username = $name;
 }
 $data->title = get_string('studentsreports', 'codescore');
