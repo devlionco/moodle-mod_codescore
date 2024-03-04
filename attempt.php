@@ -20,14 +20,14 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
- require_once(__DIR__ . '/../../config.php');
- require_once($CFG->dirroot . '/mod/codescore/locallib.php');
- require_once($CFG->dirroot . '/mod/codescore/classes/task/check_attempt.php');
- require_once(__DIR__.'/lib.php');
+require_once(__DIR__ . '/../../config.php');
+require_once($CFG->dirroot . '/mod/codescore/locallib.php');
+require_once($CFG->dirroot . '/mod/codescore/classes/task/check_attempt.php');
+require_once(__DIR__ . '/lib.php');
 
- global $USER;
+global $USER;
 
- $id = required_param('cmid', PARAM_INT); // Course module id
+$id = required_param('cmid', PARAM_INT); // Course module id
 
 if ($data = data_submitted()) {
     $code = optional_param('code', '', PARAM_RAW);
@@ -48,24 +48,26 @@ if ($data = data_submitted()) {
 }
 $timestart = time();
 if ($id) {
-     $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-     $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
 } else {
-     $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-     $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-     $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
+    $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
+    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
+    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
 }
 $PAGE->requires->css('/mod/codescore/codemirror/codemirror.css');
 
 $modulecontext = context_module::instance($id);
+require_login($course, true, $cm);
+require_capability("mod/codescore:view", $modulecontext);
 
- $url = new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
+$url = new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
 
- $PAGE->set_context($modulecontext);
- $PAGE->set_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
- $PAGE->set_title(format_string($moduleinstance->name));
- $PAGE->set_heading(format_string($course->fullname));
+$PAGE->set_context($modulecontext);
+$PAGE->set_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
+$PAGE->set_title(format_string($moduleinstance->name));
+$PAGE->set_heading(format_string($course->fullname));
 
 if ($modulecontext->contextlevel == CONTEXT_MODULE) {
     // Calling $PAGE->set_context should be enough, but it seems that it is not.

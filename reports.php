@@ -38,16 +38,14 @@ if ($id) {
     $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
 }
 
-$context = context_module::instance($cm->id);
-
-require_capability("mod/codescore:addinstance", $context);
-
 $modulecontext = context_module::instance($cm->id);
+require_login($course, true, $cm);
+require_capability("mod/codescore:view", $modulecontext);
 
 if ($modulecontext->contextlevel == CONTEXT_MODULE) {
     // Calling $PAGE->set_context should be enough, but it seems that it is not.
     // Therefore, we get the right $cm and $course, and set things up ourselves.
-    $cm = get_coursemodule_from_id(false, $context->instanceid, 0, false, MUST_EXIST);
+    $cm = get_coursemodule_from_id(false, $modulecontext->instanceid, 0, false, MUST_EXIST);
     $PAGE->set_cm($cm, $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST));
 }
 

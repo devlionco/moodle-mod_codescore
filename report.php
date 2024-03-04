@@ -95,9 +95,9 @@ if ($id) {
      $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
      $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
 }
-require_login($course, true, $cm);
-
 $modulecontext = context_module::instance($id);
+require_login($course, true, $cm);
+require_capability("mod/codescore:view", $modulecontext);
 
 $PAGE->set_context($modulecontext);
 $PAGE->set_url('/mod/codescore/report.php');
