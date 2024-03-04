@@ -73,9 +73,9 @@ $string['noinstances'] = 'There are no CodeScore instances';
 
 // Admin settings
 $string['apikey'] = 'API Key';
-$string['apikeyexplain'] = 'Insert an API key for GPT-4';
+$string['apikeyexplain'] = 'The key to access AI API. The free version allows you 10 prompt executions per week. To get the Pro version, contact us at <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'API URL';
-$string['apiurlexplain'] = 'Insert an API URL for GPT-4';
+$string['apiurlexplain'] = 'The url to access AI API';
 
 // View
 $string['viewreportsbtn'] = 'View reports';

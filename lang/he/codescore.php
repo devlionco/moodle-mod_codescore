@@ -73,9 +73,9 @@ $string['noinstances'] = 'אין מופעי CodeScore';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';
-$string['apikeyexplain'] = 'הכנס מפתח API עבור GPT-4';
+$string['apikeyexplain'] = 'המפתח לגישה ל-AI API. הגרסה החינמית מאפשרת לך 10 הוצאות להורג מהירות בשבוע. כדי לקבל את גרסת ה-Pro, צור איתנו קשר בטלפון';
 $string['apiurl'] = 'API URL';
-$string['apiurlexplain'] = 'הוסף URL API עבור GPT-4';
+$string['apiurlexplain'] = 'כתובת האתר לגישה ל-AI API';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';
