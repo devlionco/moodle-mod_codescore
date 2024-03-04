@@ -141,3 +141,24 @@ $string['codediffreport'] = 'פער בין הקודים';
 $string['studentcodereport'] = "קוד תלמיד";
 $string['correctcodereport'] = 'קוד מתוקן';
 $string['reportgradebtn'] = 'ציון';
+
+//Privacy
+$string['privacy:metadata:codescore_attempts'] = 'הטבלה הזו מכילה מידע על נסיונות המשתמש';
+$string['privacy:metadata:codescore_attempts:userid'] = 'זיהוי המשתמש ששמר את הדוח הזה.';
+$string['privacy:metadata:codescore_attempts:attempt'] = 'מספרים סידוריים של נסיונות התלמיד הזה.';
+$string['privacy:metadata:codescore_attempts:timestart'] = 'זמן בו התחיל המשתמש לנסות.';
+$string['privacy:metadata:codescore_attempts:timefinish'] = 'זמן בו הסתיים הניסיון של המשתמש.';
+$string['privacy:metadata:codescore_attempts:timemodified'] = 'זמן בו שונה הניסיון של המשתמש.';
+$string['privacy:metadata:codescore_attempts:timemodifiedoffline'] = 'זמן בו שונה הניסיון של המשתמש במצב לא מקוון.';
+$string['privacy:metadata:codescore_attempts:timegraded'] = 'זמן בו דורג הניסיון של המשתמש.';
+$string['privacy:metadata:codescore_attempts:code'] = 'קוד שהוזן בניסיון הזה.';
+$string['privacy:metadata:codescore_attempts:studentnotes'] = 'הערות לניסיון הזה.';
+$string['privacy:metadata:codescore_attempts:grade'] = 'ציון לניסיון הזה.';
+
+$string['privacy:metadata:codescore'] = 'הטבלה הזו מכילה מידע שנשלח ל-API כדי לקבל משוב על קוד התלמיד';
+$string['privacy:metadata:codescore:task'] = 'משימת תכנות של ההתבצעות';
+$string['privacy:metadata:codescore:programminglang'] = 'שפת תכנות שצריך להשתמש בה בהתבצעות';
+$string['privacy:metadata:codescore:syntaxgrading'] = 'ציון מרבי עבור נכונות תחביר של קוד התלמיד';
+$string['privacy:metadata:codescore:outputgrading'] = 'ציון מרבי עבור פלט הקוד/פלט הפונקציה של התלמיד';
+$string['privacy:metadata:codescore:problemsolutiongrading'] = 'ציון מרבי עבור אופטימיזציה/תבניות בקוד התלמיד';
+$string['privacy:metadata:codescore:allcasesgrading'] = 'ציון מרבי עבור הצגת כל המקרים בקוד של התלמיד (למשל, הפונקציה עובדת נכון עם כל סט של פרמטרים)';

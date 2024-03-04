@@ -141,3 +141,24 @@ $string['codediffreport'] = 'Code diff: ';
 $string['studentcodereport'] = "Student's code";
 $string['correctcodereport'] = 'Corrected code';
 $string['reportgradebtn'] = 'Grade';
+
+// Privacy
+$string['privacy:metadata:codescore_attempts'] = 'This table contains info about user\'s attempts';
+$string['privacy:metadata:codescore_attempts:userid'] = 'The ID of the user that saved this report.';
+$string['privacy:metadata:codescore_attempts:attempt'] = 'Sequentially numbers of this student\'s attempts.';
+$string['privacy:metadata:codescore_attempts:timestart'] = 'Time at which user started attempt.';
+$string['privacy:metadata:codescore_attempts:timefinish'] = 'Time at which user finished attempt.';
+$string['privacy:metadata:codescore_attempts:timemodified'] = 'Time at which user modified attempt.';
+$string['privacy:metadata:codescore_attempts:timemodifiedoffline'] = 'Time at which user modified attempt being offline.';
+$string['privacy:metadata:codescore_attempts:timegraded'] = 'Time at which user graded attempt.';
+$string['privacy:metadata:codescore_attempts:code'] = 'Code that was submitted in this attempt.';
+$string['privacy:metadata:codescore_attempts:studentnotes'] = 'Notes for this attempt.';
+$string['privacy:metadata:codescore_attempts:grade'] = 'Grade for this attempt.';
+
+$string['privacy:metadata:codescore'] = 'This table contains info that is sent to API so it can give feedback about student\'s code';
+$string['privacy:metadata:codescore:task'] = 'Coding task of the instance';
+$string['privacy:metadata:codescore:programminglang'] = 'Programming language that needs to be used in the instance';
+$string['privacy:metadata:codescore:syntaxgrading'] = "Maximum grade for student's code syntax correctness";
+$string['privacy:metadata:codescore:outputgrading'] = "Maximum grade for student's code output/function output";
+$string['privacy:metadata:codescore:problemsolutiongrading'] = "Maximum grade for student's code optimization/patterns";
+$string['privacy:metadata:codescore:allcasesgrading'] = "Maximum grade for student's code covering all cases (e.g function works properly with any set of parameters)";
