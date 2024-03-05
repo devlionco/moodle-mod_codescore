@@ -142,7 +142,7 @@ $string['studentcodereport'] = "קוד תלמיד";
 $string['correctcodereport'] = 'קוד מתוקן';
 $string['reportgradebtn'] = 'ציון';
 
-//Privacy
+// Privacy
 $string['privacy:metadata:codescore_attempts'] = 'הטבלה הזו מכילה מידע על נסיונות המשתמש';
 $string['privacy:metadata:codescore_attempts:userid'] = 'זיהוי המשתמש ששמר את הדוח הזה.';
 $string['privacy:metadata:codescore_attempts:attempt'] = 'מספרים סידוריים של נסיונות התלמיד הזה.';

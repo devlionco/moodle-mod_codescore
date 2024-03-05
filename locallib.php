@@ -29,7 +29,7 @@ function codescore_save_attempt($data) {
        ORDER BY attempt desc",
         [
             'userid' => $USER->id,
-            'codescore' => $data->cmid
+            'codescore' => $data->cmid,
         ]
     );
 

@@ -43,7 +43,7 @@ $functions = [
         'capabilities' => 'mod/quiz:addinstance',
         'type' => 'write',
         'ajax' => true,
-    ]
+    ],
 ];
 $services = array(
     'Codescore web services' => [
@@ -52,6 +52,6 @@ $services = array(
             'mod_codescore_regrade_attempts',
         ],
         'restrictedusers' => 1,
-        'enabled' => 1
-    ]
+        'enabled' => 1,
+    ],
 );

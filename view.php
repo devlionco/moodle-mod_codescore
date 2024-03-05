@@ -141,10 +141,10 @@ foreach ($data->attempts as &$value) {
 }
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
 
-$grading_info = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
+$gradinginfo = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
 $lastrenderdata = end($data->attempts);
 if ($lastrenderdata) {
-    $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($grading_info->items[0]->grades)->grade;
+    $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($gradinginfo->items[0]->grades)->grade;
     $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
     $lastrenderdata->hasAttempts = $attempts ? true : false;
     $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
@@ -154,8 +154,11 @@ if ($lastrenderdata) {
     if ($lastrenderdata->timegraded !== "0" && $codescore->showfeedback === '1') {
         $lastrenderdata->formatfeedback = get_string('aifeedback', 'codescore') . ' ' .$lastrenderdata->feedback;
     }
-    if ($lastrenderdata->timegraded === "0") { $lastrenderdata->status = get_string('waitingforgrade', 'codescore'); }
-    else { $lastrenderdata->status = get_string('graded', 'codescore'); }
+    if ($lastrenderdata->timegraded === "0") {
+        $lastrenderdata->status = get_string('waitingforgrade', 'codescore');
+    } else {
+        $lastrenderdata->status = get_string('graded', 'codescore');
+    }
     $lastrenderdata->timestart = $lastrenderdata->timestart !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timestart) : '';
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');

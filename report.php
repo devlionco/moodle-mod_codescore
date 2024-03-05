@@ -37,7 +37,9 @@ if ($data = data_submitted()) {
      // Save attempt.
      $modulecontext = context_module::instance($cmid);
      $isteacher = has_capability('mod/codescore:addinstance', $modulecontext);
-     if(!$isteacher) return;
+    if (!$isteacher) {
+          return;
+    }
      $attemptid = codescore_set_grade_attempt($data);
 
      $modulecontext = context_module::instance($id);

@@ -34,14 +34,12 @@ use external_single_structure;
 use external_value;
 use stdClass;
 
-class delete_attempts extends external_api
-{
-    public static function execute_parameters(): external_function_parameters
-    {
+class delete_attempts extends external_api {
+    public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
                 'ids' => new external_value(PARAM_RAW, '', VALUE_DEFAULT),
-                'cmid' => new external_value(PARAM_RAW, '', VALUE_DEFAULT, '')
+                'cmid' => new external_value(PARAM_RAW, '', VALUE_DEFAULT, ''),
             ]
         );
     }
@@ -53,8 +51,7 @@ class delete_attempts extends external_api
      * @param int $newversion the version to set. 0 means 'always latest'.
      * @return array
      */
-    public static function execute($ids, $cmid)
-    {
+    public static function execute($ids, $cmid) {
         require_once(__DIR__ . '../../../config.php');
         require_once(__DIR__ . '../lib.php');
         global $USER, $DB, $PAGE, $COURSE;
@@ -84,11 +81,10 @@ class delete_attempts extends external_api
      *
      * @return external_description
      */
-    public static function execute_returns()
-    {
+    public static function execute_returns() {
         return new external_single_structure(
             [
-                'result' => new external_value(PARAM_RAW, '')
+                'result' => new external_value(PARAM_RAW, ''),
             ]
         );
     }

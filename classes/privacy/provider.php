@@ -16,14 +16,14 @@
 
 namespace mod_codescore\privacy;
 
-/**
- * Privacy API implementation for the Code Score plugin.
- *
- * @package     mod_codescore
- * @category    privacy
- * @copyright   2024 Devlion <info@devlion.co>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
+
+// Privacy API implementation for the Code Score plugin.
+
+// @package     mod_codescore
+// @category    privacy
+// @copyright   2024 Devlion <info@devlion.co>
+// @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
 
 use core_privacy\local\metadata\collection;
 
@@ -51,7 +51,7 @@ class provider implements \core_privacy\local\metadata\provider {
             'problemsolutiongrading' => 'privacy:metadata:codescore:problemsolutiongrading',
             'allcasesgrading' => 'privacy:metadata:codescore:allcasesgrading',
         ], 'privacy:metadata:codescore');
-    
+
         return $collection;
     }
 }
