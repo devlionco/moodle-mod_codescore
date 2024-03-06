@@ -47,6 +47,8 @@ require_capability("mod/codescore:view", $context);
 
 $modulecontext = context_module::instance($cm->id);
 
+$PAGE->requires->css('/mod/codescore/codemirror/codemirror.css');
+
 $event = \mod_codescore\event\course_module_viewed::create(array(
     'objectid' => $moduleinstance->id,
     'context' => $modulecontext,
@@ -62,7 +64,7 @@ $PAGE->set_context($modulecontext);
 
 echo $OUTPUT->header();
 
-$issubmitted = cgai_get_user_attempts($id, $USER->id);
+$issubmitted = codescore_get_user_attempts($id, $USER->id);
 
 $canattempt = has_capability('mod/quiz:attempt', $context);
 $isteacher = has_capability('mod/quiz:addinstance', $context);
@@ -84,6 +86,22 @@ if ($isteacher) {
     echo $OUTPUT->render_from_template('mod_codescore/reportsbtn', ['url' => $url]);
 }
 
+$langs = array(
+    '0' => 'Javascript',
+    '1' => 'C++',
+    '2' => 'Python',
+    '3' => 'Java',
+    '4' => 'GO',
+    '5' => 'C#',
+    '6' => 'PHP',
+    '7' => 'HTML',
+    '8' => 'Typescript',
+    '9' => 'Visual Basic',
+    '10' => 'Ruby',
+    '11' => 'SQL',
+    '12' => 'Assembly',
+);
+
 $renderdata = (object) [
     'buttonClass' => '',
     'textareaClass' => '',
@@ -93,6 +111,7 @@ $renderdata = (object) [
     'cmid' => $cm->id,
     'task' => $moduleinstance->task,
     'isavaible' => $isavaible,
+    'lang' => $langs[$moduleinstance->programminglang],
 ];
 if ($issubmitted) {
     $renderdata = (object) [
@@ -104,13 +123,14 @@ if ($issubmitted) {
         'cmid' => $cm->id,
         'task' => $moduleinstance->task,
         'isavaible' => $isavaible,
+        'lang' => $langs[$moduleinstance->programminglang],
     ];
 }
 
 echo $OUTPUT->render_from_template('mod_codescore/view', $renderdata);
 
 
-$attempts = cgai_get_user_attempts($id, $USER->id);
+$attempts = codescore_get_user_attempts($id, $USER->id);
 $data = new stdClass;
 $data->attempts = array_values($attempts);
 foreach ($data->attempts as &$value) {
@@ -121,18 +141,34 @@ foreach ($data->attempts as &$value) {
 }
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
 
-$grading_info = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
+$gradinginfo = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
 $lastrenderdata = end($data->attempts);
 if ($lastrenderdata) {
-    $lastrenderdata->grade = (int)end($grading_info->items[0]->grades)->grade;
-    $lastrenderdata->aigrade = (int)$lastrenderdata->aigrade;
+    $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($gradinginfo->items[0]->grades)->grade;
+    $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
     $lastrenderdata->hasAttempts = $attempts ? true : false;
     $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
+
+    $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
+
+    if ($lastrenderdata->timegraded !== "0" && $codescore->showfeedback === '1') {
+        $lastrenderdata->formatfeedback = get_string('aifeedback', 'codescore') . ' ' .$lastrenderdata->feedback;
+    }
+    if ($lastrenderdata->timegraded === "0") {
+        $lastrenderdata->status = get_string('waitingforgrade', 'codescore');
+    } else {
+        $lastrenderdata->status = get_string('graded', 'codescore');
+    }
+    $lastrenderdata->timestart = $lastrenderdata->timestart !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timestart) : '';
+    $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
+    $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
+    $lastrenderdata->isteacher = $isteacher;
 }
 
 if ($attempts) {
     echo $OUTPUT->render_from_template('mod_codescore/lastattempt', $lastrenderdata);
+    $PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);
 }
-$PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);
+
 
 echo $OUTPUT->footer();

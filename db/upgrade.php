@@ -43,5 +43,24 @@ function xmldb_codescore_upgrade($oldversion) {
     // You will also have to create the db/install.xml file by using the XMLDB Editor.
     // Documentation for the XMLDB Editor can be found at {@link https://docs.moodle.org/dev/XMLDB_editor}.
 
+    if ($oldversion < 2024022005) {
+        $table = new xmldb_table('codescore_attempts');
+        $field = new \xmldb_field('feedback', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
+    if ($oldversion < 2024022200) {
+        $table = new xmldb_table('codescore');
+        $field = new \xmldb_field('feedbacklang', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
+        $field2 = new \xmldb_field('showfeedback', XMLDB_TYPE_INTEGER, '10', null, null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+        if (!$dbman->field_exists($table, $field2)) {
+            $dbman->add_field($table, $field2);
+        }
+    }
+
     return true;
 }

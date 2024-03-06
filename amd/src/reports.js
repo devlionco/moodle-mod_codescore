@@ -22,6 +22,7 @@
 
 import Tabulator from 'mod_codescore/tabulatorlib';
 import {get_string as getString} from 'core/str';
+import Ajax from 'core/ajax';
 
 export const init = async(data) => {
     const rawParams = window.location.search;
@@ -47,11 +48,13 @@ export const init = async(data) => {
 
     const dateFormatter = (cell) => {
         const value = cell.getValue();
+        if (value === '0') {return '';}
         const toDate = new Date(Number(value) * 1000).toString();
         return toDate.split('GMT')[0];
     };
 
     const gradeFormatter = (cell) => {
+        if (cell.getRow().getData().timegraded === '0') { return ''; }
         const value = cell.getValue();
         return Number(value);
     };
@@ -59,6 +62,31 @@ export const init = async(data) => {
     const deleteFormatter = (cell) => {
         const index = cell.getRow().getIndex();
         return `<input type="checkbox" data-id="${index}" class="tabulatorSelect"/>`;
+    };
+
+    const aigradeFormatter = (cell) => {
+        if (cell.getValue() === null) { return ''; }
+        return Number(cell.getValue());
+    };
+
+    let inprogress = await getString('submittedstatus', 'codescore');
+    let finished = await getString('finishedstatus', 'codescore');
+    let pending = await getString('pendingstatus', 'codescore');
+
+    const statusFormatter = (cell) => {
+        let result;
+        switch (cell.getValue()) {
+            case 'inprogress':
+                result = inprogress;
+                break;
+            case 'finished':
+                result = finished;
+                break;
+            case 'pending':
+                result = pending;
+                break;
+        }
+        return result;
     };
 
     if (!data.attempts[0]) {
@@ -80,13 +108,11 @@ export const init = async(data) => {
             },
             { title: await getString('tablename', 'codescore'), field: "username", width: 150, formatter: link },
             { title: await getString('startedat', 'codescore'), field: "timestart", hozAlign: "left", formatter: dateFormatter },
-            { title: await getString('tablenotes', 'codescore'), field: "studentnotes" },
-            { title: await getString('syntaxgradetable', 'codescore'), field: "syntaxgrading" },
-            { title: await getString('outputgradetable', 'codescore'), field: "outputgrading" },
-            { title: await getString('problemgradetable', 'codescore'), field: "problemsolutiongrading" },
-            { title: await getString('casesgradetable', 'codescore'), field: "allcasesgrading" },
-            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: gradeFormatter },
+            { title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter },
+            { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
             { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
+            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter },
+            { title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter },
         ],
     });
     //Event listeners
@@ -94,26 +120,54 @@ export const init = async(data) => {
     table.on("renderComplete", () => {
         document.querySelectorAll('.tabulatorSelect').forEach((el) => {
             el.addEventListener('click', (e) => {
-                const id = el.dataset.id;
-                table.getRow(Number(id)).toggleSelect();
+                e.stopPropagation();
+                const id = e.target.dataset.id;
+                if (e.target.checked) {
+                    table.selectRow(Number(id));
+                } else {
+                    table.deselectRow(Number(id));
+                }
                 const deleteBtn = document.getElementById('deleteAttempts');
+                const regradeBtn = document.getElementById('regradeAttempts');
                 if (!table.getSelectedData()[0]) {
                     deleteBtn.className = 'disabled btn btn-secondary mb-2';
+                    regradeBtn.className = 'disabled btn btn-secondary mb-2';
                 }
                 else {
                     deleteBtn.className = 'btn btn-secondary mb-2';
+                    regradeBtn.className = 'btn btn-secondary mb-2';
                 }
-                e.stopPropagation();
             });
         });
     });
-    document.getElementById('deleteAttemptsConfirm').addEventListener('click', () => {
+    document.getElementById('regradeAttempts').addEventListener('click', async () => {
         // eslint-disable-next-line curly
         if (!table.getSelectedData()) return;
         const selected = table.getSelectedData().map((el) => {
             return el.id;
         });
-        window.location.href = `delete_attempts.php?ids=${selected.join(",")}&cmid=${cmid}`;
+        await Ajax.call([{
+            methodname: 'mod_codescore_regrade_attempts',
+            args: {
+                ids: selected.join(","),
+            },
+        }]);
+        location.reload();
+    });
+    document.getElementById('deleteAttemptsConfirm').addEventListener('click', async() => {
+        // eslint-disable-next-line curly
+        if (!table.getSelectedData()) return;
+        const selected = table.getSelectedData().map((el) => {
+            return el.id;
+        });
+        await Ajax.call([{
+            methodname: 'mod_codescore_delete_attempts',
+            args: {
+                ids: selected.join(","),
+                cmid: cmid
+            },
+        }]);
+        location.reload();
     });
     if (!data.candelete) {
         table.on("tableBuilt", function () {

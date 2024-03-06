@@ -59,10 +59,8 @@ class mod_codescore_mod_form extends moodleform_mod {
         }
 
         $this->standard_intro_elements();
-        $mform->addElement('textarea', 'task', get_string('task', 'codescore'), null,
-                ['subdirs' => 1, 'maxbytes' => $CFG->maxbytes, 'maxfiles' => -1, 'changeformat' => 1, 'context' => $this->context,
-                        'noclean' => 1, 'trusttext' => 0]);
-        $mform->setType('task', PARAM_TEXT);
+        $mform->addElement('textarea', 'task', get_string('task', 'codescore'));
+        $mform->setType('task', PARAM_RAW);
         $mform->addRule('task', get_string('filltask', 'codescore'), 'required');
 
         $langs = array(
@@ -153,10 +151,16 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'autograde', get_string('autograde', 'codescore'));
         $mform->setDefault('autograde', false);
 
-        $mform->addRule('autograde', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
-        
+        $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
+        $mform->setDefault('showfeedback', true);
+
+        $mform->addRule('allcasesgrading', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);
+
+        $mform->addElement('select', 'feedbacklang', get_string('feedbacklang', 'codescore'), get_string_manager()->get_list_of_translations());
+        $mform->setDefault('feedbacklang', $CFG->lang);
 
         $this->standard_coursemodule_elements();
 

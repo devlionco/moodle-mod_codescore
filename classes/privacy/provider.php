@@ -16,22 +16,42 @@
 
 namespace mod_codescore\privacy;
 
-/**
- * Privacy API implementation for the Code Score plugin.
- *
- * @package     mod_codescore
- * @category    privacy
- * @copyright   2024 Devlion <info@devlion.co>
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class provider implements \core_privacy\local\metadata\null_provider {
 
-    /**
-     * Returns stringid of a text explaining that this plugin stores no personal data.
-     *
-     * @return string
-     */
-    public static function get_reason() : string {
-        return 'privacy:metadata';
+// Privacy API implementation for the Code Score plugin.
+
+// @package     mod_codescore
+// @category    privacy
+// @copyright   2024 Devlion <info@devlion.co>
+// @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+
+
+use core_privacy\local\metadata\collection;
+
+class provider implements \core_privacy\local\metadata\provider {
+    public static function get_metadata(collection $collection): collection {
+
+        // Here you will add more items into the collection.
+        $collection->add_database_table('codescore_attempts', [
+            'userid' => 'privacy:metadata:codescore_attempts:userid',
+            'attempt' => 'privacy:metadata:codescore_attempts:attempt',
+            'timestart' => 'privacy:metadata:codescore_attempts:timestart',
+            'timefinish' => 'privacy:metadata:codescore_attempts:timefinish',
+            'timemodified' => 'privacy:metadata:codescore_attempts:timemodified',
+            'timemodifiedoffline' => 'privacy:metadata:codescore_attempts:timemodifiedoffline',
+            'timegraded' => 'privacy:metadata:codescore_attempts:code',
+            'studentnotes' => 'privacy:metadata:codescore_attempts:studentnotes',
+            'grade' => 'privacy:metadata:codescore_attempts:grade',
+        ], 'privacy:metadata:codescore_attempts');
+
+        $collection->add_external_location_link('codescore', [
+            'task' => 'privacy:metadata:codescore:task',
+            'programminglang' => 'privacy:metadata:codescore:programminglang',
+            'syntaxgrading' => 'privacy:metadata:codescore:syntaxgrading',
+            'outputgrading' => 'privacy:metadata:codescore:outputgrading',
+            'problemsolutiongrading' => 'privacy:metadata:codescore:problemsolutiongrading',
+            'allcasesgrading' => 'privacy:metadata:codescore:allcasesgrading',
+        ], 'privacy:metadata:codescore');
+
+        return $collection;
     }
 }

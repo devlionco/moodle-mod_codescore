@@ -1,7 +1,7 @@
 <h3> {{#str}} taskoverview, codescore {{/str}} </h3>
 <ul>
     <li> {{#str}} reportlang, codescore {{/str}} {{lang}}</li>
-    <li> {{#str}} taskreport, codescore {{/str}} <br/> {{task}}</li>
+    <li style="white-space: pre-wrap;"> {{#str}} taskreport, codescore {{/str}} <br/> {{{task}}}</li>
     <li> {{#str}} maxgradesyntax, codescore {{/str}} {{syntaxgrade}}</li>
     <li> {{#str}} maxrightoutput, codescore {{/str}} {{outputgrade}}</li>
     <li> {{#str}} maxproblemsolution, codescore {{/str}} {{problemsolutiongrade}}</li>
@@ -15,6 +15,7 @@
     <li>{{#str}} outputreport, codescore {{/str}} {{outputgrading}}</li>
     <li>{{#str}} problemreport, codescore {{/str}} {{problemsolutiongrading}}</li>
     <li>{{#str}} casesreport, codescore {{/str}} {{allcasesgrading}}</li>
+    <li>{{#str}} aifeedback, codescore {{/str}} {{feedback}}</li>
     <li>{{#str}} notesreport, codescore {{/str}} {{studentnotes}}</li>
 </ul>
 <input type="hidden" value="{{code}}" id="codeValue">

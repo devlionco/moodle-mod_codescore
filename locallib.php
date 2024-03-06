@@ -20,20 +20,17 @@ require_once("$CFG->libdir/filelib.php");
 require_once("$CFG->libdir/resourcelib.php");
 require_once("$CFG->dirroot/mod/page/lib.php");
 
-function page_get_editor_options($context) {
-    global $CFG;
-    return array('subdirs' => 1, 'maxbytes' => $CFG->maxbytes, 'maxfiles' => -1, 'changeformat' => 1, 'context' => $context, 'noclean' => 1, 'trusttext' => 0);
-}
-
-function cgai_save_attempt($data) {
+function codescore_save_attempt($data) {
     global $DB, $USER;
 
     $lastattempt = $DB->get_record_sql(
         "SELECT *
-        from {codescore_attempts}
-        order by attempt desc",
-        ['userid' => $USER->id,
-            'codescore' => $data->cmid]
+           FROM {codescore_attempts}
+       ORDER BY attempt desc",
+        [
+            'userid' => $USER->id,
+            'codescore' => $data->cmid,
+        ]
     );
 
     $data->codescore = $data->cmid;
@@ -41,7 +38,7 @@ function cgai_save_attempt($data) {
     $data->studentnotes = $data->notes;
     $data->attempt = $lastattempt ? $lastattempt->attempt + 1 : 1;
     $data->state = 'inprogress';
-    $data->timestart = time();
+    $data->timefinish = time();
     $data->grade = 0;
     $data->correctedcode = '';
     $data->output = '';
@@ -60,17 +57,18 @@ function cgai_save_attempt($data) {
     return $result;
 }
 
-function cgai_set_grade_attempt($data) {
+function codescore_set_grade_attempt($data) {
     global $DB, $USER;
 
     $attempts = $DB->update_record('codescore_attempts', array(
         'id' => $data->id,
+        'timegraded' => time(),
         'grade' => $data->grade,
     ));
     return $attempts;
 }
 
-function cgai_exec_adhoc($id) {
+function codescore_exec_adhoc($id) {
     global $DB;
 
     $attempt = $DB->get_record('codescore_attempts', ['id' => $id]);
@@ -82,7 +80,7 @@ function cgai_exec_adhoc($id) {
     $task->execute();
 }
 
-function cgai_get_user_attempts($codescore, $userid = null) {
+function codescore_get_user_attempts($codescore, $userid = null) {
     global $DB, $USER;
 
     $userid = $userid ?? $USER->id;
@@ -94,7 +92,7 @@ function cgai_get_user_attempts($codescore, $userid = null) {
     return $attempts;
 }
 
-function cgai_get_attempts($codescore) {
+function codescore_get_attempts($codescore) {
     global $DB, $USER;
 
     $context = context_module::instance($codescore);

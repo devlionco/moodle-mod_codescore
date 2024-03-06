@@ -34,6 +34,7 @@ $string['codescoreopenclose_help'] = 'Students can only start their attempt(s) a
 $string['codescoreopen'] = 'Open the activity';
 $string['codescoreclose'] = 'Close the activity';
 $string['codescoreclose_help'] = 'Students can only start their attempt(s) after the open time and they must complete their attempts before the close time.';
+$string['feedbacklang'] = 'Language of feedback';
 
 $string['modulenameplural'] = 'Codescore\'s';
 $string['newmodulesettings'] = 'Settings';
@@ -57,6 +58,7 @@ $string['correctsolution_help'] = "Maximum grade for student's code optimization
 $string['allcases'] = 'Grade for covering all cases';
 $string['allcases_help'] = "Maximum grade for student's code covering all cases (e.g function works properly with any set of parameters)";
 $string['programminglang'] = 'Select programming language';
+$string['programminglangview'] = 'Programming language:';
 $string['autograde'] = 'Set automatic grade by AI';
 $string['alowedlanguages'] = 'Select languages that will be used';
 $string['multiattempts'] = 'Multiple attempts';
@@ -65,12 +67,15 @@ $string['filltask'] = 'Please provide task description';
 $string['selectlang'] = 'Please select language';
 $string['yes'] = 'Yes';
 $string['no'] = 'No';
+$string['showfeedback'] = 'Show AI feedback to students';
+$string['aifeedback'] = 'AI feedback:';
+$string['noinstances'] = 'There are no CodeScore instances';
 
 // Admin settings
 $string['apikey'] = 'API Key';
-$string['apikeyexplain'] = 'Insert an API key for GPT-4';
+$string['apikeyexplain'] = 'The key to access AI API. The free version allows you 10 prompt executions per week. To get the Pro version, contact us at <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'API URL';
-$string['apiurlexplain'] = 'Insert an API URL for GPT-4';
+$string['apiurlexplain'] = 'The url to access AI API';
 
 // View
 $string['viewreportsbtn'] = 'View reports';
@@ -79,6 +84,13 @@ $string['submissionstatus'] = 'Submission status: ';
 $string['submitted'] = 'submitted';
 $string['notsubmitted'] = 'not submitted';
 $string['yoursubmissions'] = 'Your attempt: ';
+$string['waitingforgrade'] = 'Waiting for grade';
+$string['graded'] = 'Graded';
+$string['notgraded'] = 'Not graded yet';
+$string['viewdategraded'] = 'Date graded:';
+$string['gradestatus'] = 'Status:';
+$string['unavaibleactivity'] = "This activity isn't available for now";
+$string['startattempt'] = 'Start attempt';
 
 // Reports
 $string['studentsreports'] = "Student's reports:";
@@ -86,20 +98,28 @@ $string['noreports'] = "No reports yet";
 $string['deleteBtnText'] = 'Delete attempts';
 $string['areyousure'] = 'Are you sure you want to delete attempts?';
 $string['irreversible'] = 'This action will be irreversible';
+$string['regrade'] = 'Regrade attempts';
 
 // Attempt
 $string['taskheader'] = 'The task is:';
+$string['saveandexit'] = "Save and exit";
+$string['notesplaceholder'] = 'You can write notes for teachers here';
 
 // Attempts table
 $string['tablename'] = "Name";
 $string['startedat'] = "Started at";
-$string['tablenotes'] = "Notes";
+$string['timefinish'] = "Submitted at";
+$string['timegraded'] = "Graded at";
 $string['syntaxgradetable'] = "Syntax grade";
 $string['outputgradetable'] = "Output grade";
 $string['problemgradetable'] = "Problem grade";
 $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
-$string['tableteachergrade'] = "Teacher grade";
+$string['tableteachergrade'] = "Final grade";
+$string['statusattempt'] = "Status";
+$string['finishedstatus'] = "Finished";
+$string['pendingstatus'] = "Pending";
+$string['submittedstatus'] = "Submitted";
 
 // Report
 $string['taskoverview'] = 'Task overview';
@@ -121,3 +141,24 @@ $string['codediffreport'] = 'Code diff: ';
 $string['studentcodereport'] = "Student's code";
 $string['correctcodereport'] = 'Corrected code';
 $string['reportgradebtn'] = 'Grade';
+
+// Privacy
+$string['privacy:metadata:codescore_attempts'] = 'This table contains info about user\'s attempts';
+$string['privacy:metadata:codescore_attempts:userid'] = 'The ID of the user that saved this report.';
+$string['privacy:metadata:codescore_attempts:attempt'] = 'Sequentially numbers of this student\'s attempts.';
+$string['privacy:metadata:codescore_attempts:timestart'] = 'Time at which user started attempt.';
+$string['privacy:metadata:codescore_attempts:timefinish'] = 'Time at which user finished attempt.';
+$string['privacy:metadata:codescore_attempts:timemodified'] = 'Time at which user modified attempt.';
+$string['privacy:metadata:codescore_attempts:timemodifiedoffline'] = 'Time at which user modified attempt being offline.';
+$string['privacy:metadata:codescore_attempts:timegraded'] = 'Time at which user graded attempt.';
+$string['privacy:metadata:codescore_attempts:code'] = 'Code that was submitted in this attempt.';
+$string['privacy:metadata:codescore_attempts:studentnotes'] = 'Notes for this attempt.';
+$string['privacy:metadata:codescore_attempts:grade'] = 'Grade for this attempt.';
+
+$string['privacy:metadata:codescore'] = 'This table contains info that is sent to API so it can give feedback about student\'s code';
+$string['privacy:metadata:codescore:task'] = 'Coding task of the instance';
+$string['privacy:metadata:codescore:programminglang'] = 'Programming language that needs to be used in the instance';
+$string['privacy:metadata:codescore:syntaxgrading'] = "Maximum grade for student's code syntax correctness";
+$string['privacy:metadata:codescore:outputgrading'] = "Maximum grade for student's code output/function output";
+$string['privacy:metadata:codescore:problemsolutiongrading'] = "Maximum grade for student's code optimization/patterns";
+$string['privacy:metadata:codescore:allcasesgrading'] = "Maximum grade for student's code covering all cases (e.g function works properly with any set of parameters)";
