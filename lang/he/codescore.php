@@ -73,9 +73,9 @@ $string['noinstances'] = 'אין מופעי CodeScore';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';
-$string['apikeyexplain'] = 'המפתח לגישה ל-AI API. הגרסה החינמית מאפשרת לך 10 הוצאות להורג מהירות בשבוע. כדי לקבל את גרסת ה-Pro, צור איתנו קשר בטלפון';
-$string['apiurl'] = 'API URL';
-$string['apiurlexplain'] = 'כתובת האתר לגישה ל-AI API';
+$string['apikeyexplain'] = 'המפתח לגישה ל-API של הבינה המלאכותית. הגרסה החינמית מאפשרת 10 הרצות בשבוע. לקבלת גרסת ה-Pro, צרו קשר עם <a href="mailto:info@devlion.co">info@devlion.co</a>';
+$string['apiurl'] = 'כתובת URL של API';
+$string['apiurlexplain'] = 'כתובת ה-URL לגישה ל-API של הבינה המלאכותית';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';
@@ -144,21 +144,21 @@ $string['reportgradebtn'] = 'ציון';
 
 // Privacy
 $string['privacy:metadata:codescore_attempts'] = 'הטבלה הזו מכילה מידע על נסיונות המשתמש';
-$string['privacy:metadata:codescore_attempts:userid'] = 'זיהוי המשתמש ששמר את הדוח הזה.';
-$string['privacy:metadata:codescore_attempts:attempt'] = 'מספרים סידוריים של נסיונות התלמיד הזה.';
-$string['privacy:metadata:codescore_attempts:timestart'] = 'זמן בו התחיל המשתמש לנסות.';
-$string['privacy:metadata:codescore_attempts:timefinish'] = 'זמן בו הסתיים הניסיון של המשתמש.';
-$string['privacy:metadata:codescore_attempts:timemodified'] = 'זמן בו שונה הניסיון של המשתמש.';
-$string['privacy:metadata:codescore_attempts:timemodifiedoffline'] = 'זמן בו שונה הניסיון של המשתמש במצב לא מקוון.';
-$string['privacy:metadata:codescore_attempts:timegraded'] = 'זמן בו דורג הניסיון של המשתמש.';
-$string['privacy:metadata:codescore_attempts:code'] = 'קוד שהוזן בניסיון הזה.';
-$string['privacy:metadata:codescore_attempts:studentnotes'] = 'הערות לניסיון הזה.';
-$string['privacy:metadata:codescore_attempts:grade'] = 'ציון לניסיון הזה.';
+$string['privacy:metadata:codescore_attempts:userid'] = 'מזהה המשתמש ששמר דוח זה.';
+$string['privacy:metadata:codescore_attempts:attempt'] = 'מספרי ניסיונותיו של סטודנט זה לפי מספרים סידוריים.';
+$string['privacy:metadata:codescore_attempts:timestart'] = 'זמן שבו המשתמש התחיל בהגשה.';
+$string['privacy:metadata:codescore_attempts:timefinish'] = 'זמן בו הסתיימה ההגשה של המשתמש.';
+$string['privacy:metadata:codescore_attempts:timemodified'] = 'זמן שבו המשתמש שינה את ההגשה.';
+$string['privacy:metadata:codescore_attempts:timemodifiedoffline'] = 'הזמן שבו המשתמש שינה את ההגשה במצב לא מקוון';
+$string['privacy:metadata:codescore_attempts:timegraded'] = 'זמן בו ניתן ציון על ההגשה של המשתמש.';
+$string['privacy:metadata:codescore_attempts:code'] = 'קוד שהוגש בהגשה זו.';
+$string['privacy:metadata:codescore_attempts:studentnotes'] = 'הערות להגשה זו.';
+$string['privacy:metadata:codescore_attempts:grade'] = 'ציון להגשה זו.';
 
-$string['privacy:metadata:codescore'] = 'הטבלה הזו מכילה מידע שנשלח ל-API כדי לקבל משוב על קוד התלמיד';
-$string['privacy:metadata:codescore:task'] = 'משימת תכנות של ההתבצעות';
-$string['privacy:metadata:codescore:programminglang'] = 'שפת תכנות שצריך להשתמש בה בהתבצעות';
-$string['privacy:metadata:codescore:syntaxgrading'] = 'ציון מרבי עבור נכונות תחביר של קוד התלמיד';
+$string['privacy:metadata:codescore'] = 'טבלה זו מכילה מידע שנשלח ל-API כדי לקבל משוב על קוד התלמיד';
+$string['privacy:metadata:codescore:task'] = 'משימת התכנות של המטלה';
+$string['privacy:metadata:codescore:programminglang'] = 'שפת תכנות שצריך להשתמש בה במטלה';
+$string['privacy:metadata:codescore:syntaxgrading'] = 'ציון מרבי עבור תקינות תחביר הקוד התלמיד';
 $string['privacy:metadata:codescore:outputgrading'] = 'ציון מרבי עבור פלט הקוד/פלט הפונקציה של התלמיד';
 $string['privacy:metadata:codescore:problemsolutiongrading'] = 'ציון מרבי עבור אופטימיזציה/תבניות בקוד התלמיד';
-$string['privacy:metadata:codescore:allcasesgrading'] = 'ציון מרבי עבור הצגת כל המקרים בקוד של התלמיד (למשל, הפונקציה עובדת נכון עם כל סט של פרמטרים)';
+$string['privacy:metadata:codescore:allcasesgrading'] = 'ציון מרבי עבור כיסוי כל המקרים בקוד של התלמיד (למשל, הפונקציה שעובדת כראוי עם כל סט של פרמטרים)';
