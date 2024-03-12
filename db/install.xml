@@ -13,15 +13,10 @@
                 <FIELD NAME="task" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Task of the activity."/>
                 <FIELD NAME="programminglang" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="gradingspec" TYPE="int" LENGTH="10" NOTNULL="false"/>
-                <FIELD NAME="syntaxgrading" TYPE="int" LENGTH="10" NOTNULL="false"/>
-                <FIELD NAME="outputgrading" TYPE="int" LENGTH="10" NOTNULL="false"/>
-                <FIELD NAME="problemsolutiongrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="allcasesgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="commentsgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="reduntatcodegrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="algorithmgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="resourcecompgrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
-                <FIELD NAME="complexitygrading" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric1maxgrade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric2maxgrade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric3maxgrade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric4maxgrade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="autograde" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="showfeedback" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="feedbacklang" TYPE="text" LENGTH="20" NOTNULL="true" SEQUENCE="false"/>
@@ -52,6 +47,15 @@
                 <FIELD NAME="timestart" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Time when the attempt was started."/>
                 <FIELD NAME="timefinish" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false"
                        COMMENT="Time when the attempt was submitted. 0 if the attempt has not been submitted yet."/>
+                <FIELD NAME="rubric1name" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric1grade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric2name" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric2grade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric3name" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric3grade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric4name" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubric4grade" TYPE="text" LENGTH="20" NOTNULL="false" SEQUENCE="false"/>
+                <FIELD NAME="rubriccount" TYPE="int" LENGTH="1" NOTNULL="true" SEQUENCE="false"/>
                 <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Last modified time."/>
                 <FIELD NAME="timemodifiedoffline" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Last modified time via web services."/>
                 <FIELD NAME="timecheckstate" TYPE="int" LENGTH="10" NOTNULL="false" DEFAULT="0" SEQUENCE="false"

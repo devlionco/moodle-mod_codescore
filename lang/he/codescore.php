@@ -76,6 +76,10 @@ $string['apikey'] = 'מפתח API';
 $string['apikeyexplain'] = 'המפתח לגישה ל-API של הבינה המלאכותית. הגרסה החינמית מאפשרת 10 הרצות בשבוע. לקבלת גרסת ה-Pro, צרו קשר עם <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'כתובת URL של API';
 $string['apiurlexplain'] = 'כתובת ה-URL לגישה ל-API של הבינה המלאכותית';
+$string['adminheading'] = 'רובריקות';
+$string['adminheadingexplain'] = 'לשנות מדדי הציון';
+$string['rubricscount'] = 'מספר מדדי הציון';
+$string['rubricblock'] = 'כּוֹתֶרֶת';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';

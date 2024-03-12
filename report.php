@@ -134,6 +134,14 @@ $langobject = [
 
 ];
 
+$rubricscount = $attempt[$index]->rubriccount + 1;
+
+for ($i = 1; $i <= 4; $i++) {
+     if ($i > $rubricscount) {
+          $attempt[$index]->{'rubric' . $i . 'name'} = NULL;
+     }
+}
+
 $attempt[$index]->cmid = $id;
 $attempt[$index]->grade = intval($attempt[$index]->grade);
 $attempt[$index]->aigrade = intval($attempt[$index]->aigrade);
@@ -141,10 +149,6 @@ $attempt[$index]->backUrl = new moodle_url('/mod/codescore/report.php', array('c
 $attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;
-$attempt[$index]->syntaxgrade = $moduleinstance->syntaxgrading;
-$attempt[$index]->outputgrade = $moduleinstance->outputgrading;
-$attempt[$index]->problemsolutiongrade = $moduleinstance->problemsolutiongrading;
-$attempt[$index]->allcasesgrade = $moduleinstance->allcasesgrading;
 $attempt[$index]->name = $name;
 
 echo $OUTPUT->render_from_template('mod_codescore/report', $attempt[$index]);

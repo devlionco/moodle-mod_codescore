@@ -18,7 +18,7 @@
  * Plugin administration pages are defined here.
  *
  * @package     mod_codescore
- * @category    admin
+ * @rubric    admin
  * @copyright   2024 Devlion <info@devlion.co>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -46,12 +46,83 @@ if ($hassiteconfig) {
             '11' => 'SQL',
             '12' => 'Assembly',
         );
-        $settings->add(new admin_setting_configpasswordunmask('codescore/apikey',
-                get_string('apikey', 'mod_codescore'), get_string('apikeyexplain', 'mod_codescore'), '78943f4e0d975b797de17bc980ee402037d6d2a3', PARAM_TEXT));
-        $settings->add(new admin_setting_configtext('codescore/apiurl',
-                get_string('apiurl', 'mod_codescore'), get_string('apiurlexplain', 'mod_codescore'), 'https://apireprot.learnapp.io/LionAI/index.php', PARAM_TEXT));
-        $settings->add(new admin_setting_configmultiselect('codescore/alowedlanguages',
-                get_string('alowedlanguages', 'mod_codescore'), null,
-                array('0', '1', '2', '3', '4', '5', '6', '7'), $langs));
+        $settings->add(
+            new admin_setting_configpasswordunmask(
+                'codescore/apikey',
+                get_string('apikey', 'mod_codescore'),
+                get_string('apikeyexplain', 'mod_codescore'),
+                '78943f4e0d975b797de17bc980ee402037d6d2a3',
+                PARAM_TEXT
+            )
+        );
+        $settings->add(
+            new admin_setting_configtext(
+                'codescore/apiurl',
+                get_string('apiurl', 'mod_codescore'),
+                get_string('apiurlexplain', 'mod_codescore'),
+                'https://apireprot.learnapp.io/LionAI/index.php',
+                PARAM_TEXT
+            )
+        );
+        $settings->add(
+            new admin_setting_configmultiselect(
+                'codescore/alowedlanguages',
+                get_string('alowedlanguages', 'mod_codescore'),
+                null,
+                array('0', '1', '2', '3', '4', '5', '6', '7'),
+                $langs
+            )
+        );
+
+        $settings->add(new admin_setting_configselect('codescore/rubricscount', get_string('rubricscount', 'mod_codescore'), '', 3, [1, 2, 3, 4]));
+
+        $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
+
+        $defaults = array(
+            1 => get_string('syntaxgradetable', 'mod_codescore'),
+            2 => get_string('outputgradetable', 'mod_codescore'),
+            3 => get_string('problemgradetable', 'mod_codescore'),
+            4 => get_string('casesgradetable', 'mod_codescore'),
+        );
+
+        for ($i = 1; $i <= $numberofcategories; $i++) {
+            $innersetting = new admin_setting_heading(
+                    'rubric' . $i,
+                    get_string('rubricblock', 'mod_codescore') . ' ' . (string)$i,
+                    ''
+            );
+            $settings->add($innersetting);
+            $indexname = "indextitle" . ($i - 1);
+            $indexdescription = '';
+            $setting = new admin_setting_description($indexname, '', $indexdescription);
+            $settings->add($setting);
+            // Set rubric name and tag
+            $settings->add(
+                new admin_setting_configtext(
+                    'codescore/rubric' . $i . 'name',
+                    get_string('rubricname', 'mod_codescore', $i),
+                    '',
+                    $defaults[$i],
+                    PARAM_TEXT
+                )
+            );
+            $settings->add(
+                new admin_setting_configtext(
+                    'codescore/rubric' . $i . 'prompt',
+                    get_string('rubricprompt', 'mod_codescore', $i),
+                    '',
+                    get_string('rubric' . $i . 'prompt', 'mod_codescore'),
+                    PARAM_TEXT
+                )
+            );
+            $setting = new admin_setting_configtext(
+                'codescore/' . 'maximumgrade' . $i,
+                get_string('maximumgrade'),
+                '', 
+                intval(100 / $numberofcategories),
+                PARAM_INT);
+            $settings->add($setting);
+        }
     }
+    $PAGE->requires->js_call_amd('mod_codescore/adminsettings', 'init', []);
 }

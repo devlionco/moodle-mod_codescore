@@ -11,10 +11,22 @@
 <ul>
     <li>{{#str}} reportgrade, codescore {{/str}} {{grade}}</li>
     <li>{{#str}} aigradereport, codescore {{/str}} {{aigrade}}</li>
-    <li>{{#str}} syntaxreport, codescore {{/str}} {{syntaxgrading}}</li>
-    <li>{{#str}} outputreport, codescore {{/str}} {{outputgrading}}</li>
-    <li>{{#str}} problemreport, codescore {{/str}} {{problemsolutiongrading}}</li>
-    <li>{{#str}} casesreport, codescore {{/str}} {{allcasesgrading}}</li>
+    <li>{{rubric1name}}: {{rubric1grade}}</li>
+    {{#rubric2name}}
+    <li>
+        {{rubric2name}}: {{rubric2grade}} 
+    </li>
+    {{/rubric2name}}
+    {{#rubric3name}}
+    <li>
+        {{rubric3name}}: {{rubric3grade}}
+    </li>
+    {{/rubric3name}} 
+    {{#rubric4name}}
+    <li>
+        {{rubric4name}}: {{rubric4grade}}
+    </li>
+    {{/rubric4name}}
     <li>{{#str}} aifeedback, codescore {{/str}} {{feedback}}</li>
     <li>{{#str}} notesreport, codescore {{/str}} {{studentnotes}}</li>
 </ul>

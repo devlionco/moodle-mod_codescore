@@ -165,6 +165,14 @@ if ($lastrenderdata) {
     $lastrenderdata->isteacher = $isteacher;
 }
 
+$rubricscount = $lastrenderdata->rubriccount + 1;
+
+for ($i = 1; $i <= 4; $i++) {
+     if ($i > $rubricscount) {
+          $lastrenderdata->{'rubric' . $i . 'name'} = NULL;
+     }
+}
+
 if ($attempts) {
     echo $OUTPUT->render_from_template('mod_codescore/lastattempt', $lastrenderdata);
     $PAGE->requires->js_call_amd('mod_codescore/lastattempt', 'init', []);

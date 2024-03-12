@@ -76,6 +76,16 @@ $string['apikey'] = 'API Key';
 $string['apikeyexplain'] = 'The key to access AI API. The free version allows you 10 prompt executions per week. To get the Pro version, contact us at <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'API URL';
 $string['apiurlexplain'] = 'The url to access AI API';
+$string['adminheading'] = 'Rubrics';
+$string['adminheadingexplain'] = 'Change grading rubrics';
+$string['rubricscount'] = 'Number of rubrics';
+$string['rubricblock'] = 'Rubric';
+$string['rubricname'] = 'Rubric name';
+$string['rubricprompt'] = 'Rubric prompt';
+$string['rubric1prompt'] = 'Grade for student\'s code syntax';
+$string['rubric2prompt'] = 'Grade for the output of the code';
+$string['rubric3prompt'] = 'Grade for correct code solution';
+$string['rubric4prompt'] = 'Grade for code covering all cases';
 
 // View
 $string['viewreportsbtn'] = 'View reports';
@@ -112,7 +122,7 @@ $string['timefinish'] = "Submitted at";
 $string['timegraded'] = "Graded at";
 $string['syntaxgradetable'] = "Syntax grade";
 $string['outputgradetable'] = "Output grade";
-$string['problemgradetable'] = "Problem grade";
+$string['problemgradetable'] = "Problem solution grade";
 $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
 $string['tableteachergrade'] = "Final grade";

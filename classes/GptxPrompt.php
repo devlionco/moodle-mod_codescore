@@ -44,21 +44,31 @@ class GptxPrompt {
             $key = '78943f4e0d975b797de17bc980ee402037d6d2a3';
         }
 
+        function get_max_grade($grade, $num) {
+            $config = get_config('codescore');
+            $rubricscount = $config->rubricscount + 1;
+            if ($num > $rubricscount) { return '0'; }
+            return $grade;
+        }
         $correctedata = new stdClass();
         $correctedata->solution = $this->attemptData->code;
         $correctedata->lang = $codescore->programminglang;
         $correctedata->task = $codescore->task;
-        $correctedata->syntaxgrade = $codescore->syntaxgrading;
-        $correctedata->outputgrade = $codescore->outputgrading;
-        $correctedata->solutiongrade = $codescore->problemsolutiongrading;
-        $correctedata->allcasesgrade = $codescore->allcasesgrading;
+        $correctedata->rubric1prompt = $config->rubric1prompt;
+        $correctedata->rubric2prompt = $config->rubric2prompt;
+        $correctedata->rubric3prompt = $config->rubric3prompt;
+        $correctedata->rubric4prompt = $config->rubric4prompt;
+        $correctedata->rubric1maxgrade = get_max_grade($config->maximumgrade1, 1);
+        $correctedata->rubric2maxgrade = get_max_grade($config->maximumgrade2, 2);
+        $correctedata->rubric3maxgrade = get_max_grade($config->maximumgrade3, 3);
+        $correctedata->rubric4maxgrade = get_max_grade($config->maximumgrade4, 4);
         $correctedata->feedbacklang = get_string_manager()->get_list_of_translations()[$codescore->feedbacklang];
 
         $curldata = array(
             'token' => $key,
             'data' => json_encode($correctedata),
             'id' => '124',
-            'action' => 'CodeCheck',
+            'action' => 'CodeScore',
         );
 
         $curl = new \curl();

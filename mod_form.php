@@ -116,36 +116,27 @@ class mod_codescore_mod_form extends moodleform_mod {
         // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 
-        $mform->addElement('text', 'syntaxgrading', get_string('syntaxgrade', 'codescore'));
-        $mform->setType('syntaxgrading', PARAM_INT);
-        $mform->setDefault('syntaxgrading', 10);
-        $mform->addHelpButton('syntaxgrading', 'syntaxgrade', 'codescore');
+        $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
 
-        $mform->addElement('text', 'outputgrading', get_string('correctoutput', 'codescore'));
-        $mform->setType('outputgrading', PARAM_INT);
-        $mform->setDefault('outputgrading', 60);
-        $mform->addHelpButton('outputgrading', 'correctoutput', 'codescore');
+        for ($i = 1; $i <= $numberofcategories; $i++) {
+            $element = 'rubric' . $i . 'maxgrade';
+            $name = get_config('codescore', $element);
 
-        $mform->addElement('text', 'problemsolutiongrading', get_string('correctsolution', 'codescore'));
-        $mform->setType('problemsolutiongrading', PARAM_INT);
-        $mform->setDefault('problemsolutiongrading', 10);
-        $mform->addHelpButton('problemsolutiongrading', 'correctsolution', 'codescore');
-
-        $mform->addElement('text', 'allcasesgrading', get_string('allcases', 'codescore'));
-        $mform->setType('allcasesgrading', PARAM_INT);
-        $mform->setDefault('allcasesgrading', 20);
-        $mform->addHelpButton('allcasesgrading', 'allcases', 'codescore');
+            $mform->addElement('text', $element, get_config('codescore', 'rubric' . $i . 'name'));
+            $mform->setType($element, PARAM_INT);
+            $mform->setDefault($name, 100 / $numberofcategories);
+            $mform->getElement($element)->setValue(get_config('codescore', 'maximumgrade' . $i));
+        }
 
         $checkgrading = function() {
-            $mform = $this->_form;
-            $syntaxvalue = (int)$mform->getElement('syntaxgrading')->_attributes['value'];
-            $outputvalue = (int)$mform->getElement('outputgrading')->_attributes['value'];
-            $solutionvalue = (int)$mform->getElement('problemsolutiongrading')->_attributes['value'];
-            $casesvalue = (int)$mform->getElement('allcasesgrading')->_attributes['value'];
-            if ($syntaxvalue + $outputvalue + $solutionvalue + $casesvalue !== 100) {
-                return false;
+            $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
+            $totalgrade = 0;
+            for ($i = 1; $i <= $numberofcategories; $i++) {
+                $mform = $this->_form;
+                $element = 'rubric' . $i . 'maxgrade';
+                $totalgrade += (int)$mform->getElement($element)->_attributes['value'];
             }
-            return true;
+            return $totalgrade === 100;
         };
 
         $mform->addElement('advcheckbox', 'autograde', get_string('autograde', 'codescore'));
@@ -154,7 +145,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
         $mform->setDefault('showfeedback', true);
 
-        $mform->addRule('allcasesgrading', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+        $mform->addRule('rubric' . $numberofcategories . 'maxgrade', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
 
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);

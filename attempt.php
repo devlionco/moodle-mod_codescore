@@ -35,6 +35,7 @@ if ($data = data_submitted()) {
     $sesskey = optional_param('sesskey', '', PARAM_RAW);
     $timestart = optional_param('timestart', '', PARAM_RAW);
     $data->timestart = $timestart;
+    $data->rubriccount = get_config('codescore', 'rubricscount');
     confirm_sesskey($sesskey);
 
     // Save attempt.

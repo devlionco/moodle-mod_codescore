@@ -67,10 +67,6 @@ class check_attempt extends adhoc_task {
             $data->lang = $langobject[$codescore->programminglang];
             $data->solution = $attempt->code;
             $data->task = $codescore->task;
-            $data->syntaxgrade = $codescore->syntaxgrading;
-            $data->outputgrade = $codescore->outputgrading;
-            $data->solutiongrade = $codescore->problemsolutiongrading;
-            $data->allcasesgrade = $codescore->allcasesgrading;
 
             $response = $tt->sendprompt($codescore);
             $response = str_replace('```json', '', $response);
@@ -80,17 +76,25 @@ class check_attempt extends adhoc_task {
                 $attempt->grade = $response->grade;
             }
             $attempt->aigrade = $response->grade;
+            
+            $attempt->rubric1name = $config->rubric1name;
+            $attempt->rubric1grade = $response->rubric1grade;
+
+            $attempt->rubric2name = $config->rubric2name;
+            $attempt->rubric2grade = $response->rubric2grade;
+
+            $attempt->rubric3name = $config->rubric3name;
+            $attempt->rubric3grade = $response->rubric3grade;
+
+            $attempt->rubric4name = $config->rubric4name;
+            $attempt->rubric4grade = $response->rubric4grade;
+
             $attempt->feedback = $response->feedback;
-            $attempt->syntaxgrading = $response->syntaxgrade;
-            $attempt->outputgrading = $response->outputgrade;
-            $attempt->problemsolutiongrading = $response->solutiongrade;
-            $attempt->allcasesgrading = $response->allcasesgrade;
             $attempt->output = $response->output;
             $attempt->correctedcode = $response->corrected;
             $attempt->state = 'finished';
             $attempt->timemodified = time();
             $DB->update_record('codescore_attempts', $attempt);
-
         }
 
     }
