@@ -122,6 +122,7 @@ if ($hassiteconfig) {
                 intval(100 / $numberofcategories),
                 PARAM_INT);
             $settings->add($setting);
+            
         }
     }
     $PAGE->requires->js_call_amd('mod_codescore/adminsettings', 'init', []);

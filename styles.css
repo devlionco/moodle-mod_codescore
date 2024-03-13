@@ -1476,3 +1476,12 @@
 .path-mod-codescore .CodeMirror-merge-scrolllock-wrap {
     display: none;
 }
+
+#page-admin-setting-modsettingcodescore .save-disabled {
+    opacity: .65;
+    pointer-events: none;
+}
+
+#page-admin-setting-modsettingcodescore #grade-warn {
+    text-wrap: nowrap;
+}

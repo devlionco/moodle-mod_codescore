@@ -86,6 +86,7 @@ $string['rubric1prompt'] = 'Grade for student\'s code syntax';
 $string['rubric2prompt'] = 'Grade for the output of the code';
 $string['rubric3prompt'] = 'Grade for correct code solution';
 $string['rubric4prompt'] = 'Grade for code covering all cases';
+$string['gradewarn'] = 'Total sum of grades should be equal to 100';
 
 // View
 $string['viewreportsbtn'] = 'View reports';

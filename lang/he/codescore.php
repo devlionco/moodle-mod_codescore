@@ -80,6 +80,7 @@ $string['adminheading'] = 'רובריקות';
 $string['adminheadingexplain'] = 'לשנות מדדי הציון';
 $string['rubricscount'] = 'מספר מדדי הציון';
 $string['rubricblock'] = 'כּוֹתֶרֶת';
+$string['gradewarn'] = 'סך כל הציונים צריך להיות שווה ל-100';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';

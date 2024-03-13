@@ -20,12 +20,37 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+import $ from 'jquery';
+import {get_string as getString} from 'core/str';
 
-export const init = () => {
+export const init = async () => {
     const settingPage = document.getElementById('page-admin-setting-modsettingcodescore');
     if (!settingPage) { return; }
     const select = document.getElementById('id_s_codescore_rubricscount');
     select.addEventListener('change', () => {
         document.querySelector('#adminsettings [type=submit]').click();
     });
+    const warntext = await getString('gradewarn', 'codescore');
+    $('#page-content .btn-primary').after(`<span class="mt-2 text-danger d-none" id="grade-warn">${warntext}<span>`);
+
+    let gradeElements = $('[id^="id_s_codescore_maximumgrade"]');
+
+    const validateGrades = () => {
+        let totalmaxgrade = 0;
+        Array.from(gradeElements).forEach((el) => {
+            totalmaxgrade += Number(el.value);
+        });
+        const isRight = totalmaxgrade === 100;
+        if (!isRight) {
+            $('#page-content .btn-primary').addClass('save-disabled');
+            $('[id^="id_s_codescore_maximumgrade"]').addClass('border-danger');
+            $('#grade-warn').removeClass('d-none');
+        } else {
+            $('#page-content .btn-primary').removeClass('save-disabled');
+            $('[id^="id_s_codescore_maximumgrade"]').removeClass('border-danger');
+            $('#grade-warn').addClass('d-none');
+        }
+    };
+    validateGrades();
+    gradeElements.on("change", validateGrades);
 };
