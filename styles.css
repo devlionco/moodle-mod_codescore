@@ -1485,3 +1485,18 @@
 #page-admin-setting-modsettingcodescore #grade-warn {
     text-wrap: nowrap;
 }
+
+#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric1enabled,
+#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric2enabled,
+#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric3enabled,
+#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric4enabled {
+    position: absolute;
+    left: -175px;
+    bottom: 36px;
+}
+#page-mod-codescore-mod #id_gradingoptionscontainer label {
+    max-height: 20px;
+}
+#page-mod-codescore-mod #id_gradingoptionscontainer #id_error_rubric4maxgrade {
+    height: 0px;
+}

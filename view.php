@@ -143,6 +143,7 @@ $data->candelete = has_capability('mod/codescore:addinstance', context_system::i
 
 $gradinginfo = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
 $lastrenderdata = end($data->attempts);
+$rubricscount = NULL;
 if ($lastrenderdata) {
     $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($gradinginfo->items[0]->grades)->grade;
     $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
@@ -163,14 +164,12 @@ if ($lastrenderdata) {
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
     $lastrenderdata->isteacher = $isteacher;
-}
-
-$rubricscount = $lastrenderdata->rubriccount + 1;
-
-for ($i = 1; $i <= 4; $i++) {
-     if ($i > $rubricscount) {
-          $lastrenderdata->{'rubric' . $i . 'name'} = NULL;
-     }
+    $rubricscount = $lastrenderdata->rubriccount + 1;
+    for ($i = 1; $i <= 4; $i++) {
+        if ($i > $rubricscount || $lastrenderdata->{'rubric' . $i . 'enabled'} === "0") {
+             $lastrenderdata->{'rubric' . $i . 'name'} = NULL;
+        }
+   }
 }
 
 if ($attempts) {

@@ -70,6 +70,7 @@ $string['no'] = 'לא';
 $string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמידים';
 $string['aifeedback'] = 'AI משוב:';
 $string['noinstances'] = 'אין מופעי CodeScore';
+$string['modgradeswarn'] = 'סך הכל ציונים פעילים צריך להיות שווה ל-100';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';

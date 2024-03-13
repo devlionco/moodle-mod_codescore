@@ -58,10 +58,17 @@ class GptxPrompt {
         $correctedata->rubric2prompt = $config->rubric2prompt;
         $correctedata->rubric3prompt = $config->rubric3prompt;
         $correctedata->rubric4prompt = $config->rubric4prompt;
-        $correctedata->rubric1maxgrade = get_max_grade($config->maximumgrade1, 1);
-        $correctedata->rubric2maxgrade = get_max_grade($config->maximumgrade2, 2);
-        $correctedata->rubric3maxgrade = get_max_grade($config->maximumgrade3, 3);
-        $correctedata->rubric4maxgrade = get_max_grade($config->maximumgrade4, 4);
+        $correctedata->rubric1maxgrade = get_max_grade($codescore->rubric1maxgrade, 1);
+        $correctedata->rubric2maxgrade = get_max_grade($codescore->rubric2maxgrade, 2);
+        $correctedata->rubric3maxgrade = get_max_grade($codescore->rubric3maxgrade, 3);
+        $correctedata->rubric4maxgrade = get_max_grade($codescore->rubric4maxgrade, 4);
+
+        for($i = 1; $i <= 4; $i++) {
+            if($codescore->{'rubric' . $i . 'enabled'} === "0") {
+                $correctedata->{'rubric' . $i . 'maxgrade'} = "0";
+            }
+        }
+
         $correctedata->feedbacklang = get_string_manager()->get_list_of_translations()[$codescore->feedbacklang];
 
         $curldata = array(

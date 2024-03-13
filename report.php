@@ -137,7 +137,7 @@ $langobject = [
 $rubricscount = $attempt[$index]->rubriccount + 1;
 
 for ($i = 1; $i <= 4; $i++) {
-     if ($i > $rubricscount) {
+     if ($i > $rubricscount || $attempt[$index]->{'rubric' . $i . 'enabled'} === "0") {
           $attempt[$index]->{'rubric' . $i . 'name'} = NULL;
      }
 }

@@ -115,11 +115,17 @@ if ($hassiteconfig) {
                     PARAM_TEXT
                 )
             );
+            $defaultsinglevalue = intval(100 / $numberofcategories);
+
+            if($numberofcategories === 3 && $i === 1) {
+                $defaultsinglevalue = 34;
+            }
+
             $setting = new admin_setting_configtext(
                 'codescore/' . 'maximumgrade' . $i,
                 get_string('maximumgrade'),
                 '', 
-                intval(100 / $numberofcategories),
+                $defaultsinglevalue,
                 PARAM_INT);
             $settings->add($setting);
             

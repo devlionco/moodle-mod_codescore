@@ -26,6 +26,6 @@ defined('MOODLE_INTERNAL') || die();
 
 $plugin->component = 'mod_codescore';
 $plugin->release = '0.3.0';
-$plugin->version = 2024031102;
+$plugin->version = 2024031301;
 $plugin->requires = 2022112800;
 $plugin->maturity = MATURITY_ALPHA;

@@ -123,6 +123,9 @@ class mod_codescore_mod_form extends moodleform_mod {
             $name = get_config('codescore', $element);
 
             $mform->addElement('text', $element, get_config('codescore', 'rubric' . $i . 'name'));
+            $mform->addElement('advcheckbox', 'rubric' . $i . 'enabled', '');
+            $mform->setType('rubric' . $i . 'enabled', PARAM_INT);
+            $mform->setDefault('rubric' . $i . 'enabled', 1);
             $mform->setType($element, PARAM_INT);
             $mform->setDefault($name, 100 / $numberofcategories);
             $mform->getElement($element)->setValue(get_config('codescore', 'maximumgrade' . $i));
@@ -134,7 +137,9 @@ class mod_codescore_mod_form extends moodleform_mod {
             for ($i = 1; $i <= $numberofcategories; $i++) {
                 $mform = $this->_form;
                 $element = 'rubric' . $i . 'maxgrade';
-                $totalgrade += (int)$mform->getElement($element)->_attributes['value'];
+                if ($mform->getElement('rubric' . $i . 'enabled')->_currentValue === 1) {
+                    $totalgrade += (int)$mform->getElement($element)->_attributes['value'];
+                }
             }
             return $totalgrade === 100;
         };
@@ -145,7 +150,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
         $mform->setDefault('showfeedback', true);
 
-        $mform->addRule('rubric' . $numberofcategories . 'maxgrade', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+        $mform->addRule('rubric' . $numberofcategories . 'maxgrade', get_string('modgradeswarn','codescore'), 'callback', $checkgrading, 'server');
 
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);

@@ -36,6 +36,14 @@ if ($data = data_submitted()) {
     $timestart = optional_param('timestart', '', PARAM_RAW);
     $data->timestart = $timestart;
     $data->rubriccount = get_config('codescore', 'rubricscount');
+
+    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
+    
+    $data->rubric1enabled = $moduleinstance->rubric1enabled;
+    $data->rubric2enabled = $moduleinstance->rubric2enabled;
+    $data->rubric3enabled = $moduleinstance->rubric3enabled;
+    $data->rubric4enabled = $moduleinstance->rubric4enabled;
     confirm_sesskey($sesskey);
 
     // Save attempt.
