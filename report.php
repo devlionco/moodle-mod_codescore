@@ -150,6 +150,10 @@ $attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;
 $attempt[$index]->name = $name;
+$attempt[$index]->max1grade = $moduleinstance->rubric1maxgrade;
+$attempt[$index]->max2grade = $moduleinstance->rubric2maxgrade;
+$attempt[$index]->max3grade = $moduleinstance->rubric3maxgrade;
+$attempt[$index]->max4grade = $moduleinstance->rubric4maxgrade;
 
 echo $OUTPUT->render_from_template('mod_codescore/report', $attempt[$index]);
 

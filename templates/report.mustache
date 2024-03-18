@@ -2,10 +2,10 @@
 <ul>
     <li> {{#str}} reportlang, codescore {{/str}} {{lang}}</li>
     <li style="white-space: pre-wrap;"> {{#str}} taskreport, codescore {{/str}} <br/> {{{task}}}</li>
-    <li> {{#str}} maxgradesyntax, codescore {{/str}} {{syntaxgrade}}</li>
-    <li> {{#str}} maxrightoutput, codescore {{/str}} {{outputgrade}}</li>
-    <li> {{#str}} maxproblemsolution, codescore {{/str}} {{problemsolutiongrade}}</li>
-    <li> {{#str}} maxcovering, codescore {{/str}} {{allcasesgrade}}</li>
+    {{#rubric1name}}<li> {{#str}} maxgrade, codescore {{/str}} {{rubric1name}}: {{max1grade}}</li>{{/rubric1name}}
+    {{#rubric2name}}<li> {{#str}} maxgrade, codescore {{/str}} {{rubric2name}}: {{max2grade}}</li>{{/rubric2name}}
+    {{#rubric3name}}<li> {{#str}} maxgrade, codescore {{/str}} {{rubric3name}}: {{max3grade}}</li>{{/rubric3name}}
+    {{#rubric4name}}<li> {{#str}} maxgrade, codescore {{/str}} {{rubric4name}}: {{max4grade}}</li>{{/rubric4name}}
 </ul>
     <h3>{{name}} {{#str}} reportname, codescore {{/str}} </h3>
 <ul>
