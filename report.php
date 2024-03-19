@@ -134,14 +134,6 @@ $langobject = [
 
 ];
 
-$rubricscount = $attempt[$index]->rubriccount + 1;
-
-for ($i = 1; $i <= 4; $i++) {
-     if ($i > $rubricscount || $attempt[$index]->{'rubric' . $i . 'enabled'} === "0") {
-          $attempt[$index]->{'rubric' . $i . 'name'} = NULL;
-     }
-}
-
 $attempt[$index]->cmid = $id;
 $attempt[$index]->grade = intval($attempt[$index]->grade);
 $attempt[$index]->aigrade = intval($attempt[$index]->aigrade);
@@ -150,10 +142,7 @@ $attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;
 $attempt[$index]->name = $name;
-$attempt[$index]->max1grade = $moduleinstance->rubric1maxgrade;
-$attempt[$index]->max2grade = $moduleinstance->rubric2maxgrade;
-$attempt[$index]->max3grade = $moduleinstance->rubric3maxgrade;
-$attempt[$index]->max4grade = $moduleinstance->rubric4maxgrade;
+$attempt[$index]->rubrics = json_decode($attempt[$index]->rubricsobject, true);
 
 echo $OUTPUT->render_from_template('mod_codescore/report', $attempt[$index]);
 

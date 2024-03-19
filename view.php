@@ -164,12 +164,7 @@ if ($lastrenderdata) {
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
     $lastrenderdata->isteacher = $isteacher;
-    $rubricscount = $lastrenderdata->rubriccount + 1;
-    for ($i = 1; $i <= 4; $i++) {
-        if ($i > $rubricscount || $lastrenderdata->{'rubric' . $i . 'enabled'} === "0") {
-             $lastrenderdata->{'rubric' . $i . 'name'} = NULL;
-        }
-   }
+    $lastrenderdata->rubrics = json_decode($lastrenderdata->rubricsobject, true);
 }
 
 if ($attempts) {

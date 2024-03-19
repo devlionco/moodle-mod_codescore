@@ -74,7 +74,7 @@ if ($hassiteconfig) {
             )
         );
 
-        $settings->add(new admin_setting_configselect('codescore/rubricscount', get_string('rubricscount', 'mod_codescore'), '', 3, [1, 2, 3, 4]));
+        $settings->add(new admin_setting_configselect('codescore/rubricscount', get_string('rubricscount', 'mod_codescore'), '', 3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
 
         $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
 
@@ -102,7 +102,7 @@ if ($hassiteconfig) {
                     'codescore/rubric' . $i . 'name',
                     get_string('rubricname', 'mod_codescore', $i),
                     '',
-                    $defaults[$i],
+                    isset($defaults[$i]) ? $defaults[$i] : '',
                     PARAM_TEXT
                 )
             );
@@ -111,7 +111,7 @@ if ($hassiteconfig) {
                     'codescore/rubric' . $i . 'prompt',
                     get_string('rubricprompt', 'mod_codescore', $i),
                     '',
-                    get_string('rubric' . $i . 'prompt', 'mod_codescore'),
+                    $i < 5 ? get_string('rubric' . $i . 'prompt', 'mod_codescore') : '',
                     PARAM_TEXT
                 )
             );

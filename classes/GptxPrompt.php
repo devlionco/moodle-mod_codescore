@@ -54,20 +54,15 @@ class GptxPrompt {
         $correctedata->solution = $this->attemptData->code;
         $correctedata->lang = $codescore->programminglang;
         $correctedata->task = $codescore->task;
-        $correctedata->rubric1prompt = $config->rubric1prompt;
-        $correctedata->rubric2prompt = $config->rubric2prompt;
-        $correctedata->rubric3prompt = $config->rubric3prompt;
-        $correctedata->rubric4prompt = $config->rubric4prompt;
-        $correctedata->rubric1maxgrade = get_max_grade($codescore->rubric1maxgrade, 1);
-        $correctedata->rubric2maxgrade = get_max_grade($codescore->rubric2maxgrade, 2);
-        $correctedata->rubric3maxgrade = get_max_grade($codescore->rubric3maxgrade, 3);
-        $correctedata->rubric4maxgrade = get_max_grade($codescore->rubric4maxgrade, 4);
 
-        for($i = 1; $i <= 4; $i++) {
-            if($codescore->{'rubric' . $i . 'enabled'} === "0") {
-                $correctedata->{'rubric' . $i . 'maxgrade'} = "0";
-            }
+        $rubricsprompt = 'An object with grades. Object should be called \'grades\'. In this object should be these variables: \n';
+        $attemptrubrics = json_decode($this->attemptData->rubricsobject, true);
+        foreach ($attemptrubrics as $arrkey => $value) {
+            $preparedstring = strval(intval($arrkey) + 1) . " - " . $value['prompt'] . ', from 0 to ' . strval($value['maxgrade']) . 
+                ', variable should be named rubric' . $arrkey . 'grade. \n';
+            $rubricsprompt .= $preparedstring;
         }
+        $correctedata->rubrics = $rubricsprompt;
 
         $correctedata->feedbacklang = get_string_manager()->get_list_of_translations()[$codescore->feedbacklang];
 

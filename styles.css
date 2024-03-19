@@ -1485,18 +1485,25 @@
 #page-admin-setting-modsettingcodescore #grade-warn {
     text-wrap: nowrap;
 }
+#page-mod-codescore-mod #id_gradingoptionscontainer {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
 
-#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric1enabled,
-#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric2enabled,
-#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric3enabled,
-#page-mod-codescore-mod #id_gradingoptionscontainer #id_rubric4enabled {
-    position: absolute;
-    left: -175px;
-    bottom: 36px;
+#page-mod-codescore-mod #id_gradingoptionscontainer > div {
+    flex: 95%;
 }
-#page-mod-codescore-mod #id_gradingoptionscontainer label {
-    max-height: 20px;
+
+#page-mod-codescore-mod #id_gradingoptionscontainer > div:nth-child(2n) {
+    flex: 5%;
+    margin-left: 0;
+    margin-bottom: 30px;
 }
-#page-mod-codescore-mod #id_gradingoptionscontainer #id_error_rubric4maxgrade {
-    height: 0px;
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(2),
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(3),
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(4) {
+    flex: 100%;
+    margin-bottom: 1rem;
+    margin-left: 35px;
 }

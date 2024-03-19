@@ -61,99 +61,15 @@ function xmldb_codescore_upgrade($oldversion) {
             $dbman->add_field($table, $field2);
         }
     }
-    if ($oldversion < 2024031301) {
+    if($oldversion < 2024031900) {
         $table = new xmldb_table('codescore');
         $attempts = new xmldb_table('codescore_attempts');
-
-        $rubric1maxgrade = new \xmldb_field('rubric1maxgrade', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
-        $rubric2maxgrade = new \xmldb_field('rubric2maxgrade', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
-        $rubric3maxgrade = new \xmldb_field('rubric3maxgrade', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
-        $rubric4maxgrade = new \xmldb_field('rubric4maxgrade', XMLDB_TYPE_TEXT, '10', null, null, null, null, null);
-
-        $rubric1name = new \xmldb_field('rubric1name', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric2name = new \xmldb_field('rubric2name', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric3name = new \xmldb_field('rubric3name', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric4name = new \xmldb_field('rubric4name', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-
-        $rubric1grade = new \xmldb_field('rubric1grade', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric2grade = new \xmldb_field('rubric2grade', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric3grade = new \xmldb_field('rubric3grade', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-        $rubric4grade = new \xmldb_field('rubric4grade', XMLDB_TYPE_TEXT, '20', null, null, null, null, null);
-
-        $rubric1enabled = new \xmldb_field('rubric1enabled', XMLDB_TYPE_INTEGER, '1', null, null, null, null, null);
-        $rubric2enabled = new \xmldb_field('rubric2enabled', XMLDB_TYPE_INTEGER, '1', null, null, null, null, null);
-        $rubric3enabled = new \xmldb_field('rubric3enabled', XMLDB_TYPE_INTEGER, '1', null, null, null, null, null);
-        $rubric4enabled = new \xmldb_field('rubric4enabled', XMLDB_TYPE_INTEGER, '1', null, null, null, null, null);
-
-        $rubriccount = new \xmldb_field('rubriccount', XMLDB_TYPE_INTEGER, '1', null, null, null, null, null);
-
-        if (!$dbman->field_exists($table, $rubric1maxgrade)) {
-            $dbman->add_field($table, $rubric1maxgrade);
+        $field = new \xmldb_field('rubricsobject', XMLDB_TYPE_TEXT, '1000', null, null, null, null, null);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
         }
-        if (!$dbman->field_exists($table, $rubric2maxgrade)) {
-            $dbman->add_field($table, $rubric2maxgrade);
-        }
-        if (!$dbman->field_exists($table, $rubric3maxgrade)) {
-            $dbman->add_field($table, $rubric3maxgrade);
-        }
-        if (!$dbman->field_exists($table, $rubric4maxgrade)) {
-            $dbman->add_field($table, $rubric4maxgrade);
-        }
-
-        if (!$dbman->field_exists($table, $rubric1enabled)) {
-            $dbman->add_field($table, $rubric1enabled);
-        }
-        if (!$dbman->field_exists($table, $rubric2enabled)) {
-            $dbman->add_field($table, $rubric2enabled);
-        }
-        if (!$dbman->field_exists($table, $rubric3enabled)) {
-            $dbman->add_field($table, $rubric3enabled);
-        }
-        if (!$dbman->field_exists($table, $rubric4enabled)) {
-            $dbman->add_field($table, $rubric4enabled);
-        }
-
-        if (!$dbman->field_exists($attempts, $rubric1grade)) {
-            $dbman->add_field($attempts, $rubric1grade);
-        }
-        if (!$dbman->field_exists($attempts, $rubric2grade)) {
-            $dbman->add_field($attempts, $rubric2grade);
-        }
-        if (!$dbman->field_exists($attempts, $rubric3grade)) {
-            $dbman->add_field($attempts, $rubric3grade);
-        }
-        if (!$dbman->field_exists($attempts, $rubric4grade)) {
-            $dbman->add_field($attempts, $rubric4grade);
-        }
-
-        if (!$dbman->field_exists($attempts, $rubric1name)) {
-            $dbman->add_field($attempts, $rubric1name);
-        }
-        if (!$dbman->field_exists($attempts, $rubric2name)) {
-            $dbman->add_field($attempts, $rubric2name);
-        }
-        if (!$dbman->field_exists($attempts, $rubric3name)) {
-            $dbman->add_field($attempts, $rubric3name);
-        }
-        if (!$dbman->field_exists($attempts, $rubric4name)) {
-            $dbman->add_field($attempts, $rubric4name);
-        }
-
-        if (!$dbman->field_exists($attempts, $rubric1enabled)) {
-            $dbman->add_field($attempts, $rubric1enabled);
-        }
-        if (!$dbman->field_exists($attempts, $rubric2enabled)) {
-            $dbman->add_field($attempts, $rubric2enabled);
-        }
-        if (!$dbman->field_exists($attempts, $rubric3enabled)) {
-            $dbman->add_field($attempts, $rubric3enabled);
-        }
-        if (!$dbman->field_exists($attempts, $rubric4enabled)) {
-            $dbman->add_field($attempts, $rubric4enabled);
-        }
-
-        if (!$dbman->field_exists($attempts, $rubriccount)) {
-            $dbman->add_field($attempts, $rubriccount);
+        if (!$dbman->field_exists($attempts, $field)) {
+            $dbman->add_field($attempts, $field);
         }
     }
 

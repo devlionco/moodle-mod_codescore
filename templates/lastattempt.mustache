@@ -10,26 +10,9 @@
                 <li>{{#str}} viewdategraded, codescore {{/str}} {{convertedTime}}</li>
                 <li>{{#str}} reportgrade, codescore {{/str}} {{grade}}</li>
                 <li>{{#str}} aigradereport, codescore {{/str}} {{aigrade}}</li>
-                {{#rubric1name}}
-                <li>
-                    {{rubric1name}}: {{rubric1grade}}
-                </li>
-                {{/rubric1name}}
-                {{#rubric2name}}
-                <li>
-                    {{rubric2name}}: {{rubric2grade}} 
-                </li>
-                {{/rubric2name}}
-                {{#rubric3name}}
-                <li>
-                    {{rubric3name}}: {{rubric3grade}}
-                </li>
-                {{/rubric3name}} 
-                {{#rubric4name}}
-                <li>
-                    {{rubric4name}}: {{rubric4grade}}
-                </li>
-                {{/rubric4name}}
+                {{#rubrics}}
+                    <li> {{prompt}} : {{grade}} </li> 
+                {{/rubrics}}
                 {{#formatfeedback}}<li> {{formatfeedback}} </li> {{/formatfeedback}}
                 <li>{{#str}} notesreport, codescore {{/str}} {{studentnotes}}</li>
             {{/isteacher}}

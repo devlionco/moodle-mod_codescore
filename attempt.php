@@ -39,11 +39,21 @@ if ($data = data_submitted()) {
 
     $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
     $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-    
-    $data->rubric1enabled = $moduleinstance->rubric1enabled;
-    $data->rubric2enabled = $moduleinstance->rubric2enabled;
-    $data->rubric3enabled = $moduleinstance->rubric3enabled;
-    $data->rubric4enabled = $moduleinstance->rubric4enabled;
+
+    $moduledata = json_decode($moduleinstance->rubricsobject, true);
+    $config = get_config('codescore');
+    $newrubrics = [];
+
+    foreach ($moduledata as $key => $value) {
+        array_push($newrubrics, array(
+            'name' => $value['name'],
+            'enabled' => $value['enabled'],
+            'maxgrade' => $value['maxgrade'],
+            'grade' => '',
+            'prompt' => $config->{'rubric' . strval(intval($key) + 1) . 'prompt'}
+        ));
+    }
+    $data->rubricsobject = json_encode($newrubrics);
     confirm_sesskey($sesskey);
 
     // Save attempt.

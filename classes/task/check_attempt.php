@@ -77,17 +77,13 @@ class check_attempt extends adhoc_task {
             }
             $attempt->aigrade = $response->grade;
             
-            $attempt->rubric1name = $config->rubric1name;
-            $attempt->rubric1grade = $response->rubric1grade;
+            $rubricsobj = json_decode($attempt->rubricsobject, true);
 
-            $attempt->rubric2name = $config->rubric2name;
-            $attempt->rubric2grade = $response->rubric2grade;
+            foreach ($rubricsobj as $arrkey => $value) {
+                $rubricsobj[$arrkey]['grade'] = $response->grades->{'rubric' . $arrkey . 'grade'};
+            }
 
-            $attempt->rubric3name = $config->rubric3name;
-            $attempt->rubric3grade = $response->rubric3grade;
-
-            $attempt->rubric4name = $config->rubric4name;
-            $attempt->rubric4grade = $response->rubric4grade;
+            $attempt->rubricsobject = json_encode($rubricsobj);
 
             $attempt->feedback = $response->feedback;
             $attempt->output = $response->output;
