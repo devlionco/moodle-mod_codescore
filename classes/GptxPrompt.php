@@ -31,6 +31,7 @@ class GptxPrompt {
     }
 
     private function sendrequest($codescore) {
+        global $DB;
 
         $config = get_config('codescore');
         $key = $config->apikey;
@@ -50,14 +51,35 @@ class GptxPrompt {
             if ($num > $rubricscount) { return '0'; }
             return $grade;
         }
+
         $correctedata = new stdClass();
         $correctedata->solution = $this->attemptData->code;
         $correctedata->lang = $codescore->programminglang;
         $correctedata->task = $codescore->task;
 
         $rubricsprompt = 'An object with grades. Object should be called \'grades\'. In this object should be these variables: \n';
-        $attemptrubrics = json_decode($this->attemptData->rubricsobject, true);
-        foreach ($attemptrubrics as $arrkey => $value) {
+
+        $modulerubrics = json_decode($codescore->rubricsobject, true);
+        $newrubrics = [];
+        
+        foreach ($modulerubrics as $modulekey => $value) {
+            array_push($newrubrics, array(
+                'name' => $value['name'],
+                'enabled' => $value['enabled'],
+                'maxgrade' => $value['maxgrade'],
+                'grade' => '',
+                'prompt' => $config->{'rubric' . strval(intval($modulekey) + 1) . 'prompt'}
+            ));
+        }
+
+        $attempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptData->id]);
+        $attempt->rubricsobject = json_encode($newrubrics);
+        $DB->update_record('codescore_attempts', $attempt);
+
+        $updatedattempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptData->id]);
+        $updatedrubrics = json_decode($updatedattempt->rubricsobject, true);
+
+        foreach ($updatedrubrics as $arrkey => $value) {
             $preparedstring = strval(intval($arrkey) + 1) . " - " . $value['prompt'] . ', from 0 to ' . strval($value['maxgrade']) . 
                 ', variable should be named rubric' . $arrkey . 'grade. \n';
             $rubricsprompt .= $preparedstring;

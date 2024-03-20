@@ -76,8 +76,8 @@ class check_attempt extends adhoc_task {
                 $attempt->grade = $response->grade;
             }
             $attempt->aigrade = $response->grade;
-            
-            $rubricsobj = json_decode($attempt->rubricsobject, true);
+            $updatedattempt = $DB->get_record('codescore_attempts', ['id' => $attempt->id]);
+            $rubricsobj = json_decode($updatedattempt->rubricsobject, true);
 
             foreach ($rubricsobj as $arrkey => $value) {
                 $rubricsobj[$arrkey]['grade'] = $response->grades->{'rubric' . $arrkey . 'grade'};
