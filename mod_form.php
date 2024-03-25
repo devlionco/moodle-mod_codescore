@@ -130,14 +130,14 @@ class mod_codescore_mod_form extends moodleform_mod
 
         for ($i = 1; $i <= $numberofcategories; $i++) {
             $element = 'rubric' . $i . 'maxgrade';
-            $name = get_config('codescore', $element);
 
             $mform->addElement('text', $element, get_config('codescore', 'rubric' . $i . 'name'));
             $mform->addElement('advcheckbox', 'rubric' . $i . 'enabled', '');
             $mform->setType('rubric' . $i . 'enabled', PARAM_INT);
             $mform->setDefault('rubric' . $i . 'enabled', 0);
+            $mform->addHelpButton($element, 'maxgrade_' . $i, 'codescore', '', true);
             $mform->setType($element, PARAM_INT);
-            $mform->setDefault($name, 100 / $numberofcategories);
+            $mform->setDefault($element, 100 / $numberofcategories);
             $mform->getElement($element)->setValue(get_config('codescore', 'maximumgrade' . $i));
         }
 
@@ -184,7 +184,7 @@ class mod_codescore_mod_form extends moodleform_mod
     public function data_preprocessing(&$defaultvalues) {
         parent::data_preprocessing($defaultvalues);
 
-        $rubrics = json_decode($defaultvalues['rubricsobject'], true);
+        $rubrics = isset($defaultvalues['rubricsobject']) ? json_decode($defaultvalues['rubricsobject'], true) : null;
 
         $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
 
