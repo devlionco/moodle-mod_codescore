@@ -307,3 +307,18 @@ function codescore_extend_navigation($codescorenode, $course, $module, $cm) {
  */
 function codescore_extend_settings_navigation($settingsnav, $codescorenode = null) {
 }
+
+/**
+ * Calculates help text for rubrics in localization files.
+ *
+ * @param int $i The rubric number.
+ * @param string $element The rubric element.
+ * @return string.
+ */
+
+function get_rubric_help($i, $element) {
+    if(isset(get_config('codescore')->{"rubric" . $i . $element})) {
+        return get_config('codescore')->{"rubric" . $i . $element};
+    }
+    return '';
+}

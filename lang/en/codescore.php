@@ -25,13 +25,6 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-function get_rubric_help($i, $element) {
-    if(isset(get_config('codescore')->{"rubric" . $i . $element})) {
-        return get_config('codescore')->{"rubric" . $i . $element};
-    }
-    return '';
-}
-
 $string['missingidandcmid'] = 'Missing id and cmid';
 $string['modulename'] = 'Codescore';
 $string['modulename_help'] = 'Codescore helps teacher grade the student\'s code using AI';
