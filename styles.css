@@ -1468,9 +1468,9 @@
     margin-bottom: 20px;
 }
 
-.path-mod-codescore [dir=rtl] .CodeMirror-merge-pane-rightmost {
-    right: 0px;
-    left: auto;
+.path-mod-codescore.dir-rtl .CodeMirror-merge-pane-rightmost {
+    left: 0px;
+    right: auto;
 }
 
 .path-mod-codescore .CodeMirror-merge-scrolllock-wrap {
