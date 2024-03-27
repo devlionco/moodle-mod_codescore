@@ -66,7 +66,7 @@ foreach ($data->attempts as &$value) {
     $name = fullname($user);
     $value->username = $name;
 }
-$data->title = get_string('studentsreports', 'codescore');
+$data->title = get_string('studentsreports', 'mod_codescore');
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
 $data->hasAttempts = $attempts ? true : false;
 echo $OUTPUT->render_from_template('mod_codescore/reports', $data);

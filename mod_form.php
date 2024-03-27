@@ -126,23 +126,22 @@ class mod_codescore_mod_form extends moodleform_mod
         // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 
-        $numberofcategories = intval(get_config('mod_codescore', 'rubricscount')) + 1;
+        $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
 
         for ($i = 1; $i <= $numberofcategories; $i++) {
             $element = 'rubric' . $i . 'maxgrade';
 
-            $mform->addElement('text', $element, get_config('mod_codescore', 'rubric' . $i . 'name'));
+            $mform->addElement('text', $element, get_config('mod_codescore')->{"rubric" . $i ."prompt"});
             $mform->addElement('advcheckbox', 'rubric' . $i . 'enabled', '');
             $mform->setType('rubric' . $i . 'enabled', PARAM_INT);
             $mform->setDefault('rubric' . $i . 'enabled', 0);
-            $mform->addHelpButton($element, 'maxgrade_' . $i, 'codescore', '', true);
             $mform->setType($element, PARAM_INT);
             $mform->setDefault($element, 100 / $numberofcategories);
             $mform->getElement($element)->setValue(get_config('mod_codescore', 'maximumgrade' . $i));
         }
 
         $checkgrading = function () {
-            $numberofcategories = intval(get_config('mod_codescore', 'rubricscount')) + 1;
+            $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
             $totalgrade = 0;
             for ($i = 1; $i <= $numberofcategories; $i++) {
                 $mform = $this->_form;
@@ -186,7 +185,7 @@ class mod_codescore_mod_form extends moodleform_mod
 
         $rubrics = isset($defaultvalues['rubricsobject']) ? json_decode($defaultvalues['rubricsobject'], true) : null;
 
-        $numberofcategories = intval(get_config('mod_codescore', 'rubricscount')) + 1;
+        $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
 
         $config = get_config('mod_codescore');
 

@@ -72,27 +72,6 @@ $string['aifeedback'] = 'AI feedback:';
 $string['noinstances'] = 'There are no CodeScore instances';
 $string['modgradeswarn'] = 'Total sum of active grades should be equal to 100';
 
-$string['maxgrade_1'] = get_rubric_help(1, 'name');
-$string['maxgrade_1_help'] = get_rubric_help(1, 'prompt');
-$string['maxgrade_2'] = get_rubric_help(2, 'name');
-$string['maxgrade_2_help'] = get_rubric_help(2, 'prompt');
-$string['maxgrade_3'] = get_rubric_help(3, 'name');
-$string['maxgrade_3_help'] = get_rubric_help(3, 'prompt');
-$string['maxgrade_4'] = get_rubric_help(4, 'name');
-$string['maxgrade_4_help'] = get_rubric_help(4, 'prompt');
-$string['maxgrade_5'] = get_rubric_help(5, 'name');
-$string['maxgrade_5_help'] = get_rubric_help(5, 'prompt');
-$string['maxgrade_6'] = get_rubric_help(6, 'name');
-$string['maxgrade_6_help'] = get_rubric_help(6, 'prompt');
-$string['maxgrade_7'] = get_rubric_help(7, 'name');
-$string['maxgrade_7_help'] = get_rubric_help(7, 'prompt');
-$string['maxgrade_8'] = get_rubric_help(8, 'name');
-$string['maxgrade_8_help'] = get_rubric_help(8, 'prompt');
-$string['maxgrade_9'] = get_rubric_help(9, 'name');
-$string['maxgrade_9_help'] = get_rubric_help(9, 'prompt');
-$string['maxgrade_10'] = get_rubric_help(10, 'name');
-$string['maxgrade_10_help'] = get_rubric_help(10, 'prompt');
-
 // Admin settings
 $string['apikey'] = 'API Key';
 $string['apikeyexplain'] = 'The key to access AI API. The free version allows you 10 prompt executions per week. To get the Pro version, contact us at <a href="mailto:info@devlion.co">info@devlion.co</a>';
