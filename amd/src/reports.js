@@ -101,21 +101,34 @@ export const init = async(data) => {
     let table = new Tabulator("#tableWrapper", {
         data: tabledata, //assign data to table
         layout: "fitColumns", //fit columns to width of table (optional)
+        textDirection: "ltr",
         columns: [ //Define Table Columns
             {
-                title: "", field: "deletebtn", width: 10, formatter: deleteFormatter,
-                hozAlign: "center", vertAlign: 'center', headerSort: false
+                title: "", field: "deletebtn", widthGrow: 0.1, formatter: deleteFormatter,
+                hozAlign: "center", vertAlign: 'center', headerSort: false, resizable: false
             },
-            { title: await getString('tablename', 'codescore'), field: "username", width: 150, formatter: link },
-            { title: await getString('startedat', 'codescore'), field: "timestart", hozAlign: "left", formatter: dateFormatter },
-            { title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter },
-            { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
-            { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
-            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter },
-            { title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter },
+            {
+                title: await getString('tablename', 'codescore'), field: "username",
+                formatter: link, resizable: false, widthGrow: 1.5},
+            {
+                title: await getString('startedat', 'codescore'),
+                field: "timestart", formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5
+            },
+            {
+                title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5},
+            {
+                title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5},
+            {
+                title: await getString('tableteachergrade', 'codescore'),
+                field: "grade", formatter: gradeFormatter, resizable: false},
+            {title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter, resizable: false},
+            {title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter, resizable: false},
         ],
     });
-    //Event listeners
+    // Event listeners
 
     table.on("renderComplete", () => {
         document.querySelectorAll('.tabulatorSelect').forEach((el) => {
