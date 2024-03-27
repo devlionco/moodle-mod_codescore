@@ -30,7 +30,7 @@ export const init = async () => {
     select.addEventListener('change', () => {
         document.querySelector('#adminsettings [type=submit]').click();
     });
-    const warntext = await getString('gradewarn', 'codescore');
+    const warntext = await getString('gradewarn', 'mod_codescore');
     $('#page-content .btn-primary').after(`<span class="mt-2 text-danger d-none" id="grade-warn">${warntext}<span>`);
 
     let gradeElements = $('[id^="id_s_mod_codescore_maximumgrade"]');

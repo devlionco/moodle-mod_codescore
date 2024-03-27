@@ -69,9 +69,9 @@ export const init = async(data) => {
         return Number(cell.getValue());
     };
 
-    let inprogress = await getString('submittedstatus', 'codescore');
-    let finished = await getString('finishedstatus', 'codescore');
-    let pending = await getString('pendingstatus', 'codescore');
+    let inprogress = await getString('submittedstatus', 'mod_codescore');
+    let finished = await getString('finishedstatus', 'mod_codescore');
+    let pending = await getString('pendingstatus', 'mod_codescore');
 
     const statusFormatter = (cell) => {
         let result;
@@ -92,7 +92,7 @@ export const init = async(data) => {
     if (!data.attempts[0]) {
         document.getElementsByClassName('reportTitle')[0].className += ' hidden';
         document.getElementById('tableWrapper').className += ' hidden';
-        let noReports = await getString('noreports', 'codescore');
+        let noReports = await getString('noreports', 'mod_codescore');
         if (document.getElementById('page-mod-codescore-reports')) {
             document.querySelector("[role=main]").innerHTML = `<h3>${noReports}</h3>`;
         }
@@ -108,24 +108,30 @@ export const init = async(data) => {
                 hozAlign: "center", vertAlign: 'center', headerSort: false, resizable: false
             },
             {
-                title: await getString('tablename', 'codescore'), field: "username",
+                title: await getString('tablename', 'mod_codescore'), field: "username",
                 formatter: link, resizable: false, widthGrow: 1.5},
             {
-                title: await getString('startedat', 'codescore'),
+                title: await getString('startedat', 'mod_codescore'),
                 field: "timestart", formatter: dateFormatter, resizable: false,
                 widthGrow: 1.5
             },
             {
-                title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter, resizable: false,
+                title: await getString('timefinish', 'mod_codescore'), field: "timefinish",
+                formatter: dateFormatter, resizable: false,
                 widthGrow: 1.5},
             {
-                title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter, resizable: false,
+                title: await getString('timegraded', 'mod_codescore'),
+                field: "timegraded", formatter: dateFormatter, resizable: false,
                 widthGrow: 1.5},
             {
-                title: await getString('tableteachergrade', 'codescore'),
+                title: await getString('tableteachergrade', 'mod_codescore'),
                 field: "grade", formatter: gradeFormatter, resizable: false},
-            {title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter, resizable: false},
-            {title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter, resizable: false},
+            {
+                title: await getString('tableaigrade', 'mod_codescore'),
+                field: "aigrade", formatter: aigradeFormatter, resizable: false},
+            {
+                title: await getString('statusattempt', 'mod_codescore'),
+                field: "state", formatter: statusFormatter, resizable: false},
         ],
     });
     // Event listeners
