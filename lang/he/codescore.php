@@ -70,18 +70,12 @@ $string['no'] = 'לא';
 $string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמידים';
 $string['aifeedback'] = 'AI משוב:';
 $string['noinstances'] = 'אין מופעי CodeScore';
-$string['modgradeswarn'] = 'סך הכל ציונים פעילים צריך להיות שווה ל-100';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';
 $string['apikeyexplain'] = 'המפתח לגישה ל-API של הבינה המלאכותית. הגרסה החינמית מאפשרת 10 הרצות בשבוע. לקבלת גרסת ה-Pro, צרו קשר עם <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'כתובת URL של API';
 $string['apiurlexplain'] = 'כתובת ה-URL לגישה ל-API של הבינה המלאכותית';
-$string['adminheading'] = 'רובריקות';
-$string['adminheadingexplain'] = 'לשנות מדדי הציון';
-$string['rubricscount'] = 'מספר מדדי הציון';
-$string['rubricblock'] = 'כּוֹתֶרֶת';
-$string['gradewarn'] = 'סך כל הציונים צריך להיות שווה ל-100';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';
@@ -131,7 +125,10 @@ $string['submittedstatus'] = "הוגש";
 $string['taskoverview'] = 'צפיה במטלה';
 $string['reportlang'] = 'שפת תכנות: ';
 $string['taskreport'] = 'מטלה: ';
-$string['maxgrade'] = 'מקסימום עבור';
+$string['maxgradesyntax'] = 'ניקוד מקסימלי עבור סינטקס: ';
+$string['maxrightoutput'] = 'ניקוד מקסימלי עבור פלט: ';
+$string['maxproblemsolution'] = 'ניקוד מקסימלי עבור פתרון נכון: ';
+$string['maxcovering'] = 'ניקוד מקסימלי עבור כיסוי כל המקרים האפשריים: ';
 $string['reportname'] = 'דוח';
 $string['reportgrade'] = 'ציון: ';
 $string['aigradereport'] = 'ניקוד AI:';
