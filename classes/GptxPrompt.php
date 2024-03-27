@@ -33,7 +33,7 @@ class GptxPrompt {
     private function sendrequest($codescore) {
         global $DB;
 
-        $config = get_config('codescore');
+        $config = get_config('mod_codescore');
         $key = $config->apikey;
         $url = $config->apiurl;
 
@@ -46,7 +46,7 @@ class GptxPrompt {
         }
 
         function get_max_grade($grade, $num) {
-            $config = get_config('codescore');
+            $config = get_config('mod_codescore');
             $rubricscount = $config->rubricscount + 1;
             if ($num > $rubricscount) { return '0'; }
             return $grade;

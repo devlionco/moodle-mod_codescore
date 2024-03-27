@@ -39,7 +39,7 @@ class check_attempt extends adhoc_task {
         require_once($CFG->dirroot . "/mod/codescore/classes/GptxPrompt.php");
         $data = $this->get_custom_data();
 
-        $config = get_config('codescore');
+        $config = get_config('mod_codescore');
         $key = $config->apikey;
         $tt = new \GptxPrompt($data);
         $attempts = $DB->get_records('codescore_attempts', ['id' => $data->id]);

@@ -317,8 +317,8 @@ function codescore_extend_settings_navigation($settingsnav, $codescorenode = nul
  */
 
 function get_rubric_help($i, $element) {
-    if(isset(get_config('codescore')->{"rubric" . $i . $element})) {
-        return get_config('codescore')->{"rubric" . $i . $element};
+    if(isset(get_config('mod_codescore')->{"rubric" . $i . $element})) {
+        return get_config('mod_codescore')->{"rubric" . $i . $element};
     }
     return '';
 }

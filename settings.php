@@ -48,7 +48,7 @@ if ($hassiteconfig) {
         );
         $settings->add(
             new admin_setting_configpasswordunmask(
-                'codescore/apikey',
+                'mod_codescore/apikey',
                 get_string('apikey', 'mod_codescore'),
                 get_string('apikeyexplain', 'mod_codescore'),
                 '78943f4e0d975b797de17bc980ee402037d6d2a3',
@@ -57,7 +57,7 @@ if ($hassiteconfig) {
         );
         $settings->add(
             new admin_setting_configtext(
-                'codescore/apiurl',
+                'mod_codescore/apiurl',
                 get_string('apiurl', 'mod_codescore'),
                 get_string('apiurlexplain', 'mod_codescore'),
                 'https://apireprot.learnapp.io/LionAI/index.php',
@@ -66,7 +66,7 @@ if ($hassiteconfig) {
         );
         $settings->add(
             new admin_setting_configmultiselect(
-                'codescore/alowedlanguages',
+                'mod_codescore/alowedlanguages',
                 get_string('alowedlanguages', 'mod_codescore'),
                 null,
                 array('0', '1', '2', '3', '4', '5', '6', '7'),
@@ -74,9 +74,9 @@ if ($hassiteconfig) {
             )
         );
 
-        $settings->add(new admin_setting_configselect('codescore/rubricscount', get_string('rubricscount', 'mod_codescore'), '', 3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
+        $settings->add(new admin_setting_configselect('mod_codescore/rubricscount', get_string('rubricscount', 'mod_codescore'), '', 3, [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]));
 
-        $numberofcategories = intval(get_config('codescore', 'rubricscount')) + 1;
+        $numberofcategories = intval(get_config('mod_codescore', 'rubricscount')) + 1;
 
         $defaults = array(
             1 => get_string('syntaxgradetable', 'mod_codescore'),
@@ -99,7 +99,7 @@ if ($hassiteconfig) {
             // Set rubric name and tag
             $settings->add(
                 new admin_setting_configtext(
-                    'codescore/rubric' . $i . 'name',
+                    'mod_codescore/rubric' . $i . 'name',
                     get_string('rubricname', 'mod_codescore', $i),
                     '',
                     isset($defaults[$i]) ? $defaults[$i] : '',
@@ -108,7 +108,7 @@ if ($hassiteconfig) {
             );
             $settings->add(
                 new admin_setting_configtext(
-                    'codescore/rubric' . $i . 'prompt',
+                    'mod_codescore/rubric' . $i . 'prompt',
                     get_string('rubricprompt', 'mod_codescore', $i),
                     '',
                     $i < 5 ? get_string('rubric' . $i . 'prompt', 'mod_codescore') : '',
@@ -122,7 +122,7 @@ if ($hassiteconfig) {
             }
 
             $setting = new admin_setting_configtext(
-                'codescore/' . 'maximumgrade' . $i,
+                'mod_codescore/' . 'maximumgrade' . $i,
                 get_string('maximumgrade'),
                 '', 
                 $defaultsinglevalue,
