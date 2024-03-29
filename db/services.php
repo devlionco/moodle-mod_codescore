@@ -25,7 +25,7 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-require_once('../../config.php');
+require_once('../../../config.php');
 
 $functions = [
     'mod_codescore_delete_attempts' => [
