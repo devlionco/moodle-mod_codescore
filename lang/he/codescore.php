@@ -70,12 +70,24 @@ $string['no'] = 'לא';
 $string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמידים';
 $string['aifeedback'] = 'AI משוב:';
 $string['noinstances'] = 'אין מופעי CodeScore';
+$string['modgradeswarn'] = 'סך הניקוד צריך להיות שווה ל-100';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';
 $string['apikeyexplain'] = 'המפתח לגישה ל-API של הבינה המלאכותית. הגרסה החינמית מאפשרת 10 הרצות בשבוע. לקבלת גרסת ה-Pro, צרו קשר עם <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'כתובת URL של API';
 $string['apiurlexplain'] = 'כתובת ה-URL לגישה ל-API של הבינה המלאכותית';
+$string['adminheading'] = 'רובריקות';
+$string['adminheadingexplain'] = 'לשנות מדדי הציון';
+$string['rubricscount'] = 'מספר מדדי הציון';
+$string['rubricblock'] = 'כּוֹתֶרֶת';
+$string['rubricname'] = 'שם הרובריקה';
+$string['rubricprompt'] = 'ההנחיה של הרובריקה';
+$string['rubric1prompt'] = 'ציון עבור תקינות הסינטקס של התלמיד';
+$string['rubric2prompt'] = 'ציון עבור הפלט של הקוד של התלמיד';
+$string['rubric3prompt'] = 'ציון עבור פתרון קוד נכון';
+$string['rubric4prompt'] = 'ציון עבור קוד שמכסה את כל המקריים האפשריים';
+$string['gradewarn'] = 'סך הניקוד צריך להיות שווה ל-100';
 
 // View
 $string['viewreportsbtn'] = 'צפה בהגשות';
