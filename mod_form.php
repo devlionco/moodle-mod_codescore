@@ -43,7 +43,7 @@ class mod_codescore_mod_form extends moodleform_mod
      */
     public function definition()
     {
-        global $CFG;
+        global $CFG, $OUTPUT;
 
         $mform = $this->_form;
 
@@ -139,7 +139,7 @@ class mod_codescore_mod_form extends moodleform_mod
             $mform->setDefault($element, 100 / $numberofcategories);
             $mform->getElement($element)->setValue(get_config('mod_codescore', 'maximumgrade' . $i));
         }
-
+        $mform->addElement('html', $OUTPUT->render_from_template('mod_codescore/checkall', []));
         $checkgrading = function () {
             $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
             $totalgrade = 0;

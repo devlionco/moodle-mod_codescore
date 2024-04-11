@@ -71,6 +71,7 @@ $string['showfeedback'] = 'Show AI feedback to students';
 $string['aifeedback'] = 'AI feedback:';
 $string['noinstances'] = 'There are no CodeScore instances';
 $string['modgradeswarn'] = 'Total sum of active grades should be equal to 100';
+$string['checkall'] = 'Check all';
 
 // Admin settings
 $string['apikey'] = 'API Key';
