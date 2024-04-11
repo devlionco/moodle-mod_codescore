@@ -134,6 +134,13 @@ $langobject = [
 
 ];
 
+function filterrubrics ($var) {
+     return $var["enabled"] !== 0;
+}
+
+$jsonrubrics = json_decode($attempt[$index]->rubricsobject, true);
+$jsonrubrics = array_filter($jsonrubrics, 'filterrubrics');
+
 $attempt[$index]->cmid = $id;
 $attempt[$index]->grade = intval($attempt[$index]->grade);
 $attempt[$index]->aigrade = intval($attempt[$index]->aigrade);
@@ -142,7 +149,7 @@ $attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;
 $attempt[$index]->name = $name;
-$attempt[$index]->rubrics = json_decode($attempt[$index]->rubricsobject, true);
+$attempt[$index]->rubrics = $jsonrubrics;
 
 echo $OUTPUT->render_from_template('mod_codescore/report', $attempt[$index]);
 

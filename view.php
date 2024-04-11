@@ -164,7 +164,13 @@ if ($lastrenderdata) {
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
     $lastrenderdata->isteacher = $isteacher;
-    $lastrenderdata->rubrics = json_decode($lastrenderdata->rubricsobject, true);
+    function filterrubrics ($var) {
+        return $var["enabled"] !== 0;
+    }
+   
+    $jsonrubrics = json_decode($lastrenderdata->rubricsobject, true);
+    $jsonrubrics = array_filter($jsonrubrics, 'filterrubrics');
+    $lastrenderdata->rubrics = $jsonrubrics;
 }
 
 if ($attempts) {
