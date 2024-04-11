@@ -45,13 +45,6 @@ class GptxPrompt {
             $key = '78943f4e0d975b797de17bc980ee402037d6d2a3';
         }
 
-        function get_max_grade($grade, $num) {
-            $config = get_config('mod_codescore');
-            $rubricscount = $config->rubricscount + 1;
-            if ($num > $rubricscount) { return '0'; }
-            return $grade;
-        }
-
         $correctedata = new stdClass();
         $correctedata->solution = $this->attemptData->code;
         $correctedata->lang = $codescore->programminglang;
