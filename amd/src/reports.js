@@ -206,7 +206,7 @@ export const init = async(data) => {
     }
 
     const modCheckboxes = (value) => {
-        const checkboxes = Array.from(document.getElementsByClassName('tabulatorselect'));
+        const checkboxes = Array.from(document.getElementsByClassName('tabulatorSelect'));
         checkboxes.forEach((el) => {
             el.checked = value;
         });
