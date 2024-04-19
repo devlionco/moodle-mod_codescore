@@ -136,29 +136,40 @@ export const init = async(data) => {
     });
     // Event listeners
 
+    const modifyBtns = () => {
+        const deleteBtn = document.getElementById('deleteAttempts');
+        const regradeBtn = document.getElementById('regradeAttempts');
+        if (!table.getSelectedData()[0]) {
+            deleteBtn.className = 'disabled btn btn-secondary mb-2';
+            regradeBtn.className = 'disabled btn btn-secondary mb-2';
+        }
+        else {
+            deleteBtn.className = 'btn btn-secondary mb-2';
+            regradeBtn.className = 'btn btn-secondary mb-2';
+        }
+    };
+
     table.on("renderComplete", () => {
         document.querySelectorAll('.tabulatorSelect').forEach((el) => {
             el.addEventListener('click', (e) => {
+                if (!document.querySelectorAll('.tabulatorSelect:not(:checked)')[0]) {
+                    checkallbox.checked = true;
+                }
                 e.stopPropagation();
                 const id = e.target.dataset.id;
                 if (e.target.checked) {
                     table.selectRow(Number(id));
                 } else {
                     table.deselectRow(Number(id));
+                    checkallbox.checked = false;
                 }
-                const deleteBtn = document.getElementById('deleteAttempts');
-                const regradeBtn = document.getElementById('regradeAttempts');
-                if (!table.getSelectedData()[0]) {
-                    deleteBtn.className = 'disabled btn btn-secondary mb-2';
-                    regradeBtn.className = 'disabled btn btn-secondary mb-2';
-                }
-                else {
-                    deleteBtn.className = 'btn btn-secondary mb-2';
-                    regradeBtn.className = 'btn btn-secondary mb-2';
-                }
+                modifyBtns();
             });
         });
     });
+
+    const checkallbox = document.getElementById('checkallcheckbox');
+
     document.getElementById('regradeAttempts').addEventListener('click', async () => {
         // eslint-disable-next-line curly
         if (!table.getSelectedData()) return;
@@ -193,4 +204,22 @@ export const init = async(data) => {
             table.getColumns()[0].delete();
         });
     }
+
+    const modCheckboxes = (value) => {
+        const checkboxes = Array.from(document.getElementsByClassName('tabulatorselect'));
+        checkboxes.forEach((el) => {
+            el.checked = value;
+        });
+    };
+
+    checkallbox.addEventListener('change', () => {
+        modCheckboxes(checkallbox.checked);
+        if (checkallbox.checked) {
+            table.selectRow('visible');
+            modifyBtns();
+            return;
+        }
+        table.deselectRow('visible');
+        modifyBtns();
+    });
 };
