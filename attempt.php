@@ -35,6 +35,25 @@ if ($data = data_submitted()) {
     $sesskey = optional_param('sesskey', '', PARAM_RAW);
     $timestart = optional_param('timestart', '', PARAM_RAW);
     $data->timestart = $timestart;
+    $data->rubriccount = get_config('mod_codescore', 'rubricscount');
+
+    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
+
+    $moduledata = json_decode($moduleinstance->rubricsobject, true);
+    $config = get_config('mod_codescore');
+    $newrubrics = [];
+
+    foreach ($moduledata as $key => $value) {
+        array_push($newrubrics, array(
+            'name' => $value['name'],
+            'enabled' => $value['enabled'],
+            'maxgrade' => $value['maxgrade'],
+            'grade' => '',
+            'prompt' => $config->{'rubric' . strval(intval($key) + 1) . 'prompt'}
+        ));
+    }
+    $data->rubricsobject = json_encode($newrubrics);
     confirm_sesskey($sesskey);
 
     // Save attempt.

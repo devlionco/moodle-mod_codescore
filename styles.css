@@ -1468,11 +1468,53 @@
     margin-bottom: 20px;
 }
 
-.path-mod-codescore [dir=rtl] .CodeMirror-merge-pane-rightmost {
-    right: 0px;
-    left: auto;
+.path-mod-codescore.dir-rtl .CodeMirror-merge-pane-rightmost {
+    left: 0px;
+    right: auto;
 }
 
 .path-mod-codescore .CodeMirror-merge-scrolllock-wrap {
     display: none;
+}
+
+#page-admin-setting-modsettingcodescore .save-disabled {
+    opacity: .65;
+    pointer-events: none;
+}
+
+#page-admin-setting-modsettingcodescore #grade-warn {
+    text-wrap: nowrap;
+}
+#page-mod-codescore-mod #id_gradingoptionscontainer {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap;
+}
+
+#page-mod-codescore-mod #id_gradingoptionscontainer > div {
+    flex: 95%;
+}
+
+#page-mod-codescore-mod #id_gradingoptionscontainer #checkall {
+    cursor: pointer;
+}
+
+#page-mod-codescore-mod #id_gradingoptionscontainer > div .form-inline {
+    align-items: center !important;
+}
+#page-mod-codescore-mod #id_gradingoptionscontainer > div:nth-child(2n) {
+    flex: 5%;
+    margin-left: 0;
+    margin-bottom: 30px;
+}
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(2),
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(3),
+#page-mod-codescore-mod #id_gradingoptionscontainer .form-group:nth-last-child(4) {
+    flex: 100%;
+    margin-bottom: 1rem;
+    margin-left: 35px;
+}
+
+#page-mod-codescore-reports .checkallbox {
+    margin-left: 14px;
 }

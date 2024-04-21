@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/course/moodleform_mod.php');
+require_once ($CFG->dirroot . '/course/moodleform_mod.php');
 
 /**
  * Module instance settings form.
@@ -33,15 +33,17 @@ require_once($CFG->dirroot . '/course/moodleform_mod.php');
  * @copyright   2024 Devlion <info@devlion.co>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_codescore_mod_form extends moodleform_mod {
+class mod_codescore_mod_form extends moodleform_mod
+{
 
     public static $datefieldoptions = array('optional' => true);
 
     /**
      * Defines forms elements
      */
-    public function definition() {
-        global $CFG;
+    public function definition()
+    {
+        global $CFG, $OUTPUT;
 
         $mform = $this->_form;
 
@@ -52,7 +54,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('text', 'name', get_string('name'), array('size' => '48'));
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
-        if (!empty($CFG->formatstringstriptags)) {
+        if (!empty ($CFG->formatstringstriptags)) {
             $mform->setType('name', PARAM_TEXT);
         } else {
             $mform->setType('name', PARAM_CLEANHTML);
@@ -79,7 +81,7 @@ class mod_codescore_mod_form extends moodleform_mod {
             '12' => 'Assembly',
         );
 
-        $alowedlanguages = get_config('codescore')->alowedlanguages;
+        $alowedlanguages = get_config('mod_codescore')->alowedlanguages;
         $alowedlanguages = explode(',', $alowedlanguages);
 
         foreach ($langs as $key => $lang) {
@@ -89,7 +91,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         }
 
         $mform->addElement('select', 'programminglang', get_string('programminglang', 'codescore'), $langoptions);
-        $mform->getElement('programminglang')->addOption('Select...', '13', array( 'disabled' => 'disabled' ));
+        $mform->getElement('programminglang')->addOption('Select...', '13', array('disabled' => 'disabled'));
         $mform->setDefault('programminglang', '13');
 
         $checkvalid = function ($val) {
@@ -105,47 +107,50 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('header', 'timing', get_string('timing', 'codescore'));
 
         // Open and close dates.
-        $mform->addElement('date_time_selector', 'timeopened', get_string('codescoreopen', 'codescore'),
-                self::$datefieldoptions);
+        $mform->addElement(
+            'date_time_selector',
+            'timeopened',
+            get_string('codescoreopen', 'codescore'),
+            self::$datefieldoptions
+        );
         $mform->setType('timeopened', PARAM_INT);
         $mform->addHelpButton('timeopened', 'codescoreclose', 'codescore');
 
-        $mform->addElement('date_time_selector', 'timeclosed', get_string('codescoreclose', 'codescore'),
-                self::$datefieldoptions);
+        $mform->addElement(
+            'date_time_selector',
+            'timeclosed',
+            get_string('codescoreclose', 'codescore'),
+            self::$datefieldoptions
+        );
         $mform->setType('timeclosed', PARAM_INT);
         // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 
-        $mform->addElement('text', 'syntaxgrading', get_string('syntaxgrade', 'codescore'));
-        $mform->setType('syntaxgrading', PARAM_INT);
-        $mform->setDefault('syntaxgrading', 10);
-        $mform->addHelpButton('syntaxgrading', 'syntaxgrade', 'codescore');
+        $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
 
-        $mform->addElement('text', 'outputgrading', get_string('correctoutput', 'codescore'));
-        $mform->setType('outputgrading', PARAM_INT);
-        $mform->setDefault('outputgrading', 60);
-        $mform->addHelpButton('outputgrading', 'correctoutput', 'codescore');
+        for ($i = 1; $i <= $numberofcategories; $i++) {
+            $element = 'rubric' . $i . 'maxgrade';
 
-        $mform->addElement('text', 'problemsolutiongrading', get_string('correctsolution', 'codescore'));
-        $mform->setType('problemsolutiongrading', PARAM_INT);
-        $mform->setDefault('problemsolutiongrading', 10);
-        $mform->addHelpButton('problemsolutiongrading', 'correctsolution', 'codescore');
-
-        $mform->addElement('text', 'allcasesgrading', get_string('allcases', 'codescore'));
-        $mform->setType('allcasesgrading', PARAM_INT);
-        $mform->setDefault('allcasesgrading', 20);
-        $mform->addHelpButton('allcasesgrading', 'allcases', 'codescore');
-
-        $checkgrading = function() {
-            $mform = $this->_form;
-            $syntaxvalue = (int)$mform->getElement('syntaxgrading')->_attributes['value'];
-            $outputvalue = (int)$mform->getElement('outputgrading')->_attributes['value'];
-            $solutionvalue = (int)$mform->getElement('problemsolutiongrading')->_attributes['value'];
-            $casesvalue = (int)$mform->getElement('allcasesgrading')->_attributes['value'];
-            if ($syntaxvalue + $outputvalue + $solutionvalue + $casesvalue !== 100) {
-                return false;
+            $mform->addElement('text', $element, get_config('mod_codescore')->{"rubric" . $i ."prompt"});
+            $mform->addElement('advcheckbox', 'rubric' . $i . 'enabled', '');
+            $mform->setType('rubric' . $i . 'enabled', PARAM_INT);
+            $mform->setDefault('rubric' . $i . 'enabled', 0);
+            $mform->setType($element, PARAM_INT);
+            $mform->setDefault($element, 100 / $numberofcategories);
+            $mform->getElement($element)->setValue(get_config('mod_codescore', 'maximumgrade' . $i));
+        }
+        $mform->addElement('html', $OUTPUT->render_from_template('mod_codescore/checkall', []));
+        $checkgrading = function () {
+            $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
+            $totalgrade = 0;
+            for ($i = 1; $i <= $numberofcategories; $i++) {
+                $mform = $this->_form;
+                $element = 'rubric' . $i . 'maxgrade';
+                if ($mform->getElement('rubric' . $i . 'enabled')->_currentValue === 1) {
+                    $totalgrade += (int) $mform->getElement($element)->_attributes['value'];
+                }
             }
-            return true;
+            return $totalgrade === 100;
         };
 
         $mform->addElement('advcheckbox', 'autograde', get_string('autograde', 'codescore'));
@@ -154,7 +159,7 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
         $mform->setDefault('showfeedback', true);
 
-        $mform->addRule('allcasesgrading', 'Total sum of grades should be equal to 100', 'callback', $checkgrading, 'server');
+        $mform->addRule('rubric' . $numberofcategories . 'maxgrade', get_string('modgradeswarn', 'codescore'), 'callback', $checkgrading, 'server');
 
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);
@@ -167,5 +172,53 @@ class mod_codescore_mod_form extends moodleform_mod {
         // Add standard buttons.
         $this->add_action_buttons();
 
+    }
+
+    /**
+     * Set up the completion checkbox which is not part of standard data.
+     *
+     * @param array $defaultvalues
+     *
+     */
+    public function data_preprocessing(&$defaultvalues) {
+        parent::data_preprocessing($defaultvalues);
+
+        $rubrics = isset($defaultvalues['rubricsobject']) ? json_decode($defaultvalues['rubricsobject'], true) : null;
+
+        $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
+
+        $config = get_config('mod_codescore');
+
+        for ($i = 1; $i <= $numberofcategories; $i++) {
+            $element = 'rubric' . $i . 'maxgrade';
+            $defaultvalues[$element] = isset($rubrics[$i - 1]) ? $rubrics[$i - 1]['maxgrade'] : $config->{'maximumgrade' . $i};
+            if(isset($rubrics[$i - 1])) {
+                $defaultvalues['rubric' . $i . 'enabled'] = $rubrics[$i - 1]['enabled'];
+            }
+        }
+    }
+
+    /**
+     * Allows module to modify the data returned by form get_data().
+     * This method is also called in the bulk activity completion form.
+     *
+     * Only available on moodleform_mod.
+     *
+     * @param stdClass $data the form data to be modified.
+     */
+    public function data_postprocessing($data)
+    {
+        parent::data_postprocessing($data);
+        $rubricsdata = array();
+        for ($i = 1; isset ($data->{'rubric' . $i . 'maxgrade'}); $i++) {
+            $config = get_config('mod_codescore');
+            array_push($rubricsdata, array(
+                'name' => $config->{'rubric' . $i . 'name'},
+                'maxgrade' => $data->{'rubric' . $i . 'maxgrade'},
+                'enabled' => $data->{'rubric' . $i . 'enabled'},
+            )
+            );
+        }
+        $data->rubricsobject = json_encode($rubricsdata);
     }
 }

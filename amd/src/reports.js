@@ -69,9 +69,9 @@ export const init = async(data) => {
         return Number(cell.getValue());
     };
 
-    let inprogress = await getString('submittedstatus', 'codescore');
-    let finished = await getString('finishedstatus', 'codescore');
-    let pending = await getString('pendingstatus', 'codescore');
+    let inprogress = await getString('submittedstatus', 'mod_codescore');
+    let finished = await getString('finishedstatus', 'mod_codescore');
+    let pending = await getString('pendingstatus', 'mod_codescore');
 
     const statusFormatter = (cell) => {
         let result;
@@ -92,7 +92,7 @@ export const init = async(data) => {
     if (!data.attempts[0]) {
         document.getElementsByClassName('reportTitle')[0].className += ' hidden';
         document.getElementById('tableWrapper').className += ' hidden';
-        let noReports = await getString('noreports', 'codescore');
+        let noReports = await getString('noreports', 'mod_codescore');
         if (document.getElementById('page-mod-codescore-reports')) {
             document.querySelector("[role=main]").innerHTML = `<h3>${noReports}</h3>`;
         }
@@ -101,45 +101,75 @@ export const init = async(data) => {
     let table = new Tabulator("#tableWrapper", {
         data: tabledata, //assign data to table
         layout: "fitColumns", //fit columns to width of table (optional)
+        textDirection: "ltr",
         columns: [ //Define Table Columns
             {
-                title: "", field: "deletebtn", width: 10, formatter: deleteFormatter,
-                hozAlign: "center", vertAlign: 'center', headerSort: false
+                title: "", field: "deletebtn", widthGrow: 0.1, formatter: deleteFormatter,
+                hozAlign: "center", vertAlign: 'center', headerSort: false, resizable: false
             },
-            { title: await getString('tablename', 'codescore'), field: "username", width: 150, formatter: link },
-            { title: await getString('startedat', 'codescore'), field: "timestart", hozAlign: "left", formatter: dateFormatter },
-            { title: await getString('timefinish', 'codescore'), field: "timefinish", formatter: dateFormatter },
-            { title: await getString('timegraded', 'codescore'), field: "timegraded", formatter: dateFormatter },
-            { title: await getString('tableteachergrade', 'codescore'), field: "grade", formatter: gradeFormatter },
-            { title: await getString('tableaigrade', 'codescore'), field: "aigrade", formatter: aigradeFormatter },
-            { title: await getString('statusattempt', 'codescore'), field: "state", formatter: statusFormatter },
+            {
+                title: await getString('tablename', 'mod_codescore'), field: "username",
+                formatter: link, resizable: false, widthGrow: 1.5},
+            {
+                title: await getString('startedat', 'mod_codescore'),
+                field: "timestart", formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5
+            },
+            {
+                title: await getString('timefinish', 'mod_codescore'), field: "timefinish",
+                formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5},
+            {
+                title: await getString('timegraded', 'mod_codescore'),
+                field: "timegraded", formatter: dateFormatter, resizable: false,
+                widthGrow: 1.5},
+            {
+                title: await getString('tableteachergrade', 'mod_codescore'),
+                field: "grade", formatter: gradeFormatter, resizable: false},
+            {
+                title: await getString('tableaigrade', 'mod_codescore'),
+                field: "aigrade", formatter: aigradeFormatter, resizable: false},
+            {
+                title: await getString('statusattempt', 'mod_codescore'),
+                field: "state", formatter: statusFormatter, resizable: false},
         ],
     });
-    //Event listeners
+    // Event listeners
+
+    const modifyBtns = () => {
+        const deleteBtn = document.getElementById('deleteAttempts');
+        const regradeBtn = document.getElementById('regradeAttempts');
+        if (!table.getSelectedData()[0]) {
+            deleteBtn.className = 'disabled btn btn-secondary mb-2';
+            regradeBtn.className = 'disabled btn btn-secondary mb-2';
+        }
+        else {
+            deleteBtn.className = 'btn btn-secondary mb-2';
+            regradeBtn.className = 'btn btn-secondary mb-2';
+        }
+    };
 
     table.on("renderComplete", () => {
         document.querySelectorAll('.tabulatorSelect').forEach((el) => {
             el.addEventListener('click', (e) => {
+                if (!document.querySelectorAll('.tabulatorSelect:not(:checked)')[0]) {
+                    checkallbox.checked = true;
+                }
                 e.stopPropagation();
                 const id = e.target.dataset.id;
                 if (e.target.checked) {
                     table.selectRow(Number(id));
                 } else {
                     table.deselectRow(Number(id));
+                    checkallbox.checked = false;
                 }
-                const deleteBtn = document.getElementById('deleteAttempts');
-                const regradeBtn = document.getElementById('regradeAttempts');
-                if (!table.getSelectedData()[0]) {
-                    deleteBtn.className = 'disabled btn btn-secondary mb-2';
-                    regradeBtn.className = 'disabled btn btn-secondary mb-2';
-                }
-                else {
-                    deleteBtn.className = 'btn btn-secondary mb-2';
-                    regradeBtn.className = 'btn btn-secondary mb-2';
-                }
+                modifyBtns();
             });
         });
     });
+
+    const checkallbox = document.getElementById('checkallcheckbox');
+
     document.getElementById('regradeAttempts').addEventListener('click', async () => {
         // eslint-disable-next-line curly
         if (!table.getSelectedData()) return;
@@ -174,4 +204,22 @@ export const init = async(data) => {
             table.getColumns()[0].delete();
         });
     }
+
+    const modCheckboxes = (value) => {
+        const checkboxes = Array.from(document.getElementsByClassName('tabulatorSelect'));
+        checkboxes.forEach((el) => {
+            el.checked = value;
+        });
+    };
+
+    checkallbox.addEventListener('change', () => {
+        modCheckboxes(checkallbox.checked);
+        if (checkallbox.checked) {
+            table.selectRow('visible');
+            modifyBtns();
+            return;
+        }
+        table.deselectRow('visible');
+        modifyBtns();
+    });
 };

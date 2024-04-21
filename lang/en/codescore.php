@@ -70,12 +70,25 @@ $string['no'] = 'No';
 $string['showfeedback'] = 'Show AI feedback to students';
 $string['aifeedback'] = 'AI feedback:';
 $string['noinstances'] = 'There are no CodeScore instances';
+$string['modgradeswarn'] = 'Total sum of active grades should be equal to 100';
+$string['checkall'] = 'Check all';
 
 // Admin settings
 $string['apikey'] = 'API Key';
 $string['apikeyexplain'] = 'The key to access AI API. The free version allows you 10 prompt executions per week. To get the Pro version, contact us at <a href="mailto:info@devlion.co">info@devlion.co</a>';
 $string['apiurl'] = 'API URL';
 $string['apiurlexplain'] = 'The url to access AI API';
+$string['adminheading'] = 'Rubrics';
+$string['adminheadingexplain'] = 'Change grading rubrics';
+$string['rubricscount'] = 'Number of rubrics';
+$string['rubricblock'] = 'Rubric';
+$string['rubricname'] = 'Rubric name';
+$string['rubricprompt'] = 'Rubric prompt';
+$string['rubric1prompt'] = 'Grade for student\'s code syntax';
+$string['rubric2prompt'] = 'Grade for the output of the code';
+$string['rubric3prompt'] = 'Grade for correct code solution';
+$string['rubric4prompt'] = 'Grade for code covering all cases';
+$string['gradewarn'] = 'Total sum of grades should be equal to 100';
 
 // View
 $string['viewreportsbtn'] = 'View reports';
@@ -112,7 +125,7 @@ $string['timefinish'] = "Submitted at";
 $string['timegraded'] = "Graded at";
 $string['syntaxgradetable'] = "Syntax grade";
 $string['outputgradetable'] = "Output grade";
-$string['problemgradetable'] = "Problem grade";
+$string['problemgradetable'] = "Problem solution grade";
 $string['casesgradetable'] = "All cases coverage grade";
 $string['tableaigrade'] = "AI grade";
 $string['tableteachergrade'] = "Final grade";
@@ -125,10 +138,7 @@ $string['submittedstatus'] = "Submitted";
 $string['taskoverview'] = 'Task overview';
 $string['reportlang'] = 'Programming language: ';
 $string['taskreport'] = 'Task: ';
-$string['maxgradesyntax'] = 'Max grade for syntax: ';
-$string['maxrightoutput'] = 'Max grade for right output: ';
-$string['maxproblemsolution'] = 'Max grade for problem solution: ';
-$string['maxcovering'] = 'Max grade for covering all cases: ';
+$string['maxgrade'] = 'Maximum for';
 $string['reportname'] = 'report';
 $string['reportgrade'] = 'Grade: ';
 $string['aigradereport'] = 'AI grade: ';

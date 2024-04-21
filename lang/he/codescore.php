@@ -71,6 +71,7 @@ $string['showfeedback'] = 'הצג משוב בינה מלאכותית לתלמי�
 $string['aifeedback'] = 'AI משוב:';
 $string['noinstances'] = 'אין מופעי CodeScore';
 $string['modgradeswarn'] = 'סך הניקוד צריך להיות שווה ל-100';
+$string['checkall'] = 'סמן הכל';
 
 // Admin settings
 $string['apikey'] = 'מפתח API';

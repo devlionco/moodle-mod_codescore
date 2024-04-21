@@ -39,7 +39,7 @@ class check_attempt extends adhoc_task {
         require_once($CFG->dirroot . "/mod/codescore/classes/GptxPrompt.php");
         $data = $this->get_custom_data();
 
-        $config = get_config('codescore');
+        $config = get_config('mod_codescore');
         $key = $config->apikey;
         $tt = new \GptxPrompt($data);
         $attempts = $DB->get_records('codescore_attempts', ['id' => $data->id]);
@@ -67,10 +67,6 @@ class check_attempt extends adhoc_task {
             $data->lang = $langobject[$codescore->programminglang];
             $data->solution = $attempt->code;
             $data->task = $codescore->task;
-            $data->syntaxgrade = $codescore->syntaxgrading;
-            $data->outputgrade = $codescore->outputgrading;
-            $data->solutiongrade = $codescore->problemsolutiongrading;
-            $data->allcasesgrade = $codescore->allcasesgrading;
 
             $response = $tt->sendprompt($codescore);
             $response = str_replace('```json', '', $response);
@@ -80,17 +76,21 @@ class check_attempt extends adhoc_task {
                 $attempt->grade = $response->grade;
             }
             $attempt->aigrade = $response->grade;
+            $updatedattempt = $DB->get_record('codescore_attempts', ['id' => $attempt->id]);
+            $rubricsobj = json_decode($updatedattempt->rubricsobject, true);
+
+            foreach ($rubricsobj as $arrkey => $value) {
+                $rubricsobj[$arrkey]['grade'] = $response->grades->{'rubric' . $arrkey . 'grade'};
+            }
+
+            $attempt->rubricsobject = json_encode($rubricsobj);
+
             $attempt->feedback = $response->feedback;
-            $attempt->syntaxgrading = $response->syntaxgrade;
-            $attempt->outputgrading = $response->outputgrade;
-            $attempt->problemsolutiongrading = $response->solutiongrade;
-            $attempt->allcasesgrading = $response->allcasesgrade;
             $attempt->output = $response->output;
             $attempt->correctedcode = $response->corrected;
             $attempt->state = 'finished';
             $attempt->timemodified = time();
             $DB->update_record('codescore_attempts', $attempt);
-
         }
 
     }

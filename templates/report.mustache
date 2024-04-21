@@ -2,19 +2,17 @@
 <ul>
     <li> {{#str}} reportlang, codescore {{/str}} {{lang}}</li>
     <li style="white-space: pre-wrap;"> {{#str}} taskreport, codescore {{/str}} <br/> {{{task}}}</li>
-    <li> {{#str}} maxgradesyntax, codescore {{/str}} {{syntaxgrade}}</li>
-    <li> {{#str}} maxrightoutput, codescore {{/str}} {{outputgrade}}</li>
-    <li> {{#str}} maxproblemsolution, codescore {{/str}} {{problemsolutiongrade}}</li>
-    <li> {{#str}} maxcovering, codescore {{/str}} {{allcasesgrade}}</li>
+    {{#rubrics}}
+        <li> {{#str}} maxgrade, codescore {{/str}} {{name}} : {{maxgrade}} </li> 
+    {{/rubrics}}
 </ul>
     <h3>{{name}} {{#str}} reportname, codescore {{/str}} </h3>
 <ul>
     <li>{{#str}} reportgrade, codescore {{/str}} {{grade}}</li>
     <li>{{#str}} aigradereport, codescore {{/str}} {{aigrade}}</li>
-    <li>{{#str}} syntaxreport, codescore {{/str}} {{syntaxgrading}}</li>
-    <li>{{#str}} outputreport, codescore {{/str}} {{outputgrading}}</li>
-    <li>{{#str}} problemreport, codescore {{/str}} {{problemsolutiongrading}}</li>
-    <li>{{#str}} casesreport, codescore {{/str}} {{allcasesgrading}}</li>
+    {{#rubrics}}
+        <li> {{prompt}} : {{grade}} </li> 
+    {{/rubrics}}
     <li>{{#str}} aifeedback, codescore {{/str}} {{feedback}}</li>
     <li>{{#str}} notesreport, codescore {{/str}} {{studentnotes}}</li>
 </ul>
