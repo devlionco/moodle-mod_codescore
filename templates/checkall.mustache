@@ -1,0 +1,12 @@
+<div class='btn-link' id='checkall'>
+    {{#str}} checkall, mod_codescore {{/str}}
+</div>
+{{#js}}
+    let checkall = document.getElementById('checkall');
+    checkall.addEventListener('click', function() {
+        let checkboxes = document.querySelectorAll('#id_gradingoptionscontainer .form-check-input[id^=id_rubric]');
+        checkboxes.forEach(function(checkbox) {
+            checkbox.checked = true;
+        });
+    });
+{{/js}}
