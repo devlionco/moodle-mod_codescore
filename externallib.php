@@ -26,8 +26,8 @@ class mod_codescore_external extends external_api {
     public static function delete_attempts_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
-                'ids' => new external_value(PARAM_RAW, ''),
-                'cmid' => new external_value(PARAM_RAW, ''),
+                'ids' => new external_value(PARAM_TEXT, ''),
+                'cmid' => new external_value(PARAM_INT, ''),
             ]
         );
     }
@@ -45,16 +45,24 @@ class mod_codescore_external extends external_api {
 
         global $USER, $DB, $PAGE, $COURSE;
 
+        self::validate_parameters(self::delete_attempts_parameters(), [
+            'ids' => $ids,
+            'cmid' => $cmid,
+        ]);
+
+        $context = context_course::instance($COURSE->id);
+        self::validate_context($context);
+
         $ids = explode(",", $ids);
 
         foreach ($ids as &$id) {
             $DB->delete_records_select('codescore_attempts', "id=" . $id);
         }
-
+        $coursecontext = context_course::instance($COURSE->id);
         $params = [
             'relateduserid' => $USER->id,
             'objectid' => context_module::instance($cmid)->id,
-            'context' => $modulecontext,
+            'context' => $coursecontext,
         ];
 
         $event = \mod_codescore\event\attempt_delete::create($params);
