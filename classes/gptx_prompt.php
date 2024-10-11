@@ -14,22 +14,62 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot."/lib/filelib.php");
 
-class GptxPrompt {
-    private $result = '';
-
+/**
+ * Class gptx_prompt
+ *
+ * This class handles the interaction with the CodeScore API to send prompts
+ * and retrieve feedback based on the user's code submission. It constructs
+ * the necessary data payload, sends it to the API, and processes the response.
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @author      Vladyslav Braun <vlad@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+class gptx_prompt {
+    /**
+     * gptx_prompt constructor.
+     *
+     * Initializes the gptx_prompt instance with the provided attempt data.
+     *
+     * @param stdClass $data The data related to the user's attempt, including code, task, and programming language.
+     */
     public function __construct($data) {
         $this->attemptData = $data;
     }
 
+    /**
+     * Sends the prompt to the CodeScore API and returns the feedback message.
+     *
+     * @param object $codescore An object containing information about the code score attempt.
+     * @return string The feedback message returned from the API.
+     */
     public function sendprompt($codescore) {
         $response = $this->sendrequest($codescore);
         return json_decode($response)->message;
     }
 
+    /**
+     * Prepares and sends the request to the CodeScore API.
+     *
+     * Constructs the data payload including the user's code, programming language,
+     * task information, and rubrics. It also handles the API configuration
+     * such as the URL and API key.
+     *
+     * @param object $codescore An object containing information about the code score attempt.
+     * @return string The raw JSON response from the API.
+     */
     private function sendrequest($codescore) {
         global $DB;
 
@@ -54,15 +94,15 @@ class GptxPrompt {
 
         $modulerubrics = json_decode($codescore->rubricsobject, true);
         $newrubrics = [];
-        
+
         foreach ($modulerubrics as $modulekey => $value) {
-            array_push($newrubrics, array(
+            array_push($newrubrics, [
                 'name' => $value['name'],
                 'enabled' => $value['enabled'],
                 'maxgrade' => $value['maxgrade'],
                 'grade' => '',
-                'prompt' => $config->{'rubric' . strval(intval($modulekey) + 1) . 'prompt'}
-            ));
+                'prompt' => $config->{'rubric' . strval(intval($modulekey) + 1) . 'prompt'},
+            ]);
         }
 
         $attempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptData->id]);
@@ -73,7 +113,7 @@ class GptxPrompt {
         $updatedrubrics = json_decode($updatedattempt->rubricsobject, true);
 
         foreach ($updatedrubrics as $arrkey => $value) {
-            $preparedstring = strval(intval($arrkey) + 1) . " - " . $value['prompt'] . ', from 0 to ' . strval($value['maxgrade']) . 
+            $preparedstring = strval(intval($arrkey) + 1) . " - " . $value['prompt'] . ', from 0 to ' . strval($value['maxgrade']) .
                 ', variable should be named rubric' . $arrkey . 'grade. \n';
             $rubricsprompt .= $preparedstring;
         }
@@ -81,12 +121,12 @@ class GptxPrompt {
 
         $correctedata->feedbacklang = get_string_manager()->get_list_of_translations()[$codescore->feedbacklang];
 
-        $curldata = array(
+        $curldata = [
             'token' => $key,
             'data' => json_encode($correctedata),
             'id' => '124',
             'action' => 'CodeScore',
-        );
+        ];
 
         $curl = new \curl();
         $jsonresult = $curl->post($url, $curldata);
