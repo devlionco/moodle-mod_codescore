@@ -51,10 +51,10 @@ $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 
 if ($data = data_submitted()) {
-    $code = optional_param('code', '', PARAM_RAW);
-    $notes = optional_param('notes', '', PARAM_RAW);
-    $sesskey = optional_param('sesskey', '', PARAM_RAW);
-    $timestart = optional_param('timestart', '', PARAM_RAW);
+    $code = optional_param('code', '', PARAM_TEXT);
+    $notes = optional_param('notes', '', PARAM_TEXT);
+    $sesskey = optional_param('sesskey', '', PARAM_TEXT);
+    $timestart = optional_param('timestart', '', PARAM_INT);
     $data->timestart = $timestart;
     $data->rubriccount = get_config('mod_codescore', 'rubricscount');
 
