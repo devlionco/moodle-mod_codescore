@@ -23,7 +23,7 @@ require_once("$CFG->dirroot/mod/page/lib.php");
 function codescore_save_attempt($data) {
     global $DB, $USER;
 
-    $lastattempt = $DB->get_record_sql(
+    $attempts = $DB->get_records_sql(
         "SELECT *
            FROM {codescore_attempts}
        ORDER BY attempt desc",
@@ -33,10 +33,20 @@ function codescore_save_attempt($data) {
         ]
     );
 
+    $lastattempt = 0;
+    if ($attempts) {
+        foreach($attempts as $attempt) {
+            $attemptnum = intval($attempt->attempt);
+            if($attemptnum > $lastattempt) {
+                $lastattempt = $attemptnum; 
+            }
+        }
+    }
+
     $data->codescore = $data->cmid;
     $data->userid = $USER->id;
     $data->studentnotes = $data->notes;
-    $data->attempt = $lastattempt ? $lastattempt->attempt + 1 : 1;
+    $data->attempt = $lastattempt + 1;
     $data->state = 'inprogress';
     $data->timefinish = time();
     $data->grade = 0;

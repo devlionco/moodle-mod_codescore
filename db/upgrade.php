@@ -147,6 +147,13 @@ function xmldb_codescore_upgrade($oldversion)
             $dbman->drop_field($attempts, $allcases);
         }
     }
+    if ($oldversion < 2024101102) {
+        $table = new xmldb_table('codescore');
+        $field = new \xmldb_field('introformat', XMLDB_TYPE_INTEGER, '4', null, true, null, 0, false);
+        if (!$dbman->field_exists($table, $field)) {
+            $dbman->add_field($table, $field);
+        }
+    }
 
     return true;
 }
