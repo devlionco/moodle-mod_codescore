@@ -27,6 +27,9 @@
  * Custom uninstallation procedure.
  */
 function xmldb_codescore_uninstall() {
+    global $DB;
+
+    $DB->delete_records('codescore_attempts');
 
     return true;
 }
