@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  *
  * @package     mod_codescore
@@ -27,26 +28,20 @@ require_once(__DIR__ . '/lib.php');
 
 global $USER;
 
-$id = required_param('cmid', PARAM_INT); // Course module id
+$id = required_param('cmid', PARAM_INT); // Course module id.
 
-if ($id) {
-    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-} else {
-    $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
-}
+$cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $modulecontext = context_module::instance($id);
 require_login($course, true, $cm);
 require_capability("mod/codescore:view", $modulecontext);
 
-$url = new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
+$url = new moodle_url('/mod/codescore/attempt.php', ['cmid' => $id, 'userid' => $USER->id]);
 
 $PAGE->set_context($modulecontext);
-$PAGE->set_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
+$PAGE->set_url('/mod/codescore/attempt.php', ['cmid' => $id, 'userid' => $USER->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 
@@ -59,20 +54,20 @@ if ($data = data_submitted()) {
     $data->rubriccount = get_config('mod_codescore', 'rubricscount');
 
     $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
+    $moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
     $moduledata = json_decode($moduleinstance->rubricsobject, true);
     $config = get_config('mod_codescore');
     $newrubrics = [];
 
     foreach ($moduledata as $key => $value) {
-        array_push($newrubrics, array(
+        array_push($newrubrics, [
             'name' => $value['name'],
             'enabled' => $value['enabled'],
             'maxgrade' => $value['maxgrade'],
             'grade' => '',
-            'prompt' => $config->{'rubric' . strval(intval($key) + 1) . 'prompt'}
-        ));
+            'prompt' => $config->{'rubric' . strval(intval($key) + 1) . 'prompt'},
+        ]);
     }
     $data->rubricsobject = json_encode($newrubrics);
     confirm_sesskey($sesskey);
@@ -80,10 +75,9 @@ if ($data = data_submitted()) {
     // Save attempt.
     $attemptid = codescore_save_attempt($data);
 
-    // TODO: Exec ADHOC
     codescore_exec_adhoc($attemptid);
 
-    $redirecturl = new moodle_url('/mod/codescore/view.php', array('id' => $id));
+    $redirecturl = new moodle_url('/mod/codescore/view.php', ['id' => $id]);
     redirect($redirecturl);
 }
 $timestart = time();
@@ -94,14 +88,14 @@ if ($modulecontext->contextlevel == CONTEXT_MODULE) {
     // Calling $PAGE->set_context should be enough, but it seems that it is not.
     // Therefore, we get the right $cm and $course, and set things up ourselves.
     $cm = get_coursemodule_from_id(false, $modulecontext->instanceid, 0, false, MUST_EXIST);
-    $PAGE->set_cm($cm, $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST));
+    $PAGE->set_cm($cm, $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST));
 }
 
 echo $OUTPUT->header();
 
-$cmdb = $DB->get_record('codescore', array('id' => $moduleinstance->id));
+$cmdb = $DB->get_record('codescore', ['id' => $moduleinstance->id]);
 
-$langs = array(
+$langs = [
     '0' => 'Javascript',
     '1' => 'C++',
     '2' => 'Python',
@@ -115,10 +109,10 @@ $langs = array(
     '10' => 'Ruby',
     '11' => 'SQL',
     '12' => 'Assembly',
-);
+];
 
 $renderdata = (object) [
-    'backUrl' => new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id)),
+    'backUrl' => new moodle_url('/mod/codescore/attempt.php', ['cmid' => $id]),
     'cmid' => $id,
     'task' => $cmdb->task,
     'timestart' => $timestart,

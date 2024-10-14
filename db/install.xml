@@ -13,7 +13,7 @@
                 <FIELD NAME="task" TYPE="text" NOTNULL="false" SEQUENCE="false" COMMENT="Task of the activity."/>
                 <FIELD NAME="introformat" TYPE="int" LENGTH="4" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
                 <FIELD NAME="programminglang" TYPE="int" LENGTH="2" NOTNULL="true" DEFAULT="0" SEQUENCE="false"/>
-                <FIELD NAME="gradingspec" TYPE="int" LENGTH="10" NOTNULL="false"/>
+                <FIELD NAME="gradingspec" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="rubricsobject" TYPE="text" LENGTH="1000" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="autograde" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>
                 <FIELD NAME="showfeedback" TYPE="int" LENGTH="1" NOTNULL="false" SEQUENCE="false"/>

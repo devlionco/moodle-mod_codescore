@@ -39,7 +39,7 @@ function codescore_supports($feature) {
         case FEATURE_BACKUP_MOODLE2:
             return true;
         case FEATURE_MOD_PURPOSE:
-            return MOD_PURPOSE_CONTENT;
+            return true;
         default:
             return null;
     }
@@ -98,12 +98,12 @@ function codescore_update_instance($moduleinstance, $mform = null) {
 function codescore_delete_instance($id) {
     global $DB;
 
-    $exists = $DB->get_record('codescore', array('id' => $id));
+    $exists = $DB->get_record('codescore', ['id' => $id]);
     if (!$exists) {
         return false;
     }
 
-    $DB->delete_records('codescore', array('id' => $id));
+    $DB->delete_records('codescore', ['id' => $id]);
 
     return true;
 }
@@ -121,7 +121,7 @@ function codescore_delete_instance($id) {
 function codescore_scale_used($moduleinstanceid, $scaleid) {
     global $DB;
 
-    if ($scaleid && $DB->record_exists('codescore', array('id' => $moduleinstanceid, 'grade' => -$scaleid))) {
+    if ($scaleid && $DB->record_exists('codescore', ['id' => $moduleinstanceid, 'grade' => -$scaleid])) {
         return true;
     } else {
         return false;
@@ -139,7 +139,7 @@ function codescore_scale_used($moduleinstanceid, $scaleid) {
 function codescore_scale_used_anywhere($scaleid) {
     global $DB;
 
-    if ($scaleid && $DB->record_exists('codescore', array('grade' => -$scaleid))) {
+    if ($scaleid && $DB->record_exists('codescore', ['grade' => -$scaleid])) {
         return true;
     } else {
         return false;
@@ -155,13 +155,14 @@ function codescore_scale_used_anywhere($scaleid) {
  * @param bool $reset Reset grades in the gradebook.
  * @return void.
  */
-function codescore_grade_item_update($moduleinstance, $reset=false, $new = false) {
+function codescore_grade_item_update($moduleinstance, $reset = false, $new = false) {
     global $CFG;
     require_once($CFG->libdir.'/gradelib.php');
 
-    $item = array();
-    $item['itemname'] = clean_param($moduleinstance->name, PARAM_NOTAGS);
-    $item['gradetype'] = GRADE_TYPE_VALUE;
+    $item = [
+        'itemname' => clean_param($moduleinstance->name, PARAM_NOTAGS),
+        'gradetype' => GRADE_TYPE_VALUE,
+    ];
 
     if ($moduleinstance->grade >= 0) {
         $item['gradetype'] = GRADE_TYPE_VALUE;
@@ -176,15 +177,17 @@ function codescore_grade_item_update($moduleinstance, $reset=false, $new = false
     if ($reset) {
         $item['reset'] = true;
     }
-    $grades;
+
+    $grades = [];
     if ($new) {
         $grades = null;
     } else {
-        $grades = array(
+        $grades = [
             'userid' => (int)$moduleinstance->userid,
             'rawgrade' => (int)$moduleinstance->grade,
-        );
+        ];
     }
+
     grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'codescore', $moduleinstance->id, 0, $grades, $item);
 }
 
@@ -199,7 +202,7 @@ function codescore_grade_item_delete($moduleinstance) {
     require_once($CFG->libdir.'/gradelib.php');
 
     return grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'codescore',
-                        $moduleinstance->id, 0, null, array('deleted' => 1));
+                        $moduleinstance->id, 0, null, ['deleted' => 1]);
 }
 
 /**
@@ -211,11 +214,11 @@ function codescore_grade_item_delete($moduleinstance) {
  * @param int $userid Update grade of specific user only, 0 means all participants.
  */
 function codescore_update_grades($moduleinstance, $userid = 0) {
-    global $CFG, $DB;
+    global $CFG;
     require_once($CFG->libdir.'/gradelib.php');
 
     // Populate array of grade objects indexed by userid.
-    $grades = array();
+    $grades = [];
     grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'mod_codescore', $moduleinstance->id, 0, $grades);
 }
 
@@ -234,7 +237,7 @@ function codescore_update_grades($moduleinstance, $userid = 0) {
  * @return string[].
  */
 function codescore_get_file_areas($course, $cm, $context) {
-    return array();
+    return [];
 }
 
 /**
@@ -272,9 +275,7 @@ function codescore_get_file_info($browser, $areas, $course, $cm, $context, $file
  * @param bool $forcedownload Whether or not force download.
  * @param array $options Additional options affecting the file serving.
  */
-function codescore_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, $options = array()) {
-    global $DB, $CFG;
-
+function codescore_pluginfile($course, $cm, $context, $filearea, $args, $forcedownload, $options = []) {
     if ($context->contextlevel != CONTEXT_MODULE) {
         send_file_not_found();
     }
@@ -316,8 +317,19 @@ function codescore_extend_settings_navigation($settingsnav, $codescorenode = nul
  * @return string.
  */
 
-function get_rubric_help($i, $element) {
-    if(isset(get_config('mod_codescore')->{"rubric" . $i . $element})) {
+/**
+ * Calculates help text for rubrics in localization files.
+ *
+ * The help text is saved in the plugin configuration as "rubric{$i}{$element}".
+ * The function will return the value of the configuration variable if it exists,
+ * otherwise an empty string is returned.
+ *
+ * @param int $i The rubric number.
+ * @param string $element The rubric element.
+ * @return string The help text for the rubric.
+ */
+function codescore_get_rubric_help($i, $element) {
+    if (isset(get_config('mod_codescore')->{"rubric" . $i . $element})) {
         return get_config('mod_codescore')->{"rubric" . $i . $element};
     }
     return '';

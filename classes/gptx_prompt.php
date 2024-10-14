@@ -38,6 +38,8 @@ require_once($CFG->dirroot."/lib/filelib.php");
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class gptx_prompt {
+    /** @var array Data of the atempts */
+    public $attemptdata;
     /**
      * gptx_prompt constructor.
      *
@@ -46,7 +48,7 @@ class gptx_prompt {
      * @param stdClass $data The data related to the user's attempt, including code, task, and programming language.
      */
     public function __construct($data) {
-        $this->attemptData = $data;
+        $this->attemptdata = $data;
     }
 
     /**
@@ -86,7 +88,7 @@ class gptx_prompt {
         }
 
         $correctedata = new stdClass();
-        $correctedata->solution = $this->attemptData->code;
+        $correctedata->solution = $this->attemptdata->code;
         $correctedata->lang = $codescore->programminglang;
         $correctedata->task = $codescore->task;
 
@@ -105,11 +107,11 @@ class gptx_prompt {
             ]);
         }
 
-        $attempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptData->id]);
+        $attempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptdata->id]);
         $attempt->rubricsobject = json_encode($newrubrics);
         $DB->update_record('codescore_attempts', $attempt);
 
-        $updatedattempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptData->id]);
+        $updatedattempt = $DB->get_record('codescore_attempts', ['id' => $this->attemptdata->id]);
         $updatedrubrics = json_decode($updatedattempt->rubricsobject, true);
 
         foreach ($updatedrubrics as $arrkey => $value) {

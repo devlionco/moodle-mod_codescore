@@ -13,28 +13,36 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-/**
- *
- * @package     mod_codescore
- * @copyright   2024 Devlion <info@devlion.co>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 namespace mod_codescore\external;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-require_once('../../config.php');
+require_once("$CFG->dirroot/mod/codescore/locallib.php");
 
 use external_api;
 use external_description;
 use external_function_parameters;
 use external_single_structure;
 use external_value;
-use stdClass;
 
+/**
+ * Ajax service for regrading attempts.
+ *
+ * @package   mod_codescore
+ * @category  external
+ * @copyright 2022 Devlion <info@devlion.co>
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class regrade_attempts extends external_api {
+    /**
+     * Set the questions slot parameters to display the question template.
+     *
+     * @param int $slotid Slot id to display.
+     * @param int $newversion the version to set. 0 means 'always latest'.
+     * @return array
+     */
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
@@ -51,10 +59,7 @@ class regrade_attempts extends external_api {
      * @return array
      */
     public static function execute($ids) {
-        require_once(__DIR__ . '/../../config.php');
-        require_once(__DIR__ . '/lib.php');
-
-        global $USER, $DB, $PAGE, $COURSE;
+        global $DB;
 
         $ids = explode(",", $ids);
 
@@ -82,3 +87,4 @@ class regrade_attempts extends external_api {
         );
     }
 }
+

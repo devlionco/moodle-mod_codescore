@@ -13,28 +13,32 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-/**
- *
- * @package     mod_codescore
- * @copyright   2024 Devlion <info@devlion.co>
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 namespace mod_codescore\external;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir . '/externallib.php');
-require_once('../../config.php');
 
 use external_api;
 use external_description;
 use external_function_parameters;
 use external_single_structure;
 use external_value;
-use stdClass;
 
+/**
+ * Webservice for deleting attempts.
+ *
+ * @package    mod_codescore
+ * @copyright  2023 Devlion  <info@devlion.co>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class delete_attempts extends external_api {
+    /**
+     * Returns description of method parameters
+     *
+     * @return external_function_parameters
+     */
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
@@ -52,9 +56,7 @@ class delete_attempts extends external_api {
      * @return array
      */
     public static function execute($ids, $cmid) {
-        require_once(__DIR__ . '../../../config.php');
-        require_once(__DIR__ . '../lib.php');
-        global $USER, $DB, $PAGE, $COURSE;
+        global $USER, $DB;
 
         $ids = explode(",", $ids);
 
@@ -62,11 +64,11 @@ class delete_attempts extends external_api {
             $DB->delete_records_select('codescore_attempts', "id=" . $id);
         }
 
-        $modulecontext = context_module::instance($cmid);
+        $modulecontext = \context_module::instance($cmid);
 
         $params = [
             'relateduserid' => $USER->id,
-            'objectid' => context_module::instance($cmid)->id,
+            'objectid' => \context_module::instance($cmid)->id,
             'context' => $modulecontext,
         ];
 

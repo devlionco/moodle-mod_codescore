@@ -23,30 +23,52 @@ global $CFG;
 
 require_once($CFG->dirroot . '/mod/codescore/locallib.php');
 
+/**
+ * Class basic_test
+ *
+ * @package    mod_codescore
+ * @copyright  2024 Devlion <info@devlion.co>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class basic_test extends \advanced_testcase {
+    /**
+     * Test that creating a codescore activity works.
+     *
+     * @return void
+     */
     public function test_create_activity() {
         global $DB;
         $this->resetAfterTest(true);
         $DB->delete_records('codescore');
         $course = $this->getDataGenerator()->create_course();
-        $this->getDataGenerator()->create_module('codescore', array('course' => $course->id));
-        $this->assertEquals(1, $DB->count_records('codescore', array()));
+        $this->getDataGenerator()->create_module('codescore', ['course' => $course->id]);
+        $this->assertEquals(1, $DB->count_records('codescore', []));
     }
+    /**
+     * Test that deleting a codescore activity works.
+     *
+     * @return void
+     */
     public function test_delete_activity() {
         global $DB;
         $this->resetAfterTest(true);
         $course = $this->getDataGenerator()->create_course();
-        $this->getDataGenerator()->create_module('codescore', array('course' => $course->id));
-        $this->assertEquals(1, $DB->count_records('codescore', array()));
+        $this->getDataGenerator()->create_module('codescore', ['course' => $course->id]);
+        $this->assertEquals(1, $DB->count_records('codescore', []));
         $DB->delete_records('codescore');
         $this->assertEmpty($DB->get_records('codescore'));
     }
+    /**
+     * Test that saving an attempt works.
+     *
+     * @return void
+     */
     public function test_submit_attempt() {
         global $DB;
         $this->resetAfterTest(true);
         $DB->delete_records('codescore');
         $course = $this->getDataGenerator()->create_course();
-        $cm = $this->getDataGenerator()->create_module('codescore', array('course' => $course->id));
+        $cm = $this->getDataGenerator()->create_module('codescore', ['course' => $course->id]);
         $data = new stdClass;
         $data->code = 'code';
         $data->notes = 'notes';
@@ -54,6 +76,6 @@ class basic_test extends \advanced_testcase {
         $data->sesskey = '9iw8sPuL8W';
         $data->timestart = 1707728466;
         codescore_save_attempt($data);
-        $this->assertEquals(1, $DB->count_records('codescore_attempts', array()));
+        $this->assertEquals(1, $DB->count_records('codescore_attempts', []));
     }
 }

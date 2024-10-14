@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Display information about all the mod_codescore modules in the requested course.
+ * Event indicating that the user has started an attempt at a codescore.
  *
  * @package     mod_codescore
  * @copyright   2024 Devlion <info@devlion.co>
@@ -23,8 +23,20 @@
  */
 
 namespace mod_codescore\event;
-defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class attempt_start
+ *
+ * @property-read array $other {
+ *      Extra information about event.
+ *
+ *      - int codescoreid: the id of the codescore the attempt belongs to.
+ * }
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class attempt_start extends \core\event\base {
 
     /**
@@ -55,13 +67,23 @@ class attempt_start extends \core\event\base {
         return 'Attempt started';
     }
 
+    /**
+     * Map the restore mapping to the objecttable.
+     *
+     * @return string
+     */
     public static function get_objectid_mapping() {
-        return array('db' => 'codescore_attempts', 'restore' => 'codescore_attempt');
+        return ['db' => 'codescore_attempts', 'restore' => 'codescore_attempt'];
     }
 
+    /**
+     * Map the restore mapping to the other mapping.
+     *
+     * @return array
+     */
     public static function get_other_mapping() {
-        $othermapped = array();
-        $othermapped['codescoreid'] = array('db' => 'codescore', 'restore' => 'codescore');
+        $othermapped = [];
+        $othermapped['codescoreid'] = ['db' => 'codescore', 'restore' => 'codescore'];
 
         return $othermapped;
     }

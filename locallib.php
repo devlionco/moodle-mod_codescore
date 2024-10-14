@@ -14,12 +14,25 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+
 defined('MOODLE_INTERNAL') || die;
 
 require_once("$CFG->libdir/filelib.php");
 require_once("$CFG->libdir/resourcelib.php");
 require_once("$CFG->dirroot/mod/page/lib.php");
 
+/**
+ * Save a new attempt, or update an existing one for a user.
+ *
+ * @param stdClass $data
+ * @return int The ID of the new or updated attempt.
+ */
 function codescore_save_attempt($data) {
     global $DB, $USER;
 
@@ -35,10 +48,10 @@ function codescore_save_attempt($data) {
 
     $lastattempt = 0;
     if ($attempts) {
-        foreach($attempts as $attempt) {
+        foreach ($attempts as $attempt) {
             $attemptnum = intval($attempt->attempt);
-            if($attemptnum > $lastattempt) {
-                $lastattempt = $attemptnum; 
+            if ($attemptnum > $lastattempt) {
+                $lastattempt = $attemptnum;
             }
         }
     }
@@ -67,17 +80,29 @@ function codescore_save_attempt($data) {
     return $result;
 }
 
-function codescore_set_grade_attempt($data) {
-    global $DB, $USER;
+/**
+ * Save a grade for an attempt.
+ *
+ * @param stdClass $data The data that has been submitted, including the id of the attempt and the grade.
+ * @return bool True if the grade has been successfully saved.
+ */
+function codescore_set_grade_attempt(stdClass $data) {
+    global $DB;
 
-    $attempts = $DB->update_record('codescore_attempts', array(
+    $attempts = $DB->update_record('codescore_attempts', [
         'id' => $data->id,
         'timegraded' => time(),
         'grade' => $data->grade,
-    ));
+    ]);
     return $attempts;
 }
 
+/**
+ * Queue up an adhoc task to check an attempt.
+ *
+ * @param int $id The id of the attempt.
+ * @return void
+ */
 function codescore_exec_adhoc($id) {
     global $DB;
 
@@ -90,6 +115,13 @@ function codescore_exec_adhoc($id) {
     $task->execute();
 }
 
+/**
+ * Get the attempts for a user.
+ *
+ * @param int $codescore The id of the codescore.
+ * @param int|null $userid The id of the user to get attempts for. Defaults to the current user.
+ * @return stdClass[] The attempts.
+ */
 function codescore_get_user_attempts($codescore, $userid = null) {
     global $DB, $USER;
 
@@ -102,8 +134,14 @@ function codescore_get_user_attempts($codescore, $userid = null) {
     return $attempts;
 }
 
+/**
+ * Get the attempts for a codescore.
+ *
+ * @param int $codescore The id of the codescore.
+ * @return stdClass[] The attempts. If the user is not a teacher, an empty array will be returned.
+ */
 function codescore_get_attempts($codescore) {
-    global $DB, $USER;
+    global $DB;
 
     $context = context_module::instance($codescore);
     $isteacher = has_capability('mod/quiz:addinstance', $context);

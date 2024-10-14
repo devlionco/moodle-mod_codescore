@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <https://www.gnu.org/licenses/>.
 
 /**
- * Display information about all the mod_codescore modules in the requested course.
+ * Event triggered when a codescore attempt is viewed.
  *
  * @package     mod_codescore
  * @copyright   2024 Devlion <info@devlion.co>
@@ -23,8 +23,17 @@
  */
 
 namespace mod_codescore\event;
-defined('MOODLE_INTERNAL') || die();
 
+
+/**
+ * Event triggered when a codescore attempt is viewed.
+ *
+ * @property-read array $other {
+ *      Extra information about event.
+ *
+ *      - int codescoreid: the id of the codescore module instance.
+ * }
+ */
 class attempt_viewed extends \core\event\base {
 
     /**
@@ -61,7 +70,7 @@ class attempt_viewed extends \core\event\base {
      * @return \moodle_url
      */
     public function get_url() {
-        return new \moodle_url('/mod/codescore/attempt.php', array('attempt' => $this->objectid));
+        return new \moodle_url('/mod/codescore/attempt.php', ['attempt' => $this->objectid]);
     }
 
     /**
@@ -77,13 +86,23 @@ class attempt_viewed extends \core\event\base {
         }
     }
 
+    /**
+     * Mapping of restore mapping of legacy log table 'objectid' to new 'relateduserid'.
+     *
+     * @return array
+     */
     public static function get_objectid_mapping() {
-        return array('db' => 'codescore_attempts', 'restore' => 'codescore_attempt');
+        return ['db' => 'codescore_attempts', 'restore' => 'codescore_attempt'];
     }
 
+    /**
+     * Mapping of restore mapping of legacy log table 'other' to new 'other'.
+     *
+     * @return array
+     */
     public static function get_other_mapping() {
-        $othermapped = array();
-        $othermapped['codescoreid'] = array('db' => 'codescore', 'restore' => 'codescore');
+        $othermapped = [];
+        $othermapped['codescoreid'] = ['db' => 'codescore', 'restore' => 'codescore'];
 
         return $othermapped;
     }

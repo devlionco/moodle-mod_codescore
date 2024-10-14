@@ -13,21 +13,24 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-/**
- * codescore restore task that provides all the settings and steps to perform one
- * complete restore of the activity
- */
 
 /**
- * Structure step to restore one codescore activity
+ * Provides the steps to backup a codescore activity
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-defined('MOODLE_INTERNAL') || die();
 class restore_codescore_activity_structure_step extends restore_activity_structure_step {
 
+    /**
+     * Define the structure of the codescore activity.
+     *
+     * @return array
+     */
     protected function define_structure() {
 
-        $paths = array();
+        $paths = [];
         $userinfo = $this->get_setting_value('userinfo');
 
         $paths[] = new restore_path_element('codescore', '/activity/codescore');
@@ -35,10 +38,15 @@ class restore_codescore_activity_structure_step extends restore_activity_structu
             $paths[] = new restore_path_element('codescore_attempt', '/activity/codescore/attempts/attempt');
         }
 
-        // Return the paths wrapped into standard activity structure
+        // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
 
+    /**
+     * Process the codescore record.
+     *
+     * @param object $data The data to process
+     */
     protected function process_codescore($data) {
         global $DB;
 
@@ -46,12 +54,17 @@ class restore_codescore_activity_structure_step extends restore_activity_structu
         $oldid = $data->id;
         $data->course = $this->get_courseid();
 
-        // insert the codescore record
+        // Insert the codescore record.
         $newitemid = $DB->insert_record('codescore', $data);
-        // immediately after inserting "activity" record, call this
+        // Immediately after inserting "activity" record, call this.
         $this->apply_activity_instance($newitemid);
     }
 
+    /**
+     * Process the codescore attempt record.
+     *
+     * @param object $data The data to process
+     */
     protected function process_codescore_attempt($data) {
         global $DB;
 
@@ -60,13 +73,13 @@ class restore_codescore_activity_structure_step extends restore_activity_structu
         $data->codescoreid = $this->get_new_parentid('codescore');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
-        $newitemid = $DB->insert_record('codescore_attempts', $data);
-        // No need to save this mapping as far as nothing depend on it
-        // (child paths, file areas nor links decoder)
+        $DB->insert_record('codescore_attempts', $data);
     }
 
+    /**
+     * Add codescore related files, no need to match by itemname (just internally handled context)
+     */
     protected function after_execute() {
-        // Add codescore related files, no need to match by itemname (just internally handled context)
         $this->add_related_files('mod_codescore', 'intro', null);
     }
 }

@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  *
  * @package     mod_codescore
@@ -29,7 +30,7 @@ global $USER;
 if ($data = data_submitted()) {
      require_once($CFG->libdir.'/gradelib.php');
      $grade = optional_param('grade', '', PARAM_RAW);
-     $id = optional_param('id', '', PARAM_RAW);
+     $id = required_param('id', PARAM_INT);
      $cmid = optional_param('cmid', '', PARAM_RAW);
      $userid = optional_param('userid', '', PARAM_RAW);
      $data->grade = $grade;
@@ -45,10 +46,10 @@ if ($data = data_submitted()) {
      $modulecontext = context_module::instance($id);
 
      $cm = get_coursemodule_from_id('codescore', $cmid, 0, false, MUST_EXIST);
-     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-     $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
+     $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+     $moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
-     $redirecturl = new moodle_url('/mod/codescore/view.php', array('id' => $cmid));
+     $redirecturl = new moodle_url('/mod/codescore/view.php', ['id' => $cmid]);
      $params = [
           'relateduserid' => $USER->id,
           'objectid' => context_module::instance($cmid)->id,
@@ -88,15 +89,10 @@ $index = required_param('index', PARAM_INT);
 $PAGE->requires->css('/mod/codescore/codemirror/codemirrormerge.css');
 $PAGE->requires->css('/mod/codescore/codemirror/codemirror.css');
 
-if ($id) {
-     $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-     $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-     $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-} else {
-     $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-     $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-     $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
-}
+$cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
+
 $modulecontext = context_module::instance($id);
 require_login($course, true, $cm);
 require_capability("mod/codescore:view", $modulecontext);
@@ -113,7 +109,7 @@ $attempt = $DB->get_records(
      ['userid' => $userid, 'codescore' => $id, 'attempt' => $attemptindex]
 );
 
-$user = $DB->get_record('user', array('id' => $userid));
+$user = $DB->get_record('user', ['id' => $userid]);
 $name = $user->firstname . " " . $user->lastname;
 $isteacher = has_capability('mod/quiz:addinstance', $modulecontext);
 
@@ -134,6 +130,12 @@ $langobject = [
 
 ];
 
+/**
+ * Filter enabled rubrics.
+ *
+ * @param array $var Rubric data.
+ * @return bool True if rubric is enabled, false otherwise.
+ */
 function filterrubrics ($var) {
      return $var["enabled"] !== 0;
 }
@@ -144,7 +146,7 @@ $jsonrubrics = array_filter($jsonrubrics, 'filterrubrics');
 $attempt[$index]->cmid = $id;
 $attempt[$index]->grade = intval($attempt[$index]->grade);
 $attempt[$index]->aigrade = intval($attempt[$index]->aigrade);
-$attempt[$index]->backUrl = new moodle_url('/mod/codescore/report.php', array('cmid' => $id));
+$attempt[$index]->backUrl = new moodle_url('/mod/codescore/report.php', ['cmid' => $id]);
 $attempt[$index]->isteacher = $isteacher;
 $attempt[$index]->lang = $langobject[$moduleinstance->programminglang];
 $attempt[$index]->task = $moduleinstance->task;

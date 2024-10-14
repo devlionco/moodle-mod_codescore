@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once (__DIR__ . '/upgradelib.php');
+require_once(__DIR__ . '/upgradelib.php');
 
 /**
  * Execute mod_codescore upgrade from the given old version.
@@ -33,8 +33,7 @@ require_once (__DIR__ . '/upgradelib.php');
  * @param int $oldversion
  * @return bool
  */
-function xmldb_codescore_upgrade($oldversion)
-{
+function xmldb_codescore_upgrade($oldversion) {
     global $DB;
 
     $dbman = $DB->get_manager();
@@ -79,36 +78,36 @@ function xmldb_codescore_upgrade($oldversion)
         foreach ($attempts as $attempt) {
             $cm = get_coursemodule_from_id('codescore', $attempt->codescore);
             $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
-            $rubrics = array(
+            $rubrics = [
                 [
                     'name' => "Syntax grade",
                     'enabled' => 1,
                     'maxgrade' => $codescore->syntaxgrading ? $codescore->syntaxgrading : 25,
                     'grade' => $attempt->syntaxgrading,
-                    'prompt' => "Grade for student's code syntax"
+                    'prompt' => "Grade for student's code syntax",
                 ],
                 [
                     'name' => "Output grade",
                     'enabled' => 1,
                     'maxgrade' => $codescore->outputgrading ? $codescore->outputgrading : 25,
                     'grade' => $attempt->outputgrading,
-                    'prompt' => "Grade for the output of the code"
+                    'prompt' => "Grade for the output of the code",
                 ],
                 [
                     'name' => "Problem solution grade",
                     'enabled' => 1,
                     'maxgrade' => $codescore->problemsolutiongrading ? $codescore->problemsolutiongrading : 25,
                     'grade' => $attempt->problemsolutiongrading,
-                    'prompt' => "Grade for correct code solution"
+                    'prompt' => "Grade for correct code solution",
                 ],
                 [
                     'name' => "All cases coverage grade",
                     'enabled' => 1,
                     'maxgrade' => $codescore->allcasesgrading ? $codescore->allcasesgrading : 25,
                     'grade' => $attempt->allcasesgrading,
-                    'prompt' => "Grade for code covering all cases"
-                ]
-            );
+                    'prompt' => "Grade for code covering all cases",
+                ],
+            ];
             if ($attempt->syntaxgrading) {
                 $attempt->rubricsobject = json_encode($rubrics);
                 $DB->update_record('codescore_attempts', $attempt);
@@ -133,7 +132,7 @@ function xmldb_codescore_upgrade($oldversion)
         if ($dbman->field_exists($table, $allcases)) {
             $dbman->drop_field($table, $allcases);
         }
-        
+
         if ($dbman->field_exists($attempts, $syntax)) {
             $dbman->drop_field($attempts, $syntax);
         }

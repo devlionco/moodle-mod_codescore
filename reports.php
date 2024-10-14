@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  *
  * @package     mod_codescore
@@ -28,15 +29,9 @@ global $USER, $PAGE;
 
 $id = required_param('cmid', PARAM_INT); // Course module id
 
-if ($id) {
-    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-} else {
-    $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
-}
+$cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $modulecontext = context_module::instance($cm->id);
 require_login($course, true, $cm);
@@ -46,10 +41,10 @@ if ($modulecontext->contextlevel == CONTEXT_MODULE) {
     // Calling $PAGE->set_context should be enough, but it seems that it is not.
     // Therefore, we get the right $cm and $course, and set things up ourselves.
     $cm = get_coursemodule_from_id(false, $modulecontext->instanceid, 0, false, MUST_EXIST);
-    $PAGE->set_cm($cm, $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST));
+    $PAGE->set_cm($cm, $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST));
 }
 
-$PAGE->set_url('/mod/codescore/reports.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/codescore/reports.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
@@ -62,13 +57,13 @@ $data->attempts = array_values($attempts);
 
 foreach ($data->attempts as &$value) {
     $userid = $value->userid;
-    $user = $DB->get_record('user', array('id' => $userid));
+    $user = $DB->get_record('user', ['id' => $userid]);
     $name = fullname($user);
     $value->username = $name;
 }
 $data->title = get_string('studentsreports', 'mod_codescore');
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
-$data->hasAttempts = $attempts ? true : false;
+$data->hasattempts = $attempts ? true : false;
 echo $OUTPUT->render_from_template('mod_codescore/reports', $data);
 $PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$data]);
 

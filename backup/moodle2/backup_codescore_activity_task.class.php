@@ -13,9 +13,18 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot . '/mod/codescore/backup/moodle2/backup_codescore_stepslib.php');
+
+/**
+ * Provides the steps to backup a codescore activity
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class backup_codescore_activity_task extends backup_activity_task {
       /**
        * No specific settings for this activity
@@ -41,3 +50,4 @@ class backup_codescore_activity_task extends backup_activity_task {
     }
 
 }
+

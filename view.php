@@ -29,17 +29,11 @@ require_once($CFG->dirroot . '/mod/codescore/locallib.php');
 global $COURSE, $USER;
 
 // Course module id.
-$id = optional_param('id', 0, PARAM_INT);
+$id = required_param('id', PARAM_INT);
 
-if ($id) {
-    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-} else {
-    $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
-}
+$cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
@@ -49,15 +43,15 @@ $modulecontext = context_module::instance($cm->id);
 
 $PAGE->requires->css('/mod/codescore/codemirror/codemirror.css');
 
-$event = \mod_codescore\event\course_module_viewed::create(array(
+$event = \mod_codescore\event\course_module_viewed::create([
     'objectid' => $moduleinstance->id,
     'context' => $modulecontext,
-));
+]);
 $event->add_record_snapshot('course', $course);
 $event->add_record_snapshot('codescore', $moduleinstance);
 $event->trigger();
 
-$PAGE->set_url('/mod/codescore/view.php', array('id' => $cm->id));
+$PAGE->set_url('/mod/codescore/view.php', ['id' => $cm->id]);
 $PAGE->set_title(format_string($moduleinstance->name));
 $PAGE->set_heading(format_string($course->fullname));
 $PAGE->set_context($modulecontext);
@@ -82,11 +76,11 @@ if ((int)$timeopened < $currenttime && $timeclosed > $currenttime) {
 }
 
 if ($isteacher) {
-    $url = new moodle_url('/mod/codescore/reports.php', array('cmid' => $id));
+    $url = new moodle_url('/mod/codescore/reports.php', ['cmid' => $id]);
     echo $OUTPUT->render_from_template('mod_codescore/reportsbtn', ['url' => $url]);
 }
 
-$langs = array(
+$langs = [
     '0' => 'Javascript',
     '1' => 'C++',
     '2' => 'Python',
@@ -100,7 +94,7 @@ $langs = array(
     '10' => 'Ruby',
     '11' => 'SQL',
     '12' => 'Assembly',
-);
+];
 
 $renderdata = (object) [
     'buttonClass' => '',
@@ -135,19 +129,19 @@ $data = new stdClass;
 $data->attempts = array_values($attempts);
 foreach ($data->attempts as &$value) {
     $userid = $value->userid;
-    $user = $DB->get_record('user', array('id' => $userid));
+    $user = $DB->get_record('user', ['id' => $userid]);
     $name = $user->firstname . " " . $user->lastname;
     $value->username = $name;
 }
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
 
-$gradinginfo = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, array($USER->id));
+$gradinginfo = grade_get_grades($COURSE->id, 'mod', 'codescore', $moduleinstance->id, [$USER->id]);
 $lastrenderdata = end($data->attempts);
-$rubricscount = NULL;
+$rubricscount = null;
 if ($lastrenderdata) {
     $lastrenderdata->grade = $lastrenderdata->timegraded === "0" ? "" : (int)end($gradinginfo->items[0]->grades)->grade;
     $lastrenderdata->aigrade = $lastrenderdata->aigrade ? (int)$lastrenderdata->aigrade : '';
-    $lastrenderdata->hasAttempts = $attempts ? true : false;
+    $lastrenderdata->hasattempts = $attempts ? true : false;
     $lastrenderdata->title = get_string('yoursubmissions', 'codescore');
 
     $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
@@ -164,10 +158,16 @@ if ($lastrenderdata) {
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
     $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
     $lastrenderdata->isteacher = $isteacher;
+    /**
+     * Filters out disabled rubrics
+     *
+     * @param array $var
+     * @return bool
+     */
     function filterrubrics ($var) {
         return $var["enabled"] !== 0;
     }
-   
+
     $jsonrubrics = json_decode($lastrenderdata->rubricsobject, true);
     $jsonrubrics = array_filter($jsonrubrics, 'filterrubrics');
     $lastrenderdata->rubrics = $jsonrubrics;

@@ -16,27 +16,32 @@
 
 namespace mod_codescore\privacy;
 
-
-// Privacy API implementation for the Code Score plugin.
-
-// @package     mod_codescore
-// @category    privacy
-// @copyright   2024 Devlion <info@devlion.co>
-// @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
-
-
 use core_privacy\local\metadata\collection;
 use core_privacy\local\request\approved_contextlist;
 use core_privacy\local\request\approved_userlist;
 use core_privacy\local\request\contextlist;
-use core_privacy\local\request\userlist;
 use core_privacy\local\request\transform;
+use core_privacy\local\request\userlist;
 use core_privacy\local\request\writer;
 
+/**
+ * Provider for the privacy API.
+ *
+ * @package    mod_codescore
+ * @copyright  2019 onwards AL Rachels <al@achuk.net>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class provider implements
     \core_privacy\local\metadata\provider,
     \core_privacy\local\request\plugin\provider,
     \core_privacy\local\request\core_userlist_provider {
+    /**
+     * Returns meta data about this plugin.
+     *
+     * @param  collection $collection The initialised collection to add items to.
+     * @return collection A listing of user data stored by the component which differs
+     *         from the user's core Moodle data.
+     */
     public static function get_metadata(collection $collection): collection {
 
         // Here you will add more items into the collection.
@@ -63,6 +68,12 @@ class provider implements
 
         return $collection;
     }
+    /**
+     * Get the list of contexts that contain user information for the specified user.
+     *
+     * @param int $userid The user to search.
+     * @return contextlist $contextlist The list of contexts used in the plugin.
+     */
     public static function get_contexts_for_userid(int $userid): contextlist {
         $contextlist = new contextlist();
 

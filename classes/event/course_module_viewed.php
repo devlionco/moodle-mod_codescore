@@ -25,17 +25,28 @@ namespace mod_codescore\event;
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class course_module_viewed extends \core\event\course_module_viewed {
+
+    /**
+     * Init method.
+     *
+     * @return void
+     */
     protected function init() {
         $this->data['crud'] = 'r';
         $this->data['edulevel'] = self::LEVEL_PARTICIPATING;
         $this->data['objecttable'] = 'codescore';
     }
 
-        /**
-         * Get objectid mapping
-         */
+    /**
+     * Get objectid mapping
+     *
+     * If the objectid is not defined, this method should map the objectid to a real object.
+     *
+     * @return array
+     */
     public static function get_objectid_mapping() {
-        return array('db' => 'codescore', 'restore' => 'codescore');
+        return ['db' => 'codescore', 'restore' => 'codescore'];
     }
+
     // For more information about the Events API please visit {@link https://docs.moodle.org/dev/Events_API}.
 }

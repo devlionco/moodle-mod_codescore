@@ -13,6 +13,7 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
  *
  * @package     mod_codescore
@@ -28,19 +29,13 @@ global $USER;
 
 $id = required_param('cmid', PARAM_INT); // Course module id
 
-if ($id) {
-    $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $cm->course), '*', MUST_EXIST);
-    $moduleinstance = $DB->get_record('codescore', array('id' => $cm->instance), '*', MUST_EXIST);
-} else {
-    $moduleinstance = $DB->get_record('codescore', array('id' => $c), '*', MUST_EXIST);
-    $course = $DB->get_record('course', array('id' => $moduleinstance->course), '*', MUST_EXIST);
-    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id, $course->id, false, MUST_EXIST);
-}
+$cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
+$course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
+$moduleinstance = $DB->get_record('codescore', ['id' => $cm->instance], '*', MUST_EXIST);
 
 $context = context_module::instance($cm->id);
 require_login($course, true, $cm);
 require_capability("mod/codescore:view", $context);
 
-$url = new moodle_url('/mod/codescore/attempt.php', array('cmid' => $id, 'userid' => $USER->id));
+$url = new moodle_url('/mod/codescore/attempt.php', ['cmid' => $id, 'userid' => $USER->id]);
 redirect($url);

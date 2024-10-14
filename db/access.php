@@ -29,27 +29,27 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$capabilities = array(
-        'mod/codescore:view' => array(
+$capabilities = [
+        'mod/codescore:view' => [
                 'captype' => 'read',
                 'contextlevel' => CONTEXT_MODULE,
-                'archetypes' => array(
+                'archetypes' => [
                         'guest' => CAP_ALLOW,
                         'user' => CAP_ALLOW,
-                ),
-        ),
+                ],
+        ],
 
-        'mod/codescore:addinstance' => array(
+        'mod/codescore:addinstance' => [
                 'riskbitmask' => RISK_XSS,
 
                 'captype' => 'write',
                 'contextlevel' => CONTEXT_COURSE,
-                'archetypes' => array(
+                'archetypes' => [
                         'editingteacher' => CAP_ALLOW,
                         'manager' => CAP_ALLOW,
-                ),
+                ],
                 'clonepermissionsfrom' => 'moodle/course:manageactivities',
-        ),
+        ],
         'mod/codescore:attempt' => [
                 'riskbitmask' => RISK_SPAM,
                 'captype' => 'write',
@@ -58,4 +58,4 @@ $capabilities = array(
                         'student' => CAP_ALLOW,
                 ],
         ],
-);
+];

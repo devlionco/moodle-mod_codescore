@@ -16,6 +16,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * Class basic_test
+ *
+ * @package    mod_codescore
+ * @copyright  2024 Devlion <info@devlion.co>
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 class mod_codescore_generator extends testing_module_generator {
 
 }

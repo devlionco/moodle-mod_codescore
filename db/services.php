@@ -28,23 +28,23 @@ defined('MOODLE_INTERNAL') || die;
 
 $functions = [
     'mod_codescore_delete_attempts' => [
-        'classname' => 'mod_codescore_external',
-        'methodname' => 'delete_attempts',
+        'classname' => 'mod_codescore\external\delete_attempts',
+        'methodname' => 'execute',
         'description' => 'Delete user attempts',
         'capabilities' => 'mod/quiz:addinstance',
         'type' => 'write',
         'ajax' => true,
     ],
     'mod_codescore_regrade_attempts' => [
-        'classname' => 'mod_codescore_external',
-        'methodname' => 'regrade_attempts',
+        'classname' => 'mod_codescore\external\regrade_attempts',
+        'methodname' => 'execute',
         'description' => 'Regrade user attempts',
         'capabilities' => 'mod/quiz:addinstance',
         'type' => 'write',
         'ajax' => true,
     ],
 ];
-$services = array(
+$services = [
     'Codescore web services' => [
         'functions' => [
             'mod_codescore_delete_attempts',
@@ -53,4 +53,4 @@ $services = array(
         'restrictedusers' => 1,
         'enabled' => 1,
     ],
-);
+];

@@ -18,7 +18,6 @@
  * Plugin administration pages are defined here.
  *
  * @package     mod_codescore
- * @rubric    admin
  * @copyright   2024 Devlion <info@devlion.co>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
@@ -31,7 +30,7 @@ defined('MOODLE_INTERNAL') || die();
 if ($hassiteconfig) {
     if ($ADMIN->fulltree) {
         require_once("$CFG->libdir/resourcelib.php");
-        $langs = array(
+        $langs = [
                 '0' => 'Javascript',
                 '1' => 'C++',
                 '2' => 'Python',
@@ -45,7 +44,7 @@ if ($hassiteconfig) {
                 '10' => 'Ruby',
                 '11' => 'SQL',
                 '12' => 'Assembly',
-        );
+        ];
         $settings->add(
                 new admin_setting_configpasswordunmask(
                         'mod_codescore/apikey',
@@ -69,7 +68,7 @@ if ($hassiteconfig) {
                         'mod_codescore/alowedlanguages',
                         get_string('alowedlanguages', 'mod_codescore'),
                         null,
-                        array('0', '1', '2', '3', '4', '5', '6', '7'),
+                        ['0', '1', '2', '3', '4', '5', '6', '7'],
                         $langs
                 )
         );
@@ -79,12 +78,12 @@ if ($hassiteconfig) {
 
         $numberofcategories = (int) (get_config('mod_codescore', 'rubricscount')) + 1;
 
-        $defaults = array(
+        $defaults = [
                 1 => get_string('syntaxgradetable', 'mod_codescore'),
                 2 => get_string('outputgradetable', 'mod_codescore'),
                 3 => get_string('problemgradetable', 'mod_codescore'),
                 4 => get_string('casesgradetable', 'mod_codescore'),
-        );
+        ];
 
         $defaultvalue = (int) (100 / $numberofcategories);
         for ($i = 1; $i <= $numberofcategories; $i++) {

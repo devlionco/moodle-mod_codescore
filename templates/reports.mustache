@@ -1,5 +1,5 @@
 <h3 class="reportTitle">{{title}}</h3>
-{{#hasAttempts}}
+{{#hasattempts}}
     <div> 
       <button type="button" class="disabled btn btn-secondary mb-2" id="deleteAttempts" data-toggle="modal" data-target="#exampleModal">
         {{#str}} deleteBtnText, codescore {{/str}}
@@ -12,7 +12,7 @@
       <input type='checkbox' id='checkallcheckbox'/>
       <label class='mb-0 ml-2' for='checkallcheckbox'>Check all</label>
     </div>
-{{/hasAttempts}}
+{{/hasattempts}}
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">

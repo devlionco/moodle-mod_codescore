@@ -24,7 +24,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once ($CFG->dirroot . '/course/moodleform_mod.php');
+require_once($CFG->dirroot . '/course/moodleform_mod.php');
 
 /**
  * Module instance settings form.
@@ -33,16 +33,21 @@ require_once ($CFG->dirroot . '/course/moodleform_mod.php');
  * @copyright   2024 Devlion <info@devlion.co>
  * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-class mod_codescore_mod_form extends moodleform_mod
-{
+class mod_codescore_mod_form extends moodleform_mod {
 
-    public static $datefieldoptions = array('optional' => true);
+    /**
+     * Default options for date fields.
+     *
+     * @var array
+     */
+    public static $datefieldoptions = [
+        'optional' => true,
+    ];
 
     /**
      * Defines forms elements
      */
-    public function definition()
-    {
+    public function definition() {
         global $CFG, $OUTPUT;
 
         $mform = $this->_form;
@@ -51,7 +56,7 @@ class mod_codescore_mod_form extends moodleform_mod
         $mform->addElement('header', 'general', get_string('general', 'form'));
 
         // Adding the standard "name" field.
-        $mform->addElement('text', 'name', get_string('name'), array('size' => '48'));
+        $mform->addElement('text', 'name', get_string('name'), ['size' => '48']);
         $mform->addRule('name', null, 'required', null, 'client');
         $mform->addRule('name', get_string('maximumchars', '', 255), 'maxlength', 255, 'client');
         if (!empty ($CFG->formatstringstriptags)) {
@@ -65,7 +70,7 @@ class mod_codescore_mod_form extends moodleform_mod
         $mform->setType('task', PARAM_RAW);
         $mform->addRule('task', get_string('filltask', 'codescore'), 'required');
 
-        $langs = array(
+        $langs = [
             '0' => 'Javascript',
             '1' => 'C++',
             '2' => 'Python',
@@ -79,11 +84,11 @@ class mod_codescore_mod_form extends moodleform_mod
             '10' => 'Ruby',
             '11' => 'SQL',
             '12' => 'Assembly',
-        );
+        ];
 
-        $alowedlanguages = get_config('mod_codescore')->alowedlanguages;
-        $alowedlanguages = explode(',', $alowedlanguages);
+        $alowedlanguages = explode(',', get_config('mod_codescore')->alowedlanguages);
 
+        $langoptions = [];
         foreach ($langs as $key => $lang) {
             if (in_array($key, $alowedlanguages)) {
                 $langoptions[$key] = $lang;
@@ -91,7 +96,7 @@ class mod_codescore_mod_form extends moodleform_mod
         }
 
         $mform->addElement('select', 'programminglang', get_string('programminglang', 'codescore'), $langoptions);
-        $mform->getElement('programminglang')->addOption('Select...', '13', array('disabled' => 'disabled'));
+        $mform->getElement('programminglang')->addOption('Select...', '13', ['disabled' => 'disabled']);
         $mform->setDefault('programminglang', '13');
 
         $checkvalid = function ($val) {
@@ -192,7 +197,7 @@ class mod_codescore_mod_form extends moodleform_mod
         for ($i = 1; $i <= $numberofcategories; $i++) {
             $element = 'rubric' . $i . 'maxgrade';
             $defaultvalues[$element] = isset($rubrics[$i - 1]) ? $rubrics[$i - 1]['maxgrade'] : $config->{'maximumgrade' . $i};
-            if(isset($rubrics[$i - 1])) {
+            if (isset($rubrics[$i - 1])) {
                 $defaultvalues['rubric' . $i . 'enabled'] = $rubrics[$i - 1]['enabled'];
             }
         }
@@ -206,18 +211,16 @@ class mod_codescore_mod_form extends moodleform_mod
      *
      * @param stdClass $data the form data to be modified.
      */
-    public function data_postprocessing($data)
-    {
+    public function data_postprocessing($data) {
         parent::data_postprocessing($data);
-        $rubricsdata = array();
+        $rubricsdata = [];
         for ($i = 1; isset ($data->{'rubric' . $i . 'maxgrade'}); $i++) {
             $config = get_config('mod_codescore');
-            array_push($rubricsdata, array(
+            array_push($rubricsdata, [
                 'name' => $config->{'rubric' . $i . 'name'},
                 'maxgrade' => $data->{'rubric' . $i . 'maxgrade'},
                 'enabled' => $data->{'rubric' . $i . 'enabled'},
-            )
-            );
+            ]);
         }
         $data->rubricsobject = json_encode($rubricsdata);
     }

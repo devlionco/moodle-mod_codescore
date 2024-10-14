@@ -26,7 +26,7 @@ use core\task\adhoc_task;
  * An adhoc task to convert submissions to pdf in the background.
  *
  * @copyright  2024 Devlion <info@devlion.co>
- * @package    codescore
+ * @package    mod_codescore
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class check_attempt extends adhoc_task {
@@ -48,7 +48,7 @@ class check_attempt extends adhoc_task {
             $codescore = $DB->get_record('codescore', ['id' => $cm->instance]);
             $attempt->state = 'pending';
             $attempt->timemodified = time();
-            $langobject = array(
+            $langobject = [
                     '0' => 'Javascript',
                     '1' => 'C++',
                     '2' => 'Python',
@@ -62,7 +62,7 @@ class check_attempt extends adhoc_task {
                     '10' => 'Ruby',
                     '11' => 'SQL',
                     '12' => 'Assembly',
-            );
+            ];
             $data = (object) [];
             $data->lang = $langobject[$codescore->programminglang];
             $data->solution = $attempt->code;

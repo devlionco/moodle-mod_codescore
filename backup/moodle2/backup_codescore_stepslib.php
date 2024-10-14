@@ -13,44 +13,58 @@
 //
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+
 /**
- * Define all the backup steps that will be used by the backup_codescore_activity_task
+ * Provides the steps to backup a codescore activity
+ *
+ * @package     mod_codescore
+ * @copyright   2024 Devlion <info@devlion.co>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class backup_codescore_activity_structure_step extends backup_activity_structure_step {
 
+    /**
+     * Define the structure of the codescore activity.
+     *
+     * @return backup_structure_element
+     */
     protected function define_structure() {
         $userinfo = $this->get_setting_value('userinfo');
 
-        $codescore = new backup_nested_element('codescore', array('id'), array(
+        $codescore = new backup_nested_element('codescore', [
+            'id',
+        ], [
             'course', 'name', 'intro', 'task', 'introformat',
             'programminglang', 'gradingspec', 'rubricsobject', 'autograde',
             'showfeedback', 'feedbacklang', 'multiattempts', 'duedate', 'timecreated', 'timemodified',
             'timeopened', 'timeclosed',
-        ));
+        ]);
         $attempts = new backup_nested_element('attempts');
 
-        $attempt = new backup_nested_element('attempt', array('id'), array(
+        $attempt = new backup_nested_element('attempt', [
+            'id',
+        ], [
             'codescore', 'userid', 'attempt',
             'state', 'timestart', 'timefinish', 'rubricsobject', 'timemodified',
             'timemodifiedoffline', 'timecheckstate', 'timegraded', 'code', 'studentnotes',
             'grade', 'aigrade', 'syntaxgrading', 'outputgrading',
             'problemsolutiongrading', 'allcasesgrading', 'correctedcode', 'feedback', 'output',
             'gradednotificationsenttime',
-        ));
+        ]);
 
         $codescore->add_child($attempts);
         $attempts->add_child($attempt);
 
-        $codescore->set_source_table('codescore', array('id' => backup::VAR_ACTIVITYID));
+        $codescore->set_source_table('codescore', ['id' => backup::VAR_ACTIVITYID]);
         $attempt->set_source_sql('
             SELECT *
               FROM {codescore_attempts}
              WHERE codescore = ?',
-            array(backup::VAR_PARENTID));
+            [backup::VAR_PARENTID]);
 
-        // All the rest of elements only happen if we are including user info
+        // All the rest of elements only happen if we are including user info.
         if ($userinfo) {
-            $attempt->set_source_table('codescore_attempts', array('id' => '../../id'));
+            $attempt->set_source_table('codescore_attempts', ['id' => '../../id']);
         }
 
         return $this->prepare_activity_structure($codescore);
