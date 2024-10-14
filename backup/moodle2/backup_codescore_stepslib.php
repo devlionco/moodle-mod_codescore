@@ -22,21 +22,19 @@ class backup_codescore_activity_structure_step extends backup_activity_structure
         $userinfo = $this->get_setting_value('userinfo');
 
         $codescore = new backup_nested_element('codescore', array('id'), array(
-            'course', 'name', 'intro', 'task',
-            'programminglang', 'gradingspec', 'syntaxgrading', 'outputgrading',
-            'problemsolutiongrading', 'allcasesgrading', 'commentsgrading', 'reduntatcodegrading',
-            'algorithmgrading', 'resourcecompgrading', 'complexitygrading', 'autograde',
-            'multiattempts', 'duedate', 'timecreated', 'timemodified',
+            'course', 'name', 'intro', 'task', 'introformat',
+            'programminglang', 'gradingspec', 'rubricsobject', 'autograde',
+            'showfeedback', 'feedbacklang', 'multiattempts', 'duedate', 'timecreated', 'timemodified',
             'timeopened', 'timeclosed',
         ));
         $attempts = new backup_nested_element('attempts');
 
         $attempt = new backup_nested_element('attempt', array('id'), array(
             'codescore', 'userid', 'attempt',
-            'state', 'timestart', 'timefinish', 'timemodified',
-            'timemodifiedoffline', 'timecheckstate', 'code', 'studentnotes',
+            'state', 'timestart', 'timefinish', 'rubricsobject', 'timemodified',
+            'timemodifiedoffline', 'timecheckstate', 'timegraded', 'code', 'studentnotes',
             'grade', 'aigrade', 'syntaxgrading', 'outputgrading',
-            'problemsolutiongrading', 'allcasesgrading', 'correctedcode', 'output',
+            'problemsolutiongrading', 'allcasesgrading', 'correctedcode', 'feedback', 'output',
             'gradednotificationsenttime',
         ));
 
