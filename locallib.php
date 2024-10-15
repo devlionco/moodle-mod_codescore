@@ -104,12 +104,8 @@ function codescore_set_grade_attempt(stdClass $data) {
  * @return void
  */
 function codescore_exec_adhoc($id) {
-    global $DB;
-
-    $attempt = $DB->get_record('codescore_attempts', ['id' => $id]);
-
     $task = new \mod_codescore\task\check_attempt;
-    $task->set_custom_data($attempt);
+    $task->set_custom_data(['id' => $id]);
     \core\task\manager::queue_adhoc_task($task, true);
     $task = new \tool_monitor\task\check_subscriptions();
     $task->execute();
