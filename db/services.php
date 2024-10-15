@@ -43,6 +43,14 @@ $functions = [
         'type' => 'write',
         'ajax' => true,
     ],
+    'mod_codescore_get_reports' => [
+        'classname' => 'mod_codescore\external\get_reports',
+        'methodname' => 'execute',
+        'description' => 'Get attempts reports',
+        'capabilities' => 'mod/quiz:addinstance',
+        'type' => 'read',
+        'ajax' => true,
+    ],
 ];
 $services = [
     'Codescore web services' => [

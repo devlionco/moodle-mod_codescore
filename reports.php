@@ -65,6 +65,6 @@ $data->title = get_string('studentsreports', 'mod_codescore');
 $data->candelete = has_capability('mod/codescore:addinstance', context_system::instance());
 $data->hasattempts = $attempts ? true : false;
 echo $OUTPUT->render_from_template('mod_codescore/reports', $data);
-$PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$data]);
+$PAGE->requires->js_call_amd('mod_codescore/reports', 'init', [$id]);
 
 echo $OUTPUT->footer();

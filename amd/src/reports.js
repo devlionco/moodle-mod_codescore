@@ -24,10 +24,14 @@ import Tabulator from 'mod_codescore/tabulatorlib';
 import {get_string as getString} from 'core/str';
 import Ajax from 'core/ajax';
 
-export const init = async(data) => {
-    const rawParams = window.location.search;
-    const urlParams = new URLSearchParams(rawParams);
-    const cmid = urlParams.get('id') ? urlParams.get('id') : urlParams.get('cmid');
+export const init = async(cmid) => {
+    const response = await Ajax.call([{
+        methodname: 'mod_codescore_get_reports',
+        args: {
+            cmid,
+        },
+    }])[0];
+    let data = JSON.parse(response.data);
     const link = (cell) => {
         const name = cell.getValue();
         const index = Number(cell.getRow().getIndex());
