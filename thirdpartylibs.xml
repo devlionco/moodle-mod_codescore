@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <libraries>
     <library>
-        <location>amd/codemirrorlib.js</location>
+        <location>amd/src/codemirrorlib.js</location>
         <name>CodeMirror</name>
         <version>6</version>
         <license>MIT</license>
@@ -11,6 +11,20 @@
         <location>amd/src/tabulatorlib.js</location>
         <name>TabulatorJS</name>
         <version>5.5.2</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>amd/src/codemirrormerge.js</location>
+        <name>CodeMirror Merge</name>
+        <version>6</version>
+        <license>MIT</license>
+        <licenseversion></licenseversion>
+    </library>
+    <library>
+        <location>amd/src/langs/js.js</location>
+        <name>CodeMirror Javascript</name>
+        <version>5</version>
         <license>MIT</license>
         <licenseversion></licenseversion>
     </library>

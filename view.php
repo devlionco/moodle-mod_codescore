@@ -156,7 +156,9 @@ if ($lastrenderdata) {
     }
     $lastrenderdata->timestart = $lastrenderdata->timestart !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timestart) : '';
     $lastrenderdata->timefinish = $lastrenderdata->timefinish !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timefinish) : '';
-    $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ? date('Y-m-d h:i:s', $lastrenderdata->timegraded) : get_string('notgraded', 'codescore');
+    $lastrenderdata->convertedTime = $lastrenderdata->timegraded !== '0' ?
+        date('Y-m-d h:i:s', $lastrenderdata->timegraded) :
+        get_string('notgraded', 'codescore');
     $lastrenderdata->isteacher = $isteacher;
     /**
      * Filters out disabled rubrics

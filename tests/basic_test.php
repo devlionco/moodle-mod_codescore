@@ -29,14 +29,15 @@ require_once($CFG->dirroot . '/mod/codescore/locallib.php');
  * @package    mod_codescore
  * @copyright  2024 Devlion <info@devlion.co>
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @covers \mod_codescore
  */
-class basic_test extends \advanced_testcase {
+final class basic_test extends \advanced_testcase {
     /**
      * Test that creating a codescore activity works.
      *
      * @return void
      */
-    public function test_create_activity() {
+    public function test_create_activity(): void {
         global $DB;
         $this->resetAfterTest(true);
         $DB->delete_records('codescore');
@@ -49,7 +50,7 @@ class basic_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_delete_activity() {
+    public function test_delete_activity(): void {
         global $DB;
         $this->resetAfterTest(true);
         $course = $this->getDataGenerator()->create_course();
@@ -63,7 +64,7 @@ class basic_test extends \advanced_testcase {
      *
      * @return void
      */
-    public function test_submit_attempt() {
+    public function test_submit_attempt(): void {
         global $DB;
         $this->resetAfterTest(true);
         $DB->delete_records('codescore');

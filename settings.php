@@ -97,7 +97,7 @@ if ($hassiteconfig) {
             $indexdescription = '';
             $setting = new admin_setting_description($indexname, '', $indexdescription);
             $settings->add($setting);
-            // Set rubric name and tag
+            // Set rubric name and tag.
             $settings->add(
                     new admin_setting_configtext(
                             'mod_codescore/rubric' . $i . 'name',

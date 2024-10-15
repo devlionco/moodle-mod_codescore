@@ -32,7 +32,7 @@ use external_value;
  *
  * @package   mod_codescore
  * @category  external
- * @copyright 2022 Devlion <info@devlion.co>
+ * @copyright 2024 Devlion <info@devlion.co>
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 class regrade_attempts extends external_api {

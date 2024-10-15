@@ -131,7 +131,6 @@ class mod_codescore_mod_form extends moodleform_mod {
 
         $this->standard_grading_coursemodule_elements();
 
-        // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 
         $numberofcategories = (int)(get_config('mod_codescore', 'rubricscount')) + 1;
@@ -167,12 +166,15 @@ class mod_codescore_mod_form extends moodleform_mod {
         $mform->addElement('advcheckbox', 'showfeedback', get_string('showfeedback', 'codescore'));
         $mform->setDefault('showfeedback', true);
 
-        $mform->addRule('rubric' . $numberofcategories . 'maxgrade', get_string('modgradeswarn', 'codescore'), 'callback', $checkgrading, 'server');
+        $mform->addRule('rubric' . $numberofcategories . 'maxgrade',
+            get_string('modgradeswarn', 'codescore'), 'callback', $checkgrading, 'server');
 
         $mform->addElement('advcheckbox', 'multiattempts', get_string('multiattempts', 'codescore'));
         $mform->setDefault('multiattempts', true);
 
-        $mform->addElement('select', 'feedbacklang', get_string('feedbacklang', 'codescore'), get_string_manager()->get_list_of_translations());
+        $mform->addElement('select', 'feedbacklang',
+            get_string('feedbacklang', 'codescore'), get_string_manager()->get_list_of_translations());
+
         $mform->setDefault('feedbacklang', $CFG->lang);
 
         $this->standard_coursemodule_elements();

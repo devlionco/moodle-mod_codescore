@@ -17,10 +17,6 @@
 namespace mod_codescore\task;
 
 use core\task\adhoc_task;
-// use codescore\document_services;
-// use codescore\combined_document;
-
-// use assign;
 
 /**
  * An adhoc task to convert submissions to pdf in the background.

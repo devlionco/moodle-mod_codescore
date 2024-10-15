@@ -67,7 +67,6 @@ class get_reports extends external_api {
         $context = \context_course::instance($COURSE->id);
         self::validate_context($context);
 
-
         $attempts = codescore_get_attempts($cmid);
         $data = new \stdClass();
         $data->attempts = array_values($attempts);

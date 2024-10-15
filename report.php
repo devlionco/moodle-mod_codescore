@@ -81,8 +81,8 @@ if ($data = data_submitted()) {
      redirect($redirecturl);
 }
 
-$id = required_param('cmid', PARAM_INT); // Course module id
-$userid = required_param('userid', PARAM_INT); // Course module id
+$id = required_param('cmid', PARAM_INT); // Course module id.
+$userid = required_param('userid', PARAM_INT); // Course module id.
 $attemptindex = required_param('attempt', PARAM_INT);
 $index = required_param('index', PARAM_INT);
 

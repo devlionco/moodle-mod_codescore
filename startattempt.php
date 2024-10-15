@@ -27,7 +27,7 @@ require_once(__DIR__.'/lib.php');
 
 global $USER;
 
-$id = required_param('cmid', PARAM_INT); // Course module id
+$id = required_param('cmid', PARAM_INT); // Course module id.
 
 $cm = get_coursemodule_from_id('codescore', $id, 0, false, MUST_EXIST);
 $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
