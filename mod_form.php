@@ -128,6 +128,9 @@ class mod_codescore_mod_form extends moodleform_mod {
             self::$datefieldoptions
         );
         $mform->setType('timeclosed', PARAM_INT);
+
+        $this->standard_grading_coursemodule_elements();
+
         // grading options
         $mform->addElement('header', 'gradingoptions', get_string('grading', 'codescore'));
 

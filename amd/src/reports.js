@@ -106,6 +106,8 @@ export const init = async(cmid) => {
         data: tabledata, //assign data to table
         layout: "fitColumns", //fit columns to width of table (optional)
         textDirection: "ltr",
+        pagination: true,
+        paginationSize: 15,
         columns: [ //Define Table Columns
             {
                 title: "", field: "deletebtn", widthGrow: 0.1, formatter: deleteFormatter,
