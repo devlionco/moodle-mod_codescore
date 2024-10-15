@@ -46,7 +46,7 @@ class regrade_attempts extends external_api {
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
-                'ids' => new external_value(PARAM_RAW, '', VALUE_DEFAULT),
+                'ids' => new external_value(PARAM_TEXT, '', VALUE_DEFAULT),
             ]
         );
     }
@@ -59,7 +59,14 @@ class regrade_attempts extends external_api {
      * @return array
      */
     public static function execute($ids) {
-        global $DB;
+        global $DB, $COURSE;
+
+        self::validate_parameters(self::execute_parameters(), [
+            'ids' => $ids,
+        ]);
+
+        $context = \context_course::instance($COURSE->id);
+        self::validate_context($context);
 
         $ids = explode(",", $ids);
 

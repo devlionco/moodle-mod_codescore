@@ -56,7 +56,15 @@ class delete_attempts extends external_api {
      * @return array
      */
     public static function execute($ids, $cmid) {
-        global $USER, $DB;
+        global $USER, $DB, $COURSE;
+
+        self::validate_parameters(self::execute_parameters(), [
+            'ids' => $ids,
+            'cmid' => $cmid,
+        ]);
+
+        $context = \context_course::instance($COURSE->id);
+        self::validate_context($context);
 
         $ids = explode(",", $ids);
 
