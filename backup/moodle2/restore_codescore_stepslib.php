@@ -37,7 +37,6 @@ class restore_codescore_activity_structure_step extends restore_activity_structu
         if ($userinfo) {
             $paths[] = new restore_path_element('codescore_attempt', '/activity/codescore/attempts/attempt');
         }
-
         // Return the paths wrapped into standard activity structure.
         return $this->prepare_activity_structure($paths);
     }
@@ -70,7 +69,7 @@ class restore_codescore_activity_structure_step extends restore_activity_structu
 
         $data = (object)$data;
 
-        $data->codescoreid = $this->get_new_parentid('codescore');
+        $data->codescore = $this->get_new_parentid('codescore');
         $data->userid = $this->get_mappingid('user', $data->userid);
 
         $DB->insert_record('codescore_attempts', $data);

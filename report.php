@@ -43,7 +43,7 @@ if ($data = data_submitted()) {
     }
      $attemptid = codescore_set_grade_attempt($data);
 
-     $modulecontext = context_module::instance($id);
+     $modulecontext = context_module::instance($cmid);
 
      $cm = get_coursemodule_from_id('codescore', $cmid, 0, false, MUST_EXIST);
      $course = $DB->get_record('course', ['id' => $cm->course], '*', MUST_EXIST);
@@ -74,8 +74,12 @@ if ($data = data_submitted()) {
              }
          }
      }
+     $grade = [
+        'rawgrade' => $grade,
+        'userid' => $userid,
+     ];
      if ($maxgrade <= (int)$data->grade) {
-          codescore_grade_item_update($moduleinstance);
+          codescore_grade_item_update($moduleinstance, $grade);
      }
 
      redirect($redirecturl);

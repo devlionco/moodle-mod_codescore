@@ -159,3 +159,5 @@ $string['viewreportsbtn'] = 'צפה בהגשות';
 $string['waitingforgrade'] = 'מחכה לציון';
 $string['yes'] = 'כן';
 $string['yoursubmissions'] = 'הניסיון שלך: ';
+$string['codescore:attempt'] = 'שלח ניסיון';
+$string['codescore:view'] = 'הצג את המשימה';

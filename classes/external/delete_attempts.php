@@ -42,8 +42,8 @@ class delete_attempts extends external_api {
     public static function execute_parameters(): external_function_parameters {
         return new external_function_parameters(
             [
-                'ids' => new external_value(PARAM_RAW, '', VALUE_DEFAULT),
-                'cmid' => new external_value(PARAM_RAW, '', VALUE_DEFAULT, ''),
+                'ids' => new external_value(PARAM_TEXT, '', VALUE_DEFAULT),
+                'cmid' => new external_value(PARAM_INT, '', VALUE_DEFAULT, ''),
             ]
         );
     }

@@ -65,7 +65,7 @@ function codescore_add_instance($moduleinstance, $mform = null) {
     $moduleinstance->id = $id;
     $moduleinstance->grade = 0;
 
-    codescore_grade_item_update($moduleinstance, false, true);
+    codescore_grade_item_update($moduleinstance);
 
     return $id;
 }
@@ -155,40 +155,34 @@ function codescore_scale_used_anywhere($scaleid) {
  * @param bool $reset Reset grades in the gradebook.
  * @return void.
  */
-function codescore_grade_item_update($moduleinstance, $reset = false, $new = false) {
+function codescore_grade_item_update($moduleinstance, $grades = NULL) {
     global $CFG;
-    require_once($CFG->libdir.'/gradelib.php');
+    if (!function_exists('grade_update')) { //workaround for buggy PHP versions
+        require_once($CFG->libdir.'/gradelib.php');
+    }
+    $cm = get_coursemodule_from_instance('codescore', $moduleinstance->id);
 
-    $item = [
+    $params = [
         'itemname' => clean_param($moduleinstance->name, PARAM_NOTAGS),
         'gradetype' => GRADE_TYPE_VALUE,
+        'idnumber' => $cm ? $cm->id : $moduleinstance->coursemodule,
     ];
 
-    if ($moduleinstance->grade >= 0) {
-        $item['gradetype'] = GRADE_TYPE_VALUE;
-        $item['grademax']  = 100;
-        $item['grademin']  = 0;
-    } else if ($moduleinstance->grade < 0) {
-        $item['gradetype'] = GRADE_TYPE_SCALE;
-        $item['scaleid']   = -$moduleinstance->grade;
+    if ($grades >= 0) {
+        $params['gradetype'] = GRADE_TYPE_VALUE;
+        $params['grademax']  = 100;
+        $params['grademin']  = 0;
+    } else if ($grades < 0) {
+        $params['gradetype'] = GRADE_TYPE_SCALE;
     } else {
-        $item['gradetype'] = GRADE_TYPE_NONE;
+        $params['gradetype'] = GRADE_TYPE_NONE;
     }
-    if ($reset) {
-        $item['reset'] = true;
+    if ($grades  === 'reset') {
+        $params['reset'] = true;
+        $grades = NULL;
     }
 
-    $grades = [];
-    if ($new) {
-        $grades = null;
-    } else {
-        $grades = [
-            'userid' => (int)$moduleinstance->userid,
-            'rawgrade' => (int)$moduleinstance->grade,
-        ];
-    }
-
-    grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'codescore', $moduleinstance->id, 0, $grades, $item);
+    return grade_update('mod/codescore', $moduleinstance->course, 'mod', 'codescore', $moduleinstance->id, 0, $grades, $params);
 }
 
 /**
@@ -201,7 +195,7 @@ function codescore_grade_item_delete($moduleinstance) {
     global $CFG;
     require_once($CFG->libdir.'/gradelib.php');
 
-    return grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'codescore',
+    return grade_update('mod/codescore', $moduleinstance->course, 'mod', 'codescore',
                         $moduleinstance->id, 0, null, ['deleted' => 1]);
 }
 
@@ -213,13 +207,25 @@ function codescore_grade_item_delete($moduleinstance) {
  * @param stdClass $moduleinstance Instance object with extra cmidnumber and modname property.
  * @param int $userid Update grade of specific user only, 0 means all participants.
  */
-function codescore_update_grades($moduleinstance, $userid = 0) {
-    global $CFG;
+function codescore_update_grades($moduleinstance, $userid = 0, $nullifnone=true) {
+    global $CFG, $DB;
     require_once($CFG->libdir.'/gradelib.php');
 
-    // Populate array of grade objects indexed by userid.
-    $grades = [];
-    grade_update('/mod/codescore', $moduleinstance->course, 'mod', 'mod_codescore', $moduleinstance->id, 0, $grades);
+    if (!$moduleinstance->assessed) {
+        codescore_grade_item_update($moduleinstance);
+
+    } else if ($grades = codescore_get_user_grades($moduleinstance, $userid)) {
+        codescore_grade_item_update($moduleinstance, $grades);
+
+    } else if ($userid and $nullifnone) {
+        $grade = new stdClass();
+        $grade->userid   = $userid;
+        $grade->rawgrade = NULL;
+        codescore_grade_item_update($moduleinstance, $grade);
+
+    } else {
+        codescore_grade_item_update($moduleinstance);
+    }
 }
 
 /**

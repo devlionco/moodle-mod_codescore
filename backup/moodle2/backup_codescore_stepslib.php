@@ -56,15 +56,10 @@ class backup_codescore_activity_structure_step extends backup_activity_structure
         $attempts->add_child($attempt);
 
         $codescore->set_source_table('codescore', ['id' => backup::VAR_ACTIVITYID]);
-        $attempt->set_source_sql('
-            SELECT *
-              FROM {codescore_attempts}
-             WHERE codescore = ?',
-            [backup::VAR_PARENTID]);
 
         // All the rest of elements only happen if we are including user info.
         if ($userinfo) {
-            $attempt->set_source_table('codescore_attempts', ['id' => '../../id']);
+            $attempt->set_source_table('codescore_attempts', ['codescore' => backup::VAR_PARENTID]);
         }
 
         return $this->prepare_activity_structure($codescore);

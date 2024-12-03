@@ -156,3 +156,5 @@ $string['viewreportsbtn'] = 'View reports';
 $string['waitingforgrade'] = 'Waiting for grade';
 $string['yes'] = 'Yes';
 $string['yoursubmissions'] = 'Your attempt: ';
+$string['codescore:attempt'] = 'Submit attempt';
+$string['codescore:view'] = 'View the task';
